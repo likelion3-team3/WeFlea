@@ -1,12 +1,14 @@
 package com.ll.weflea.boundedContext.member.entity;
 
 import com.ll.weflea.base.entity.BaseEntity;
-import com.ll.weflea.boundedContext.chat.entity.ChatMember;
 import com.ll.weflea.boundedContext.goods.entity.Goods;
 import com.ll.weflea.boundedContext.keyword.entity.Keyword;
 import com.ll.weflea.boundedContext.notification.entity.Notification;
 import com.ll.weflea.boundedContext.wish.entity.Wish;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;

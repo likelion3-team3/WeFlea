@@ -1,7 +1,6 @@
 package com.ll.weflea.boundedContext.search.entity;
 
 import com.ll.weflea.base.entity.BaseEntity;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import lombok.Getter;
