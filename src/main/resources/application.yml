@@ -8,9 +8,9 @@ spring:
     include: secret
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-    url: '${custom.database.url}'
-    username: '${custom.database.username}'
-    password: '${custom.database.password}'
+    url: '${custom.dev_database.url}'
+    username: '${custom.dev_database.username}'
+    password: '${custom.dev_database.password}'
 #  security:
 #    oauth2:
 #      client:
