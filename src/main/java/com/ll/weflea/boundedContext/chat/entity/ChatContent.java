@@ -2,6 +2,7 @@ package com.ll.weflea.boundedContext.chat.entity;
 
 import com.ll.weflea.base.entity.BaseEntity;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,7 +20,7 @@ public class ChatContent extends BaseEntity {
 
     private Boolean isRead;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private ChatMember chatMember;
 
 }

@@ -2,6 +2,7 @@ package com.ll.weflea.boundedContext.goods.entity;
 
 import com.ll.weflea.base.entity.File;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,7 +18,7 @@ public class GoodsImage extends File {
 
     private String imageLink;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Goods goods;
 
 }

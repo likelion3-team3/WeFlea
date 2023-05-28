@@ -5,6 +5,7 @@ import com.ll.weflea.boundedContext.member.entity.Member;
 import com.ll.weflea.boundedContext.notification.entity.Notification;
 import com.ll.weflea.boundedContext.wish.entity.Wish;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.Getter;
@@ -32,7 +33,7 @@ public class Goods extends BaseEntity {
 
     private String description;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
 
     @OneToMany(mappedBy = "goods")

@@ -6,13 +6,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @MappedSuperclass
 @Getter
 @SuperBuilder
 @NoArgsConstructor
-@EntityListeners(AuditingEntityListener.class)
 @ToString
 public abstract class File extends BaseEntity {
     private String name;

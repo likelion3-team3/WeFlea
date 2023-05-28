@@ -4,6 +4,7 @@ import com.ll.weflea.base.entity.BaseEntity;
 import com.ll.weflea.boundedContext.goods.entity.Goods;
 import com.ll.weflea.boundedContext.member.entity.Member;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.Getter;
@@ -21,20 +22,20 @@ import java.util.List;
 @ToString(callSuper = true)
 public class ChatMember extends BaseEntity {
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private ChatRoom chatRoom;
 
     //멤버와의 관계에 대한 추가 정리가 필요함.
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Member fromMember;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Member toMember;
 
     @OneToMany(mappedBy = "chatMember")
     private List<ChatContent> chatContents = new ArrayList<>();
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Goods goods;
 
 }
