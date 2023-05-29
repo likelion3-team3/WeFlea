@@ -8,9 +8,9 @@ spring:
     include: secret
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-    url: '${custom.database.url}'
-    username: '${custom.database.username}'
-    password: '${custom.database.password}'
+    url: '${custom.dev_database.url}'
+    username: '${custom.dev_database.username}'
+    password: '${custom.dev_database.password}'
 #  security:
 #    oauth2:
 #      client:
@@ -59,12 +59,13 @@ spring:
 #            user-name-attribute: username
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: create-drop
     properties:
       hibernate:
         show_sql: true
         format_sql: true
         use_sql_comments: true
+        default_batch_fetch_size: 1000
 logging:
   level:
     root: INFO
