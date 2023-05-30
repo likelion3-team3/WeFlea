@@ -11,21 +11,21 @@ spring:
     url: '${custom.dev_database.url}'
     username: '${custom.dev_database.username}'
     password: '${custom.dev_database.password}'
-#  security:
-#    oauth2:
-#      client:
-#        registration:
+  security:
+    oauth2:
+      client:
+        registration:
 #          naver:
 #            scope:
 #            client-name: Naver
 #            authorization-grant-type: authorization_code
 #            redirect-uri: '${custom.site.baseUrl}/{action}/oauth2/code/{registrationId}'
-#          kakao:
-#            scope:
-#            client-name: Kakao
-#            authorization-grant-type: authorization_code
-#            redirect-uri: '${custom.site.baseUrl}/{action}/oauth2/code/{registrationId}'
-#            client-authentication-method: POST
+          kakao:
+            scope:
+            client-name: Kakao
+            authorization-grant-type: authorization_code
+            redirect-uri: http://localhost:8080/login/oauth2/code/kakao
+            client-authentication-method: POST
 #          google:
 #            scope: profile
 #            client-name: Google
@@ -59,7 +59,7 @@ spring:
 #            user-name-attribute: username
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     properties:
       hibernate:
         show_sql: true
@@ -69,8 +69,10 @@ spring:
 logging:
   level:
     root: INFO
-    com.ll.gramgram: DEBUG
+    com.ll.weflea: DEBUG
     org.hibernate.orm.jdbc.bind: TRACE
     org.hibernate.orm.jdbc.extract: TRACE
+    org.springframework: debug
+    org.springframework.web: debug
   site:
     baseUrl: http://localhost
