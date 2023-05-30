@@ -14,7 +14,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @SuperBuilder
 @ToString(callSuper = true)
-public class ChatContent extends BaseEntity {
+public class ChatMessage extends BaseEntity {
 
     private String contents;
 

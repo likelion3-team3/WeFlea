@@ -33,7 +33,7 @@ public class ChatMember extends BaseEntity {
     private Member toMember;
 
     @OneToMany(mappedBy = "chatMember")
-    private List<ChatContent> chatContents = new ArrayList<>();
+    private List<ChatMessage> chatMessages = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Goods goods;

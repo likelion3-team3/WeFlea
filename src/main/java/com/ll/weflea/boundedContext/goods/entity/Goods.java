@@ -40,12 +40,6 @@ public class Goods extends BaseEntity {
     private List<GoodsImage> goodsImages = new ArrayList<>();
 
 
-    @OneToMany(mappedBy = "goods")
-    private List<Wish> wishes = new ArrayList<>();
-
-    @OneToMany(mappedBy = "goods")
-    private List<Notification> notifications = new ArrayList<>();
-
 
 
 }
