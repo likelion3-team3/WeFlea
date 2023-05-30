@@ -1,11 +1,14 @@
 package com.ll.weflea.boundedContext.chat.controller;
 
 import com.ll.weflea.boundedContext.chat.dto.ChatRoomDetailDTO;
+import com.ll.weflea.boundedContext.chat.entity.ChatRoom;
 import com.ll.weflea.boundedContext.chat.service.ChatService;
 import com.ll.weflea.boundedContext.member.entity.Member;
 import com.ll.weflea.boundedContext.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,11 +28,17 @@ public class ChatController {
     private final MemberRepository memberRepository;
 
     //나의 채팅방 목록 조회
+    @GetMapping("/myRooms")
+    public String myRooms(@AuthenticationPrincipal User user, Model model) {
+        String nickname = user.getUsername();
+        List<ChatRoom> chatRooms = chatService.findByNickname(nickname);
+        model.addAttribute("list", chatRooms);
+        return "chat/rooms";
+    }
 
 
-
-    //모든 채팅방 목록 조회
-    @GetMapping(value = "/rooms")
+    //모든 채팅방 목록 조회 (임시)
+    @GetMapping("/rooms")
     public String rooms(Model model){
 
         List<ChatRoomDetailDTO> rooms = chatService.findAllRooms();
@@ -41,7 +50,7 @@ public class ChatController {
     }
 
     //채팅방 개설
-    @PostMapping(value = "/room")
+    @PostMapping("/room")
     public String create(@RequestParam String name, Model model){
         //@AuthenticationPrincipal 매개변수 작업 필요
         Member member1 = memberRepository.findById(1L).orElse(null);

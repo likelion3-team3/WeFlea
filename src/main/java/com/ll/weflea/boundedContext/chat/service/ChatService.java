@@ -80,4 +80,8 @@ public class ChatService {
         return chatMessageRepository.findByChatRoom_RoomId(roomId);
     }
 
+    public List<ChatRoom> findByNickname(String nickname) {
+        return chatRoomRepository.findByChatRoom_Sender_Nickname(nickname);
+    }
+
 }
