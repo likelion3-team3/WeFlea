@@ -69,8 +69,8 @@ public class ChatService {
         String roomId = chatMessageDTO.getRoomId();
         //필요한거 : message, Member sender, ChatRoom 객체
         //임시로 repository에 해놧음 service 구현되면 수정할 것
-        Member sender = memberRepository.findByNickname(writer).orElse(null);
         ChatRoom chatRoom = chatRoomRepository.findByRoomId(roomId).orElse(null);
+        Member sender = chatRoom.getSender();
         ChatMessage chatMessage = ChatMessage.create(message, sender, chatRoom);
 
         chatMessageRepository.save(chatMessage);
