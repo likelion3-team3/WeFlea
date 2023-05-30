@@ -19,7 +19,7 @@ public class MessageController {
     private final SimpMessagingTemplate template;
     private final ChatService chatService;
 
-    @MessageMapping(value = "/chat/enter")
+    @MessageMapping("/chat/enter")
     public void enter(ChatMessageDTO message){
 
         String roomId = message.getRoomId();
@@ -40,7 +40,7 @@ public class MessageController {
 
     }
 
-    @MessageMapping(value = "/chat/message")
+    @MessageMapping("/chat/message")
     public void message(ChatMessageDTO message){
 
         chatService.createChatMessage(message);

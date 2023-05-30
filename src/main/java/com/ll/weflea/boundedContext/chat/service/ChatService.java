@@ -24,14 +24,12 @@ public class ChatService {
 
     private final ChatRoomRepository chatRoomRepository;
     private final ChatMessageRepository chatMessageRepository;
-    private final MemberRepository memberRepository;
 
 
     @Transactional
     public ChatRoomDetailDTO createChatRoomDetailDTO(String name, Member sender, Member receiver) {
 
         ChatRoom chatRoom = createChatRoom(name, sender, receiver);
-        log.info("chatRoomService 접근 : ", chatRoom.getRoomName());
 
         ChatRoomDetailDTO chatRoomDetailDTO = ChatRoomDetailDTO.toChatRoomDetailDTO(chatRoom);
 
@@ -65,7 +63,6 @@ public class ChatService {
     public void createChatMessage(ChatMessageDTO chatMessageDTO) {
 
         String message = chatMessageDTO.getMessage();
-        String writer = chatMessageDTO.getWriter();
         String roomId = chatMessageDTO.getRoomId();
         //필요한거 : message, Member sender, ChatRoom 객체
         //임시로 repository에 해놧음 service 구현되면 수정할 것
