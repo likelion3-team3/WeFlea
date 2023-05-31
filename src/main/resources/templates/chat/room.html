@@ -17,20 +17,18 @@
         </div>
       </div>
       <div id="msgArea" class="chat-history">
-        <ul style="overflow: scroll; height: 100%;" id="chat-content" class="m-b-0">
-          <li th:each="message : ${messages}">
-            <div th:if="${message.sender.nickname} == ${room.sender}" class='col-6'>
+          <li style="list-style: none" th:each="message : ${messages}">
+            <div th:if="${message.sender.username} == ${room.sender.username}" class='col-6'>
               <div class='alert alert-secondary'>
-                <b th:text="${message.sender.nickname} + ' : ' + ${message.message}"></b>
+                <b th:text="${message.sender.username} + ' : ' + ${message.message}"></b>
               </div>
             </div>
-            <div th:if="${message.sender.nickname} != ${room.sender}" class='col-6'>
+            <div th:if="${message.sender.username} != ${room.sender.username}" class='col-6'>
               <div class='alert alert-warning'>
-                <b th:text="${message.sender.nickname} + ' : ' + ${message.message}"></b>
+                <b th:text="${message.sender.username} + ' : ' + ${message.message}"></b>
               </div>
             </div>
           </li>
-        </ul>
       </div>
       <div class="chat-message clearfix">
         <div class="input-group-prepend d-flex mb-0">
@@ -56,7 +54,7 @@
 
         var roomId = [[${room.roomId}]];
         var roomName = [[${room.name}]];
-        var username = [[${room.sender.nickname}]];
+        var username = [[${room.sender.username}]];
 
         console.log(roomName + ", " + roomId + ", " + username);
 
@@ -96,14 +94,14 @@
         });
 
         //엔터를 누르면 메시지 전송
-        $("#msg").on("keyup",function(event){
-          if(event.keyCode === 13){
+        $("#msg").on("keydown", function(event) {
+          if (event.keyCode === 13) {
             event.preventDefault();
             document.getElementById('button-send').click();
           }
         });
 
-        $("#button-send").on("click", function(e){
+        $("#button-send").on("click", function (e) {
           var msg = document.getElementById("msg");
 
           console.log(username + ":" + msg.value);
