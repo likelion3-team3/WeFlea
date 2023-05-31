@@ -7,7 +7,6 @@ import com.ll.weflea.boundedContext.chat.entity.ChatRoom;
 import com.ll.weflea.boundedContext.chat.repository.ChatMessageRepository;
 import com.ll.weflea.boundedContext.chat.repository.ChatRoomRepository;
 import com.ll.weflea.boundedContext.member.entity.Member;
-import com.ll.weflea.boundedContext.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -78,7 +77,7 @@ public class ChatService {
     }
 
     public List<ChatRoom> findByNickname(String nickname) {
-        return chatRoomRepository.findByChatRoom_Sender_Nickname(nickname);
+        return chatRoomRepository.findByChatRoom_Nickname(nickname);
     }
 
 }

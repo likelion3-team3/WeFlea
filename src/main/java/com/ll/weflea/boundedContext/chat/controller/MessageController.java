@@ -28,6 +28,7 @@ public class MessageController {
 
         if (messages.size() == 0) {
             message.setMessage(message.getWriter() + "님이 물건 구매를 원합니다.");
+            template.convertAndSend("/sub/chat/room/" + message.getRoomId(), message);
             return;
         }
 
