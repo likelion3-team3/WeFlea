@@ -32,27 +32,27 @@ public class ChatController {
     private final MemberService memberService;
 
     //나의 채팅방 목록 조회
-    @GetMapping("/rooms")
-    @PreAuthorize("hasRole('member')")
-    public String myRooms(@AuthenticationPrincipal User user, Model model) {
-        String username = user.getUsername();
-        List<ChatRoomDetailDTO> chatRooms = chatService.findByUsername(username);
-        model.addAttribute("list", chatRooms);
-        return "chat/rooms";
-    }
-
-
-    //모든 채팅방 목록 조회 (임시)
 //    @GetMapping("/rooms")
-//    public String rooms(Model model){
-//
-//        List<ChatRoomDetailDTO> rooms = chatService.findAllRooms();
-//
-//        log.info("# All Chat Rooms");
-//        model.addAttribute("list", rooms);
-//
+//    @PreAuthorize("hasRole('member')")
+//    public String myRooms(@AuthenticationPrincipal User user, Model model) {
+//        String username = user.getUsername();
+//        List<ChatRoomDetailDTO> chatRooms = chatService.findByUsername(username);
+//        model.addAttribute("list", chatRooms);
 //        return "chat/rooms";
 //    }
+
+
+//    모든 채팅방 목록 조회 (임시)
+    @GetMapping("/rooms")
+    public String rooms(Model model){
+
+        List<ChatRoomDetailDTO> rooms = chatService.findAllRooms();
+
+        log.info("# All Chat Rooms");
+        model.addAttribute("list", rooms);
+
+        return "chat/rooms";
+    }
 
     //채팅방 개설
     @PostMapping("/room")
@@ -73,13 +73,14 @@ public class ChatController {
     //db에서 기존 채팅이 있다면 채팅내역을 끌고와야됨
     @GetMapping("/room")
     @PreAuthorize("hasRole('member')")
-    public String getRoom(String roomId, Model model){
+    public String getRoom(String roomId, Model model, @AuthenticationPrincipal User user){
 
         log.info("# get Chat Room, roomID : " + roomId);
         List<ChatMessage> messages = chatService.findByRoomId(roomId);
 
         model.addAttribute("room", chatService.findRoomById(roomId));
         model.addAttribute("messages", messages);
+        model.addAttribute("user", user);
 
         return "chat/room";
     }

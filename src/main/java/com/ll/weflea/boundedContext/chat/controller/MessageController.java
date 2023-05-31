@@ -28,17 +28,10 @@ public class MessageController {
 
         if (messages.size() == 0) {
             message.setMessage(message.getWriter() + "님이 물건 구매를 원합니다.");
+            chatService.createChatMessage(message);
             template.convertAndSend("/sub/chat/room/" + message.getRoomId(), message);
             return;
         }
-
-//        for (ChatMessage chatMessage : messages) {
-//            ChatMessageDTO chatMessageDTO = ChatMessageDTO.create(roomId, message.getWriter(), chatMessage.getMessage());
-//            message.setWriter(chatMessageDTO.getWriter());
-//            message.setMessage(chatMessageDTO.getMessage());
-//            template.convertAndSend("/sub/chat/room/" + message.getRoomId(), message);
-//        }
-
     }
 
     @MessageMapping("/chat/message")

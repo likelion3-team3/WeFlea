@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <th:block th:replace="~{/layout/basic :: setContent(~{this :: content})}">
   <th:block th:fragment="content">
 
-    <!-- chat section -->
     <div class="chat">
       <div class="chat-header clearfix">
         <div class="row">
@@ -13,31 +12,28 @@
               <span id="myId" class="m-b-0" th:text="${room.name}"></span>
             </div>
           </div>
-
         </div>
       </div>
       <div id="msgArea" class="chat-history">
-          <li style="list-style: none" th:each="message : ${messages}">
-            <div th:if="${message.sender.username} == ${room.sender.username}" class='col-6'>
-              <div class='alert alert-secondary'>
-                <b th:text="${message.sender.username} + ' : ' + ${message.message}"></b>
-              </div>
+        <li style="list-style: none" th:each="message : ${messages}">
+          <div th:if="${message.sender.username} == ${user.username}" class="chat-message my-message">
+            <div class="message-content alert alert-secondary">
+              <b th:text="${message.sender.username} + ' : ' + ${message.message}"></b>
             </div>
-            <div th:if="${message.sender.username} != ${room.sender.username}" class='col-6'>
-              <div class='alert alert-warning'>
-                <b th:text="${message.sender.username} + ' : ' + ${message.message}"></b>
-              </div>
+          </div>
+          <div th:if="${message.sender.username} != ${user.username}" class="chat-message other-message">
+            <div class="message-content alert alert-warning">
+              <b th:text="${message.sender.username} + ' : ' + ${message.message}"></b>
             </div>
-          </li>
+          </div>
+        </li>
       </div>
       <div class="chat-message clearfix">
         <div class="input-group-prepend d-flex mb-0">
-          <input id="msg" type="text"
-                 class="form-control"
-                 placeholder="Enter text here...">
+          <input id="msg" type="text" class="form-control" placeholder="Enter text here...">
           <div class="input-group-append">
-            <button id="button-send" type="button" class="input-group-text"
-                    data-toggle="tooltip" data-placement="top" title="send a message">
+            <button id="button-send" type="button" class="input-group-text" data-toggle="tooltip"
+                    data-placement="top" title="Send a message">
               <i class="fas fa-paper-plane"></i>
             </button>
           </div>
@@ -54,7 +50,7 @@
 
         var roomId = [[${room.roomId}]];
         var roomName = [[${room.name}]];
-        var username = [[${room.sender.username}]];
+        var username = [[${user.username}]];
 
         console.log(roomName + ", " + roomId + ", " + username);
 
@@ -74,14 +70,14 @@
             var str = '';
 
             if(writer === username){
-              str = "<div class='col-6'>";
-              str += "<div class='alert alert-secondary'>";
+              str = "<div class='chat-message my-message'>";
+              str += "<div class='message-content alert alert-secondary'>";
               str += "<b>" + writer + " : " + content.message + "</b>";
               str += "</div></div>";
             }
             else{
-              str = "<div class='col-6'>";
-              str += "<div class='alert alert-warning'>";
+              str = "<div class='chat-message other-message'>";
+              str += "<div class='message-content alert alert-warning'>";
               str += "<b>" + writer + " : " + content.message + "</b>";
               str += "</div></div>";
             }
@@ -99,6 +95,10 @@
             event.preventDefault();
             document.getElementById('button-send').click();
           }
+
+          // 스크롤 아래로 내리기
+          var chatHistory = document.getElementById("msgArea");
+          chatHistory.scrollTop = chatHistory.scrollHeight;
         });
 
         $("#button-send").on("click", function (e) {
@@ -107,6 +107,11 @@
           console.log(username + ":" + msg.value);
           stomp.send('/pub/chat/message', {}, JSON.stringify({roomId: roomId, message: msg.value, writer: username}));
           msg.value = '';
+
+          // 스크롤 아래로 내리기
+          var chatHistory = document.getElementById("msgArea");
+          chatHistory.scrollTop = chatHistory.scrollHeight;
+
         });
       });
 
