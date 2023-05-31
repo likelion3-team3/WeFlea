@@ -32,12 +32,12 @@ public class MessageController {
             return;
         }
 
-        for (ChatMessage chatMessage : messages) {
-            ChatMessageDTO chatMessageDTO = ChatMessageDTO.create(roomId, message.getWriter(), chatMessage.getMessage());
-            message.setWriter(chatMessageDTO.getWriter());
-            message.setMessage(chatMessageDTO.getMessage());
-            template.convertAndSend("/sub/chat/room/" + message.getRoomId(), message);
-        }
+//        for (ChatMessage chatMessage : messages) {
+//            ChatMessageDTO chatMessageDTO = ChatMessageDTO.create(roomId, message.getWriter(), chatMessage.getMessage());
+//            message.setWriter(chatMessageDTO.getWriter());
+//            message.setMessage(chatMessageDTO.getMessage());
+//            template.convertAndSend("/sub/chat/room/" + message.getRoomId(), message);
+//        }
 
     }
 

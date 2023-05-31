@@ -18,7 +18,18 @@
       </div>
       <div id="msgArea" class="chat-history">
         <ul style="overflow: scroll; height: 100%;" id="chat-content" class="m-b-0">
-
+          <li th:each="message : ${messages}">
+            <div th:if="${message.sender.nickname} == ${room.sender}" class='col-6'>
+              <div class='alert alert-secondary'>
+                <b th:text="${message.sender.nickname} + ' : ' + ${message.message}"></b>
+              </div>
+            </div>
+            <div th:if="${message.sender.nickname} != ${room.sender}" class='col-6'>
+              <div class='alert alert-warning'>
+                <b th:text="${message.sender.nickname} + ' : ' + ${message.message}"></b>
+              </div>
+            </div>
+          </li>
         </ul>
       </div>
       <div class="chat-message clearfix">
@@ -84,6 +95,14 @@
           stomp.send('/pub/chat/enter', {}, JSON.stringify({roomId: roomId, writer: username}))
         });
 
+        //엔터를 누르면 메시지 전송
+        $("#msg").on("keyup",function(event){
+          if(event.keyCode === 13){
+            event.preventDefault();
+            document.getElementById('button-send').click();
+          }
+        });
+
         $("#button-send").on("click", function(e){
           var msg = document.getElementById("msg");
 
@@ -93,15 +112,6 @@
         });
       });
 
-      var input = document.getElementById("msg");
-
-      //입력 엔터키로도 받아지게 설정
-      input.addEventListener("keyup", function (event) {
-        if (event.keyCode === 13) {
-          event.preventDefault();
-          document.getElementById("button-send").click();
-        }
-      });
     </script>
   </th:block>
 </th:block>

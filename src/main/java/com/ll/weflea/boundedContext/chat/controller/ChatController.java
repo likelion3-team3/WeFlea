@@ -1,6 +1,7 @@
 package com.ll.weflea.boundedContext.chat.controller;
 
 import com.ll.weflea.boundedContext.chat.dto.ChatRoomDetailDTO;
+import com.ll.weflea.boundedContext.chat.entity.ChatMessage;
 import com.ll.weflea.boundedContext.chat.entity.ChatRoom;
 import com.ll.weflea.boundedContext.chat.service.ChatService;
 import com.ll.weflea.boundedContext.member.entity.Member;
@@ -64,12 +65,17 @@ public class ChatController {
     }
 
     //채팅방 상세
+    //db에서 기존 채팅이 있다면 채팅내역을 끌고와야됨
     @GetMapping("/room")
-    public void getRoom(String roomId, Model model){
+    public String getRoom(String roomId, Model model){
 
         log.info("# get Chat Room, roomID : " + roomId);
+        List<ChatMessage> messages = chatService.findByRoomId(roomId);
 
         model.addAttribute("room", chatService.findRoomById(roomId));
+        model.addAttribute("messages", messages);
+
+        return "chat/room";
     }
 
 
