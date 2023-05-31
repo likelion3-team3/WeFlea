@@ -48,10 +48,10 @@ public class Rq {
 
     // 로그인 된 회원의 객체
     public Member getMember() {
-        if ( isLogout() ) return null;
+        if (isLogout()) return null;
 
         // 데이터가 없는지 체크
-        if ( member == null ) {
+        if (member == null) {
             member = memberService.findByUsername(user.getUsername()).orElseThrow();
         }
 
