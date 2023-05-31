@@ -1,22 +1,24 @@
 package com.ll.weflea.base.initData;
 
+import com.ll.weflea.boundedContext.member.service.MemberService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import org.springframework.transaction.annotation.Transactional;
 
 @Configuration
 @Profile({"dev", "test"})
 public class NotProd {
 
     @Bean
-    CommandLineRunner initData() {
+    CommandLineRunner initData(MemberService memberService) {
         return new CommandLineRunner() {
             @Override
-            @Transactional
             public void run(String... args) throws Exception {
                 //member 생성
+                memberService.join("USER", "bigsand");
+                memberService.join("USER", "bigsand123");
+
 
                 //게시글 생성
 

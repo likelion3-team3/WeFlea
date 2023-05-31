@@ -3,6 +3,7 @@ package com.ll.weflea.boundedContext.member.entity;
 import com.ll.weflea.base.entity.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import lombok.AllArgsConstructor;
 import jakarta.persistence.EntityListeners;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,13 +18,12 @@ import java.util.List;
 
 @Entity
 @Getter
+@AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
 @ToString(callSuper = true)
 @EntityListeners(AuditingEntityListener.class)
 public class Member extends BaseEntity {
-
-    private String role;
 
     private String username;
 
@@ -49,7 +49,6 @@ public class Member extends BaseEntity {
     }
 
     public boolean isAdmin() {
-        return "admin".equals(role);
+        return username.startsWith("admin");
     }
-
 }

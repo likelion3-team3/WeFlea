@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:replace="~{/layout/basic :: setContent(~{this :: content})}">
+  <th:block th:fragment="content">
+
+    <!-- chat section -->
+    <div class="chat">
+      <div class="chat-header clearfix">
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="chat-about">
+              <span id="myId" class="m-b-0" th:text="${room.name}"></span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div id="msgArea" class="chat-history">
+        <ul style="overflow: scroll; height: 100%;" id="chat-content" class="m-b-0">
+          <li th:each="message : ${messages}">
+            <div th:if="${message.sender.nickname} == ${room.sender}" class='col-6'>
+              <div class='alert alert-secondary'>
+                <b th:text="${message.sender.nickname} + ' : ' + ${message.message}"></b>
+              </div>
+            </div>
+            <div th:if="${message.sender.nickname} != ${room.sender}" class='col-6'>
+              <div class='alert alert-warning'>
+                <b th:text="${message.sender.nickname} + ' : ' + ${message.message}"></b>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="chat-message clearfix">
+        <div class="input-group-prepend d-flex mb-0">
+          <input id="msg" type="text"
+                 class="form-control"
+                 placeholder="Enter text here...">
+          <div class="input-group-append">
+            <button id="button-send" type="button" class="input-group-text"
+                    data-toggle="tooltip" data-placement="top" title="send a message">
+              <i class="fas fa-paper-plane"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <script th:inline="javascript">
+      $(document).ready(function(){
+
+        var roomId = [[${room.roomId}]];
+        var roomName = [[${room.name}]];
+        var username = [[${room.sender.nickname}]];
+
+        console.log(roomName + ", " + roomId + ", " + username);
+
+        var sockJs = new SockJS("/stomp/chat");
+        //1. SockJS를 내부에 들고있는 stomp를 내어줌
+        var stomp = Stomp.over(sockJs);
+
+        //2. connection이 맺어지면 실행
+        stomp.connect({}, function (){
+          console.log("STOMP Connection")
+
+          //4. subscribe(path, callback)으로 메세지를 받을 수 있음
+          stomp.subscribe("/sub/chat/room/" + roomId, function (chat) {
+            var content = JSON.parse(chat.body);
+
+            var writer = content.writer;
+            var str = '';
+
+            if(writer === username){
+              str = "<div class='col-6'>";
+              str += "<div class='alert alert-secondary'>";
+              str += "<b>" + writer + " : " + content.message + "</b>";
+              str += "</div></div>";
+            }
+            else{
+              str = "<div class='col-6'>";
+              str += "<div class='alert alert-warning'>";
+              str += "<b>" + writer + " : " + content.message + "</b>";
+              str += "</div></div>";
+            }
+
+            $("#msgArea").append(str);
+          });
+
+          //3. send(path, header, message)로 메세지를 보낼 수 있음
+          stomp.send('/pub/chat/enter', {}, JSON.stringify({roomId: roomId, writer: username}))
+        });
+
+        //엔터를 누르면 메시지 전송
+        $("#msg").on("keyup",function(event){
+          if(event.keyCode === 13){
+            event.preventDefault();
+            document.getElementById('button-send').click();
+          }
+        });
+
+        $("#button-send").on("click", function(e){
+          var msg = document.getElementById("msg");
+
+          console.log(username + ":" + msg.value);
+          stomp.send('/pub/chat/message', {}, JSON.stringify({roomId: roomId, message: msg.value, writer: username}));
+          msg.value = '';
+        });
+      });
+
+    </script>
+  </th:block>
+</th:block>
+
+</html>
