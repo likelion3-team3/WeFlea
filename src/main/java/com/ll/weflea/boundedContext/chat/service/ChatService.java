@@ -68,7 +68,7 @@ public class ChatService {
         ChatRoom chatRoom = chatRoomRepository.findByRoomId(roomId).orElse(null);
         Member sender = chatRoom.getSender();
         ChatMessage chatMessage = ChatMessage.create(message, sender, chatRoom);
-
+        chatRoom.addMessage(chatMessage);
         chatMessageRepository.save(chatMessage);
     }
 
@@ -76,8 +76,16 @@ public class ChatService {
         return chatMessageRepository.findByChatRoom_RoomId(roomId);
     }
 
-    public List<ChatRoom> findByUsername(String username) {
-        return chatRoomRepository.findByChatRoom_Username(username);
+    public List<ChatRoomDetailDTO> findByUsername(String username) {
+        List<ChatRoom> chatRooms = chatRoomRepository.findByChatRoom_Username(username);
+
+        List<ChatRoomDetailDTO> chatRoomDetailDTOS = new ArrayList<>();
+
+        for (ChatRoom chatRoom : chatRooms) {
+            chatRoomDetailDTOS.add(ChatRoomDetailDTO.toChatRoomDetailDTO(chatRoom));
+        }
+
+        return chatRoomDetailDTOS;
     }
 
 }

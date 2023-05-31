@@ -3,16 +3,20 @@
 
 <th:block th:replace="~{/layout/basic :: setContent(~{this :: content})}">
     <th:block th:fragment="content">
-        <div class="container">
-            <div>
-                <ul th:each="room : ${list}">
-                    <li><a th:href="@{/chat/room(roomId=${room.roomId})}">[[${room.name}]]</a></li>
-                </ul>
-            </div>
+        <div class="chat-list">
+            <ul class="messages" th:each="room : ${list}">
+                <li>
+                    <div class="message">
+                        <div class="message-sender" th:text="${room.receiver.username}"></div>
+                        <a class="message-content" th:href="@{/chat/room(roomId=${room.roomId})}">[[${room.lastMessage}]]</a>
+                    </div>
+
+                </li>
+            </ul>
         </div>
         <form th:action="@{/chat/room}" method="post">
             <input type="text" name="name" class="form-control">
-            <button class="btn btn-secondary">개설하기</button>
+            <button class="btn btn-secondary">채팅하기</button>
         </form>
     </th:block>
 </th:block>
