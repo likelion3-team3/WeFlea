@@ -25,8 +25,6 @@ import java.util.List;
 @EntityListeners(AuditingEntityListener.class)
 public class Member extends BaseEntity {
 
-    private String role;
-
     private String username;
 
     @Column(unique = true)
@@ -37,15 +35,6 @@ public class Member extends BaseEntity {
 
     private String providerTypeCode;
 
-    public static Member create(String role, String name, String nickname, String email, String providerTypeCode) {
-        return Member.builder()
-                .role(role)
-                .username(name)
-                .nickname(nickname)
-                .email(email)
-                .providerTypeCode(providerTypeCode)
-                .build();
-    }
     public List<? extends GrantedAuthority> getGrantedAuthorities() {
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
 
@@ -60,6 +49,6 @@ public class Member extends BaseEntity {
     }
 
     public boolean isAdmin() {
-        return "admin".equals(role);
+        return username.startsWith("admin");
     }
 }

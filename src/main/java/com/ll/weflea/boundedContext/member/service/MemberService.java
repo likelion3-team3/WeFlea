@@ -29,6 +29,7 @@ public class MemberService {
         Member member = Member
                 .builder()
                 .username(username)
+                .providerTypeCode(providerTypeCode)
                 .build();
 
         memberRepository.save(member);

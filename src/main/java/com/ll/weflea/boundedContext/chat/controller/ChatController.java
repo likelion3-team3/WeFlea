@@ -31,8 +31,8 @@ public class ChatController {
     //나의 채팅방 목록 조회
     @GetMapping("/myRooms")
     public String myRooms(@AuthenticationPrincipal User user, Model model) {
-        String nickname = user.getUsername();
-        List<ChatRoom> chatRooms = chatService.findByNickname(nickname);
+        String username = user.getUsername();
+        List<ChatRoom> chatRooms = chatService.findByUsername(username);
         model.addAttribute("list", chatRooms);
         return "chat/rooms";
     }

@@ -72,7 +72,5 @@ logging:
     com.ll.weflea: DEBUG
     org.hibernate.orm.jdbc.bind: TRACE
     org.hibernate.orm.jdbc.extract: TRACE
-    org.springframework: debug
-    org.springframework.web: debug
   site:
     baseUrl: http://localhost

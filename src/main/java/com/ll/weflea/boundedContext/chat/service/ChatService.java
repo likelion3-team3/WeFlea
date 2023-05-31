@@ -76,8 +76,8 @@ public class ChatService {
         return chatMessageRepository.findByChatRoom_RoomId(roomId);
     }
 
-    public List<ChatRoom> findByNickname(String nickname) {
-        return chatRoomRepository.findByChatRoom_Nickname(nickname);
+    public List<ChatRoom> findByUsername(String username) {
+        return chatRoomRepository.findByChatRoom_Username(username);
     }
 
 }
