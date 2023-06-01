@@ -17,8 +17,8 @@
             </div>
             <div class="keyword_wrap">
                 <div class="keyword_wrap_row">
-                    <a th:each="keyword : ${keywords}" th:href="@{|/user/search/list/${keyword}|}">
-                        <button class="keyword" th:text="${keyword}"></button>
+                    <a th:each="keyword : ${keywords}" th:href="@{/user/search(keyword=${keyword})}">
+                    <button class="keyword" th:text="${keyword}"></button>
                     </a>
                 </div>
             </div>

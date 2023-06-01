@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +21,8 @@ public class SearchController {
     private final SearchService searchService;
 
 
-    @GetMapping("/list")
+    //전체조회
+    @GetMapping("/all")
     public String searchAll(Model model) {
         List<String> keywords = searchService.keywords();
 
@@ -28,8 +30,9 @@ public class SearchController {
         return "user/search/list";
     }
 
-    @GetMapping("/list/{keyword}")
-    public String searchByKeyword(@PathVariable String keyword, Model model) {
+    //위플리에서 뽑은 인기 검색 키워드
+    @GetMapping
+    public String searchByKeyword(@RequestParam String keyword, Model model) {
 
         List<Search> searchList = searchService.findByKeyword(keyword);
         List<String> keywords = searchService.keywords();
@@ -40,6 +43,7 @@ public class SearchController {
 
         return "user/search/keywordList";
     }
+
 
 
 }
