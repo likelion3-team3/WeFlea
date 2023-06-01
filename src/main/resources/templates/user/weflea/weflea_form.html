@@ -2,10 +2,19 @@
 
 <head>
     <title>상품 등록 폼</title>
+    <style>
+        input[type="text"], textarea {
+            border: 1px solid gray;
+        }
+
+        input[type="number"], textarea {
+            border: 1px solid gray;
+        }
+    </style>
 </head>
-<body>
-<h1>상품 등록</h1>
-<form action="/create" method="POST">
+<body layout:fragment="content">
+<!--<h1>상품 등록</h1>-->
+<form action="/create" method="POST" style="margin: 10px 40px">
     <label for="title">제목:</label><br>
     <input type="text" id="title" name="title"><br><br>
 
@@ -21,7 +30,7 @@
     <label for="description">설명:</label><br>
     <textarea id="description" name="description" rows="4" cols="50"></textarea><br><br>
 
-    <input type="submit" value="등록">
+    <button type="submit" style="background-color: aliceblue; font-size: 1.2em; padding: 10px 20px; border-radius: 10px">등록</button>
 </form>
 </body>
 </html>
