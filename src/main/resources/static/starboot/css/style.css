@@ -122,5 +122,24 @@
     color: #4e69a2;
 }
 
+#login-container {
+    border: 2px solid #B0E0E6;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+#social-outline {
+    border-color: #FFE4E1;
+}
+
+#social-outline2 {
+    border-color: #FFE4E1;
+}
+
+.service-name {
+    font-size: 24px;
+    color: #333;
+    text-align: center;
+}
 
 
