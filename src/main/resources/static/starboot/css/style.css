@@ -123,16 +123,19 @@
 }
 
 #login-container {
+    box-shadow: 5px 5px 5px 5px gray;
     border: 2px solid #B0E0E6;
     border-radius: 10px;
     padding: 10px;
 }
 
 #social-outline {
+    box-shadow: 2px 2px 2px 2px gray;
     border-color: #FFE4E1;
 }
 
 #social-outline2 {
+    box-shadow: 2px 2px 2px 2px gray;
     border-color: #FFE4E1;
 }
 
