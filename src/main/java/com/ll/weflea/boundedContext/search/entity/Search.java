@@ -1,34 +1,34 @@
 package com.ll.weflea.boundedContext.search.entity;
 
 import com.ll.weflea.base.entity.BaseEntity;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor
 @SuperBuilder
 @ToString(callSuper = true)
 public class Search extends BaseEntity {
 
-    private String title;
+    @Column(columnDefinition = "TEXT")
+    private String title;           // 게시글 제목
 
-    private String status;
+    private String price;           // 상품 가격
 
-    private int price;
+    private String sellDate;        // 판매 시간  ex) 1분 전, 10초 전, 1시간 전
 
-    private String description;
+    private String link;            // 게시글 링크
 
-    private String link;
+    private String imageLink;       // 게시글 사진 링크
 
-    @OneToMany(mappedBy = "search")
-    private List<SearchImage> searchImages = new ArrayList<>();
+    private String provider;        // 어느 거래 사이트인지 ex) 당근마켓, 중고나라, ...
 
+    private String area;            // 지역
 }
