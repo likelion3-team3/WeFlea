@@ -29,4 +29,6 @@ public class Search extends BaseEntity {
     private String imageLink;       // 게시글 사진 링크
 
     private String provider;        // 어느 거래 사이트인지 ex) 당근마켓, 중고나라, ...
+
+    private String area;            // 지역
 }
