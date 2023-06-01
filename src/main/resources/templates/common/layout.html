@@ -53,9 +53,15 @@
             <a href="/">WeFlea</a>
         </div>
 
+        <form class="search-form" th:action="@{/user/search(keyword=${keyword})}" method="get">
+            <input type="text" placeholder="중고장터통합검색" name="keyword">
+            <button type="submit"><i class="fas fa-search"></i></button>
+        </form>
+
+
         <ul class="navbar__menu">
             <li><a href="/user/weflea/list">위플리장터</a></li>
-            <li><a href="/user/search/list">통합검색</a></li>
+            <li><a href="/user/search/all">통합검색</a></li>
             <li><a href="/chat/rooms">채팅</a></li>
             <li><a href="/user/member/login">로그인</a></li>
             <li><a href="/user/member/me">마이페이지</a></li>
