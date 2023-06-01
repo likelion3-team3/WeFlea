@@ -7,6 +7,7 @@ import com.ll.weflea.boundedContext.chat.entity.ChatRoom;
 import com.ll.weflea.boundedContext.chat.repository.ChatMessageRepository;
 import com.ll.weflea.boundedContext.chat.repository.ChatRoomRepository;
 import com.ll.weflea.boundedContext.member.entity.Member;
+import com.ll.weflea.boundedContext.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,7 @@ public class ChatService {
 
     private final ChatRoomRepository chatRoomRepository;
     private final ChatMessageRepository chatMessageRepository;
+    private final MemberService memberService;
 
 
     @Transactional
@@ -63,12 +65,13 @@ public class ChatService {
 
         String message = chatMessageDTO.getMessage();
         String roomId = chatMessageDTO.getRoomId();
+        String writer = chatMessageDTO.getWriter();
         //필요한거 : message, Member sender, ChatRoom 객체
         //임시로 repository에 해놧음 service 구현되면 수정할 것
         ChatRoom chatRoom = chatRoomRepository.findByRoomId(roomId).orElse(null);
-        Member sender = chatRoom.getSender();
+        Member sender = memberService.findByUsername(writer).orElse(null);
         ChatMessage chatMessage = ChatMessage.create(message, sender, chatRoom);
-
+        chatRoom.addMessage(chatMessage);
         chatMessageRepository.save(chatMessage);
     }
 
@@ -76,8 +79,16 @@ public class ChatService {
         return chatMessageRepository.findByChatRoom_RoomId(roomId);
     }
 
-    public List<ChatRoom> findByUsername(String username) {
-        return chatRoomRepository.findByChatRoom_Username(username);
+    public List<ChatRoomDetailDTO> findByUsername(String username) {
+        List<ChatRoom> chatRooms = chatRoomRepository.findByChatRoom_Username(username);
+
+        List<ChatRoomDetailDTO> chatRoomDetailDTOS = new ArrayList<>();
+
+        for (ChatRoom chatRoom : chatRooms) {
+            chatRoomDetailDTOS.add(ChatRoomDetailDTO.toChatRoomDetailDTO(chatRoom));
+        }
+
+        return chatRoomDetailDTOS;
     }
 
 }
