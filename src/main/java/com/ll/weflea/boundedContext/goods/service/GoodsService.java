@@ -5,9 +5,7 @@ import com.ll.weflea.boundedContext.goods.entity.Goods;
 import com.ll.weflea.boundedContext.goods.repository.GoodsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.thymeleaf.spring6.naming.SpringContextVariableNames;
 
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
