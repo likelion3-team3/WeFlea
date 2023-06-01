@@ -24,5 +24,10 @@ public class MemberController {
         return "user/member/me";
     }
 
+    @GetMapping("/update/nickname")
+    public String updateNickname() {
+        return "user/member/updateNickname";
+    }
+
 
 }
