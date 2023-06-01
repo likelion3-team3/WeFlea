@@ -1,67 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
+<html layout:decorate="~{common/layout.html}" />
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nav bar</title>
+    <title>메인</title>
     <script src="https://kit.fontawesome.com/b17d4fa9e7.js" crossorigin="anonymous"></script>
-    <style>
-        @font-face {
-            font-family: 'GmarketSansMedium';
-            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
-            font-weight: normal;
-            font-style: normal;
-        }
-
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: aliceblue;
-            font-family: GmarketSansMedium;
-        }
-
-        .navbar__logo {
-            font-size: larger;
-            font-weight: bold;
-            justify-content: center;
-            color: black;
-        }
-
-        .navbar__menu {
-            display: flex;
-            list-style: none;
-        }
-
-        .navbar__menu li {
-            margin-right: 10px;
-        }
-
-        .navbar__menu li a {
-            color: #888;
-            text-decoration: none;
-        }
-
-        .navbar__logo a:visited {
-            color: black;
-        }
-    </style>
+    <link rel="stylesheet" href="static/resource/common.css">
 
 
 </head>
 <body>
-<nav class="navbar">
-    <div class="navbar__logo">
-        <a href="/">WeFlea</a>
-    </div>
+<header class="navbar" layout:fragment="header">
 
-    <ul class="navbar__menu">
-        <li><a href="/user/weflea/list">위플리장터</a></li>
-        <li><a href="/user/search/list">통합검색</a></li>
-        <li><a href="/chat/rooms">채팅</a></li>
-        <li><a href="/user/member/login">로그인</a></li>
-        <li><a href="/user/member/me">마이페이지</a></li>
-    </ul>
-</nav>
+</header>
 </body>
-</html>
+

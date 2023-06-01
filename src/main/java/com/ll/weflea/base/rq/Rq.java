@@ -2,6 +2,7 @@ package com.ll.weflea.base.rq;
 
 import com.ll.weflea.boundedContext.member.entity.Member;
 import com.ll.weflea.boundedContext.member.service.MemberService;
+import com.ll.weflea.standard.util.Ut;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -10,6 +11,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.RequestScope;
+
+import java.util.Map;
 
 @Component
 @RequestScope
@@ -56,5 +59,11 @@ public class Rq {
         }
 
         return member;
+    }
+
+    public String getParamsJsonStr() {
+        Map<String, String[]> parameterMap = req.getParameterMap();
+
+        return Ut.json.toStr(parameterMap);
     }
 }
