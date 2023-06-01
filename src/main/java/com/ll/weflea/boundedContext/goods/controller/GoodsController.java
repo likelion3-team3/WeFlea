@@ -48,7 +48,7 @@ public class GoodsController {
     @PostMapping("/create")
     public String create(@Valid CreateForm createForm) {
         // 서비스에서 추가 기능 구현
-        RsData<Goods> createGoods = goodsService.create(
+        RsData<Goods> createRsData = goodsService.create(
                 createForm.getTitle(),
                 createForm.getArea(),
                 createForm.getStatus(),
@@ -56,9 +56,13 @@ public class GoodsController {
                 createForm.getDescription()
         );
 
+        if (createRsData.isFail()) {
+            return rq.historyBack(createRsData);
+        }
+
 
         // 게시물 등록 후 위플리 장터 목록 페이지로 다시 이동
-        return "redirect:/user/weflea/list";
+        return rq.redirectWithMsg("/list", createRsData);
     }
 
 }
