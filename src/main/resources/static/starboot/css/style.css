@@ -1,9 +1,11 @@
+/* 수정된 CSS */
+
 .chat-list {
     width: 300px;
     margin: 0 auto;
 }
 
-.messages {
+.chat-history {
     list-style-type: none;
     padding: 0;
 }
@@ -25,135 +27,76 @@
     color: #666;
 }
 
-.my-chat {
-    text-align: right;
-    background-color: #e2f1ff;
-}
-
-.other-chat {
-    text-align: left;
-    background-color: #f5f5f5;
-}
-
-* {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-}
-
-a {
-    text-decoration: none;
-}
-
-.wrap {
-    padding: 40px 0;
-    background-color: #A8C0D6;
-}
-
-.wrap .chat {
+.chat-message {
     display: flex;
-    align-items: flex-start;
-    padding: 20px;
+    justify-content: flex-end;
 }
 
-.wrap .chat .icon {
-    position: relative;
-    overflow: hidden;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background-color: #eee;
-}
-
-.wrap .chat .icon i {
-    position: absolute;
-    top: 10px;
-    left: 50%;
-    font-size: 2.5rem;
-    color: #aaa;
-    transform: translateX(-50%);
-}
-
-.wrap .chat .textbox {
-    position: relative;
-    display: inline-block;
-    max-width: calc(100% - 70px);
-    padding: 10px;
-    margin-top: 7px;
-    font-size: 13px;
-    border-radius: 10px;
-}
-
-.wrap .chat .textbox::before {
-    position: absolute;
-    display: block;
-    top: 0;
-    font-size: 1.5rem;
-}
-
-.wrap .ch1 .textbox {
-    margin-left: 20px;
-    background-color: #ddd;
-}
-
-.wrap .ch1 .textbox::before {
-    left: -15px;
-    content: "◀";
-    color: #ddd;
-}
-
-.wrap .ch2 {
-    flex-direction: row-reverse;
-}
-
-.wrap .ch2 .textbox {
-    margin-right: 20px;
-    background-color: #F9EB54;
-}
-
-.wrap .ch2 .textbox::before {
-    right: -15px;
-    content: "▶";
-    color: #F9EB54;
+.other-message {
+    justify-content: flex-start;
 }
 
 .chat {
+    max-width: 1000px;
+    margin: 0 auto;
     background-color: #f6f6f6;
-    border-radius: 4px;
-    padding: 15px;
+    border-radius: 5px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
-.chat .chat-history {
-    overflow-y: scroll;
-    max-height: 400px;
-}
-
-.chat .chat-message {
-    margin-bottom: 10px;
-}
-
-.chat .my-message {
-    text-align: right;
-}
-
-.chat .other-message {
-    text-align: left;
-}
-
-.chat .chat-message .message-content {
-    display: inline-block;
-    padding: 10px;
-    border-radius: 4px;
-    max-width: 70%;
-    word-wrap: break-word;
-}
-
-.chat .my-message .message-content {
-    background-color: #0084ff;
+.chat-header {
+    background-color: #4e69a2;
     color: #fff;
+    padding: 15px
 }
 
-.chat .other-message .message-content {
-    background-color: #f0f0f0;
+.chat-history {
+    padding: 20px;
+}
+
+
+.message-content {
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.my-message .message-content {
+    background-color: #dff2ff;
     color: #000;
 }
+
+.other-message .message-content {
+    background-color: #fff;
+    color: #000;
+}
+
+.chat-input {
+    padding: 20px;
+    background-color: #fff;
+}
+
+
+.form-control {
+    width: fit-content;
+    margin-right: 10px;
+}
+
+.chat-message.clearfix {
+    display: flex;
+}
+
+#msg {
+    flex-grow: 15;
+}
+
+#button-send {
+    display: flex;
+    flex-grow: 1;
+    justify-content: center;
+    align-items: center;
+}
+
+
+

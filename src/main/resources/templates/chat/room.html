@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <th:block th:replace="~{/layout/basic :: setContent(~{this :: content})}">
   <th:block th:fragment="content">
+
+    <!-- 수정된 HTML -->
 
     <div class="chat">
       <div class="chat-header clearfix">
@@ -15,7 +17,7 @@
         </div>
       </div>
       <div id="msgArea" class="chat-history">
-        <li style="list-style: none" th:each="message : ${messages}">
+        <div style="list-style: none" th:each="message : ${messages}">
           <div th:if="${message.sender.username} == ${user.username}" class="chat-message my-message">
             <div class="message-content alert alert-secondary">
               <b th:text="${message.sender.username} + ' : ' + ${message.message}"></b>
@@ -26,21 +28,54 @@
               <b th:text="${message.sender.username} + ' : ' + ${message.message}"></b>
             </div>
           </div>
-        </li>
+        </div>
       </div>
       <div class="chat-message clearfix">
-        <div class="input-group-prepend d-flex mb-0">
           <input id="msg" type="text" class="form-control" placeholder="Enter text here...">
-          <div class="input-group-append">
-            <button id="button-send" type="button" class="input-group-text" data-toggle="tooltip"
-                    data-placement="top" title="Send a message">
-              <i class="fas fa-paper-plane"></i>
-            </button>
-          </div>
-        </div>
+          <button id="button-send" type="button" class="input-group-text" data-toggle="tooltip"
+                  data-placement="top" title="Send a message">
+            <i id = "plane" class="fas fa-paper-plane"></i>
+          </button>
       </div>
     </div>
 
+
+    <!--    <div class="chat">-->
+<!--      <div class="chat-header clearfix">-->
+<!--        <div class="row">-->
+<!--          <div class="col-lg-6">-->
+<!--            <div class="chat-about">-->
+<!--              <span id="myId" class="m-b-0" th:text="${room.name}"></span>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div id="msgArea" class="chat-history">-->
+<!--        <li style="list-style: none" th:each="message : ${messages}">-->
+<!--          <div th:if="${message.sender.username} == ${user.username}" class="chat-message my-message">-->
+<!--            <div class="message-content alert alert-secondary">-->
+<!--              <b th:text="${message.sender.username} + ' : ' + ${message.message}"></b>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <div th:if="${message.sender.username} != ${user.username}" class="chat-message other-message">-->
+<!--            <div class="message-content alert alert-warning">-->
+<!--              <b th:text="${message.sender.username} + ' : ' + ${message.message}"></b>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </li>-->
+<!--      </div>-->
+<!--      <div class="chat-message clearfix">-->
+<!--        <div class="input-group-prepend d-flex mb-0">-->
+<!--          <input id="msg" type="text" class="form-control" placeholder="Enter text here...">-->
+<!--          <div class="input-group-append">-->
+<!--            <button id="button-send" type="button" class="input-group-text" data-toggle="tooltip"-->
+<!--                    data-placement="top" title="Send a message">-->
+<!--              <i class="fas fa-paper-plane"></i>-->
+<!--            </button>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
 
 
     <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>

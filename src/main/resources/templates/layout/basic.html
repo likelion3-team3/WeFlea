@@ -12,11 +12,15 @@
     <!-- 	style -->
     <link href="starboot/css/chatStyle.css" rel="stylesheet" />
 
+    <!-- 공통 JS 불러오기 -->
+    <script src="/resource/common.js"></script>
+    <!-- 공통 CSS 불러오기 -->
+    <link rel="stylesheet" href="/resource/common.css">
 
     <!-- 	fontawsome -->
     <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" crossorigin="anonymous"></script>
 
-    <title>Simple Sidebar - Start Bootstrap Template</title>
+    <title>위플리 채팅</title>
 
     <!-- Bootstrap core CSS -->
     <link th:href="@{/vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
@@ -35,74 +39,28 @@
 
   <div class="d-flex" id="wrapper">
 
-    <!-- Sidebar -->
-    <div class="bg-light border-right" id="sidebar-wrapper">
-      <div class="sidebar-heading">My Community </div>
-      <div class="list-group list-group-flush">
-        <a th:href="@{/index}" class="list-group-item list-group-item-action bg-light">Home</a>
-        <a th:href="@{/board/list}" class="list-group-item list-group-item-action bg-light">Board</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">Overview</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">Events</a>
-        <!--        <a th:if="${#authentication.isAuthenticated()}" th:href="@{/member/modify(account=${#authentication.principal.username})}" class="list-group-item list-group-item-action bg-light">Private Info</a>-->
-        <!--        <a th:href="@{/admin/member/manage}" sec:authorize="hasRole('ADMIN')" class="list-group-item list-group-item-action bg-light">Admin</a>-->
-        <!--        <a th:href="@{/chat/rooms}" sec:authorize="isAuthenticated()" class="list-group-item list-group-item-action bg-light">Chat</a>-->
-      </div>
-    </div>
-    <!-- /#sidebar-wrapper -->
-
     <!-- Page Content -->
     <div id="page-content-wrapper">
 
-      <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-        <button class="btn btn-primary" id="menu-toggle">Toggle Menu</button>
-        <!--        <div sec:authorize="isAuthenticated()">-->
-        <!--          <div sec:authentication="principal.username"></div>-->
-        <!--        </div>-->
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
-            <li class="nav-item active">
-              <a class="nav-link" th:href="@{/index}">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Dropdown
-              </a>
-              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                <!--                <a class="dropdown-item" sec:authorize="!isAuthenticated()" th:href="@{/login}">Login</a>-->
-                <!--                <a class="dropdown-item" sec:authorize="isAuthenticated()" th:href="@{/logout}">Logout</a>-->
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Something else here</a>
-              </div>
-            </li>
-          </ul>
+      <header class="navbar" layout:fragment="header">
+        <div class="navbar__logo">
+          <a href="/">WeFlea</a>
         </div>
-      </nav>
+
+        <ul class="navbar__menu">
+          <li><a href="/user/weflea/list">위플리장터</a></li>
+          <li><a href="/user/search/list">통합검색</a></li>
+          <li><a href="/chat/rooms">채팅</a></li>
+          <li><a href="/user/member/login">로그인</a></li>
+          <li><a href="/user/member/me">마이페이지</a></li>
+        </ul>
+      </header>
 
       <div class="container-fluid">
         <th:block th:replace="${content}"></th:block>
       </div>
-      <!-- /#page-content-wrapper -->
 
     </div>
-    <!-- /#wrapper -->
-
-    <!-- Menu Toggle Script -->
-    <script>
-      $("#menu-toggle").click(function(e) {
-        e.preventDefault();
-        $("#wrapper").toggleClass("toggled");
-      });
-    </script>
-
   </div>
 
   </body>
