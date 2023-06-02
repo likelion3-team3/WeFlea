@@ -2,7 +2,13 @@ package com.ll.weflea.boundedContext.search.controller;
 
 import com.ll.weflea.boundedContext.search.entity.Search;
 import com.ll.weflea.boundedContext.search.service.SearchService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +22,7 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/user/search")
+@Slf4j
 public class SearchController {
 
     private final SearchService searchService;
@@ -23,7 +30,8 @@ public class SearchController {
 
     //전체조회
     @GetMapping("/all")
-    public String searchAll(Model model) {
+    public String searchAll(Model model, HttpServletRequest request) {
+
         List<String> keywords = searchService.keywords();
 
         model.addAttribute("keywords", keywords);

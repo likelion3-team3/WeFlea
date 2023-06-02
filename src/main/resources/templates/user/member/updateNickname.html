@@ -1,0 +1,23 @@
+<html layout:decorate="~{user/layout/layout.html}" />
+
+<head>
+    <title>닉네임 설정</title>
+</head>
+
+<body>
+
+<div class="flex justify-center items-center h-screen">
+    <div id="login-container" class="max-w-2xl w-full px-4">
+        <!-- 서비스 이미지와 이름 -->
+        <div class="service mb-5">
+            <h2 class="service-name">위플리 닉네임 설정</h2>
+            <form th:action="@{/user/member/update/nickname}" method="POST" class="flex flex-col gap-6">
+                <div class="form-control">
+                    <input type="text" name="nickname" placeholder="닉네임"/>
+                    <input type="submit" value="저장하기" class="btn btn-primary my-2">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>

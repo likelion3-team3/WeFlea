@@ -51,4 +51,8 @@ public class Member extends BaseEntity {
     public boolean isAdmin() {
         return username.startsWith("admin");
     }
+
+    public void updateNickname(String nickname) {
+        this.nickname = nickname;
+    }
 }
