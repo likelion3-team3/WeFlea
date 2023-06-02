@@ -47,6 +47,7 @@ public class NicknameCheckInterceptor implements HandlerInterceptor {
             return true;
         }
 
+        response.sendRedirect("/user/member/login");
         return false;
     }
 
