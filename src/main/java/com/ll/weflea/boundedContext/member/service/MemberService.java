@@ -20,6 +20,10 @@ public class MemberService {
         return memberRepository.findByUsername(name);
     }
 
+    public Optional<Member> findByNickname(String nickname) {
+        return memberRepository.findByNickname(nickname);
+    }
+
     @Transactional
     public RsData<Member> join(String providerTypeCode, String username){
         if (findByUsername(username).isPresent()) {
