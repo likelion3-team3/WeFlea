@@ -7,6 +7,7 @@ import com.ll.weflea.standard.util.Ut;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import org.hibernate.sql.exec.spi.StandardEntityInstanceResolver;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -14,7 +15,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.RequestScope;
 
 import java.util.Date;
-import java.util.Locale;
 import java.util.Map;
 
 @Component
@@ -69,49 +69,30 @@ public class Rq {
         String key = "historyBackErrorMsg___" + referer;
         req.setAttribute("localStorageKeyAboutHistoryBackErrorMsg", key);
         req.setAttribute("historyBackErrorMsg", msg);
-        // 200 이 아니라 400 으로 응답코드가 지정되도록
-        resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         return "common/js";
     }
 
-    // 뒤로가기 + 메세지
     public String historyBack(RsData rsData) {
         return historyBack(rsData.getMsg());
     }
 
-    // 302 + 메세지
     public String redirectWithMsg(String url, RsData rsData) {
         return redirectWithMsg(url, rsData.getMsg());
     }
 
-    // 302 + 메세지
     public String redirectWithMsg(String url, String msg) {
         return "redirect:" + urlWithMsg(url, msg);
     }
 
-    private String urlWithMsg(String url, String msg) {
-        // 기존 URL에 혹시 msg 파라미터가 있다면 그것을 지우고 새로 넣는다.
+    public String urlWithMsg(String url, String msg) {
+        // 기존 URL에 혹시 msg 파라미터가 있다면 그것을 지우고 새로 넣는다
         return Ut.url.modifyQueryParam(url, "msg", msgWithTtl(msg));
     }
 
     // 메세지에 ttl 적용
-    private String msgWithTtl(String msg) {
+    public String msgWithTtl(String msg) {
         return Ut.url.encode(msg) + ";ttl=" + new Date().getTime();
     }
-
-    public void setSessionAttr(String name, String value) {
-        session.setAttribute(name, value);
-    }
-
-    public <T> T getSessionAttr(String name, T defaultValue) {
-        try {
-            return (T) session.getAttribute(name);
-        } catch (Exception ignored) {
-        }
-
-        return defaultValue;
-    }
-
 
 
     public String getParamsJsonStr() {

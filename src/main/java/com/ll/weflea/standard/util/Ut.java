@@ -3,8 +3,8 @@ package com.ll.weflea.standard.util;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 public class Ut {
@@ -20,7 +20,11 @@ public class Ut {
 
     public static class url {
         public static String encode(String str) {
-            return URLEncoder.encode(str, StandardCharsets.UTF_8);
+            try {
+                return URLEncoder.encode(str, "UTF-8");
+            } catch (UnsupportedEncodingException e) {
+                return str;
+            }
         }
 
         public static String modifyQueryParam(String url, String paramName, String paramValue) {
@@ -31,11 +35,11 @@ public class Ut {
         }
 
         public static String addQueryParam(String url, String paramName, String paramValue) {
-            if (!url.contains("?")) {
+            if (url.contains("?") == false) {
                 url += "?";
             }
 
-            if (!url.endsWith("?") && !url.endsWith("&")) {
+            if (url.endsWith("?") == false && url.endsWith("&") == false) {
                 url += "&";
             }
 
@@ -58,6 +62,7 @@ public class Ut {
 
             return url.substring(0, startPoint) + urlAfter;
         }
+
     }
 
 }
