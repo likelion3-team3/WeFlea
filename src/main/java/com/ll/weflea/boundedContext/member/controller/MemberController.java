@@ -57,7 +57,7 @@ public class MemberController {
             return rq.historyBack(memberRsData);
         }
 
-        return rq.redirectWithMsg("/", memberRsData);
+        return rq.redirectWithMsg("/user/member/me", memberRsData);
     }
 
 }

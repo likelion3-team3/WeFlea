@@ -1,12 +1,49 @@
-<html layout:decorate="~{user/layout/layout.html}" />
+<html layout:decorate="~{user/layout/layout.html}"/>
 
 <head>
     <meta charset="UTF-8">
-    <title>MainPage</title>
+    <title>마이페이지</title>
 </head>
 <body>
 
-<h1> 마이 페이지 </h1>
+<main layout:fragment="main" class="flex-grow flex items-center justify-center">
+    <div class="container">
+        <div class="header">
+            <h1>마이 페이지</h1>
+        </div>
+        <div class="profile">
+            <div class="profile-img img">
+                <img src="/images/default-profile.jpg" alt="프로필">
+            </div>
+            <div class="profile-info">
+                <h2 th:utext="${@rq.member.nickname}"></h2>
+            </div>
+            <div class="btn btn-create">
+                <a href="/user/member/update/nickname">닉네임 수정</a>
+            </div>
+        </div>
+        <div class="section">
+            <!--            <p>중고거래는 위플리 !</p>-->
+
+            <div class="buttons">
+                <a href="#">
+                    <img src="/images/post-icon.png" alt="Sell Icon">
+                    <span>내 게시글</span>
+                </a>
+                <a href="#">
+                    <img src="/images/wish-icon.png" alt="Buy Icon">
+                    <span>관심목록</span>
+                </a>
+                <a href="/chat/rooms">
+                    <img src="/images/chat-icon.png" alt="Like Icon">
+                    <span>채팅목록</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+
+</main>
 
 </body>
 </html>
