@@ -17,11 +17,11 @@ public class SecurityConfig {
         http
                 .oauth2Login(
                         oauth2Login -> oauth2Login
-                                .loginPage("/member/login")
+                                .loginPage("/user/member/login")
                 )
                 .logout(
                         logout -> logout
-                                .logoutUrl("/member/logout")
+                                .logoutUrl("/user/member/logout")
                 );
 
         return http.build();

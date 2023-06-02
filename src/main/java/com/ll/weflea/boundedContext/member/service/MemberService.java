@@ -46,4 +46,9 @@ public class MemberService {
         // 소셜 로그인를 통한 가입시 비번은 없다.
         return join(providerTypeCode, username); // 최초 로그인 시 딱 한번 실행
     }
+
+    @Transactional
+    public void updateNickname(Member member, String nickname) {
+        member.updateNickname(nickname);
+    }
 }

@@ -50,4 +50,9 @@ public class ChatRoom extends BaseEntity {
                 .chatList(new ArrayList<>())
                 .build();
     }
+
+    public void addMessage(ChatMessage chatMessage) {
+        chatList.add(chatMessage);
+//        chatMessage.getChatRoom().addMessage(chatMessage);
+    }
 }
