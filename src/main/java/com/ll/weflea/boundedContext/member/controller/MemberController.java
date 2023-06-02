@@ -3,12 +3,14 @@ package com.ll.weflea.boundedContext.member.controller;
 import com.ll.weflea.boundedContext.member.dto.NicknameDto;
 import com.ll.weflea.boundedContext.member.entity.Member;
 import com.ll.weflea.boundedContext.member.service.MemberService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -31,19 +33,22 @@ public class MemberController {
 
     @GetMapping("/update/nickname")
     public String showUpdateNickname(Model model) {
-        NicknameDto nicknameDto = new NicknameDto();
-        model.addAttribute("nicknameDto", nicknameDto);
+        model.addAttribute("nicknameDto", new NicknameDto());
 
         return "user/member/updateNickname";
     }
 
     @PostMapping("/update/nickname")
-    public String updateNickname(@RequestParam String nickname, @AuthenticationPrincipal User user) {
+    public String updateNickname(@Valid NicknameDto nicknameDto, BindingResult bindingResult, @AuthenticationPrincipal User user) {
+        if (bindingResult.hasErrors()) {
+            return "user/member/updateNickname";
+        }
+
         String username = user.getUsername();
         Member member = memberService.findByUsername(username).orElse(null);
-        log.info("username={}", member.getUsername());
+        log.info("nicknameDto = {}",nicknameDto.getNickname());
 
-        memberService.updateNickname(member, nickname);
+        memberService.updateNickname(member, nicknameDto.getNickname());
 
         return "redirect:/";
     }
