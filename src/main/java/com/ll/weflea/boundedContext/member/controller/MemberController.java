@@ -54,7 +54,7 @@ public class MemberController {
         RsData<Member> memberRsData = memberService.updateNickname(member, nicknameDto.getNickname());
 
         if (memberRsData.isFail()) {
-            rq.historyBack(memberRsData);
+            return rq.historyBack(memberRsData);
         }
 
         return rq.redirectWithMsg("/", memberRsData);
