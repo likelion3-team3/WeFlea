@@ -16,6 +16,6 @@ public class WebConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(nicknameCheckInterceptor)
                 .addPathPatterns("/**")
-                .excludePathPatterns("/user/member/login", "/css/**", "/resource/**", "/starboot/**", "/vendor/**", "/user/member/update/nickname");
+                .excludePathPatterns("/user/member/login", "/css/**", "/resource/**", "/starboot/**", "/vendor/**", "/user/member/update/nickname", "/user/layout/**", "/common/**");
     }
 }
