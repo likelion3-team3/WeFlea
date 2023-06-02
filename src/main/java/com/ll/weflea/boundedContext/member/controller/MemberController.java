@@ -1,5 +1,7 @@
 package com.ll.weflea.boundedContext.member.controller;
 
+import com.ll.weflea.base.rq.Rq;
+import com.ll.weflea.base.rsData.RsData;
 import com.ll.weflea.boundedContext.member.dto.NicknameDto;
 import com.ll.weflea.boundedContext.member.entity.Member;
 import com.ll.weflea.boundedContext.member.service.MemberService;
@@ -20,9 +22,10 @@ import org.springframework.web.bind.annotation.*;
 public class MemberController {
 
     private final MemberService memberService;
+    private final Rq rq;
 
     @GetMapping("login")
-    public String showLogin(){
+    public String showLogin() {
         return "user/member/login";
     }
 
@@ -40,17 +43,21 @@ public class MemberController {
 
     @PostMapping("/update/nickname")
     public String updateNickname(@Valid NicknameDto nicknameDto, BindingResult bindingResult, @AuthenticationPrincipal User user) {
+
         if (bindingResult.hasErrors()) {
             return "user/member/updateNickname";
         }
 
         String username = user.getUsername();
         Member member = memberService.findByUsername(username).orElse(null);
-        log.info("nicknameDto = {}",nicknameDto.getNickname());
 
-        memberService.updateNickname(member, nicknameDto.getNickname());
+        RsData<Member> memberRsData = memberService.updateNickname(member, nicknameDto.getNickname());
 
-        return "redirect:/";
+        if (memberRsData.isFail()) {
+            rq.historyBack(memberRsData);
+        }
+
+        return rq.redirectWithMsg("/", memberRsData);
     }
 
 }

@@ -48,7 +48,23 @@ public class MemberService {
     }
 
     @Transactional
-    public void updateNickname(Member member, String nickname) {
+    public RsData<Member> updateNickname(Member member, String nickname) {
+
+        if (isExistNickname(nickname)) {
+            return RsData.of("F-3", "이미 존재하는 닉네임입니다.");
+        }
+
         member.updateNickname(nickname);
+        return RsData.of("S-3", "닉네임이 수정되었습니다.");
+    }
+
+    private boolean isExistNickname(String nickname) {
+        Member member = memberRepository.findByNickname(nickname).orElse(null);
+
+        if (member == null) {
+            return false;
+        }
+
+        return true;
     }
 }
