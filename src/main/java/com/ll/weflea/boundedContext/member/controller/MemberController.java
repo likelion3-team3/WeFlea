@@ -1,14 +1,18 @@
 package com.ll.weflea.boundedContext.member.controller;
 
+import com.ll.weflea.base.rq.Rq;
+import com.ll.weflea.base.rsData.RsData;
 import com.ll.weflea.boundedContext.member.dto.NicknameDto;
 import com.ll.weflea.boundedContext.member.entity.Member;
 import com.ll.weflea.boundedContext.member.service.MemberService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -18,9 +22,10 @@ import org.springframework.web.bind.annotation.*;
 public class MemberController {
 
     private final MemberService memberService;
+    private final Rq rq;
 
     @GetMapping("login")
-    public String showLogin(){
+    public String showLogin() {
         return "user/member/login";
     }
 
@@ -31,21 +36,28 @@ public class MemberController {
 
     @GetMapping("/update/nickname")
     public String showUpdateNickname(Model model) {
-        NicknameDto nicknameDto = new NicknameDto();
-        model.addAttribute("nicknameDto", nicknameDto);
+        model.addAttribute("nicknameDto", new NicknameDto());
 
         return "user/member/updateNickname";
     }
 
     @PostMapping("/update/nickname")
-    public String updateNickname(@RequestParam String nickname, @AuthenticationPrincipal User user) {
+    public String updateNickname(@Valid NicknameDto nicknameDto, BindingResult bindingResult, @AuthenticationPrincipal User user) {
+
+        if (bindingResult.hasErrors()) {
+            return "user/member/updateNickname";
+        }
+
         String username = user.getUsername();
         Member member = memberService.findByUsername(username).orElse(null);
-        log.info("username={}", member.getUsername());
 
-        memberService.updateNickname(member, nickname);
+        RsData<Member> memberRsData = memberService.updateNickname(member, nicknameDto.getNickname());
 
-        return "redirect:/";
+        if (memberRsData.isFail()) {
+            return rq.historyBack(memberRsData);
+        }
+
+        return rq.redirectWithMsg("/", memberRsData);
     }
 
 }
