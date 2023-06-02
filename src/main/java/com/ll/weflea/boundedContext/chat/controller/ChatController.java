@@ -77,9 +77,11 @@ public class ChatController {
 
         log.info("# get Chat Room, roomID : " + roomId);
         List<ChatMessage> messages = chatService.findByRoomId(roomId);
+        Member member = memberService.findByUsername(user.getUsername()).orElse(null);
 
         model.addAttribute("room", chatService.findRoomById(roomId));
         model.addAttribute("messages", messages);
+        model.addAttribute("member", member);
         model.addAttribute("user", user);
 
         return "chat/room";
