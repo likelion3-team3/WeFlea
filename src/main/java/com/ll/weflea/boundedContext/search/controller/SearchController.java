@@ -7,11 +7,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -20,24 +20,39 @@ import java.util.List;
 public class SearchController {
 
     private final SearchService searchService;
-    private static final int DEFAULT_SIZE = 10;
+    private static final int DEFAULT_SIZE = 12;
 
 
     //전체조회
     @GetMapping("/all")
-    public String searchAll(Model model, Long lastSearchId, Integer size) {
+    public String searchAll(Model model, Integer size) {
 
         if (size == null) {
             size = DEFAULT_SIZE;
         }
 
-        List<Search> searchList = searchService.findSearchesById(lastSearchId, PageRequest.of(0, size));
+        List<Search> searchList = searchService.findSearchesById(null, PageRequest.of(0, size));
 
         List<String> keywords = searchService.keywords();
 
         model.addAttribute("keywords", keywords);
         model.addAttribute("searchList", searchList);
-        return "user/search/tmpList";
+        return "/user/search/list";
+    }
+
+    @GetMapping("/all/{lastSearchId}")
+    @ResponseBody
+    public Map<String, Object> searchByLastSearchId(Model model, @PathVariable String lastSearchId) {
+
+        List<Search> searchList = searchService.findSearchesById(Long.parseLong(lastSearchId), PageRequest.of(0, DEFAULT_SIZE));
+
+        List<String> keywords = searchService.keywords();
+
+        Map<String, Object> map = new HashMap<String, Object>();
+
+        map.put("keywords", keywords);
+        map.put("searchList", searchList);
+        return map;
     }
 
     //위플리에서 뽑은 인기 검색 키워드

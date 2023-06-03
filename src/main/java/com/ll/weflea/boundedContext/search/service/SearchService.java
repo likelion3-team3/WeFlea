@@ -57,4 +57,8 @@ public class SearchService {
 
         return searchRepository.findSearchesById(lastSearchId, pageable);
     }
+
+    public long countById() {
+        return searchRepository.countDistinctById();
+    }
 }

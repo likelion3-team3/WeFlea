@@ -247,14 +247,15 @@ img{
 .item{
     width: 200px;
     height: 300px;
-    flex-grow: 0;
-    flex-basis: auto;
+    /*flex-grow: 0;*/
+    /*flex-basis: auto;*/
+    flex: 0 0 calc(25% - 20px); /* 필요에 따라 너비 조정 */
     margin: auto;
 }
 
 .item_row{
     display: flex;
-    flex-direction: row;
+    flex-wrap: wrap;
     margin-bottom: 50px;
 }
 
@@ -263,7 +264,7 @@ img{
     font-weight: 400;
 }
 
-.item_cost{
+.item_price{
     color: #ff8a3d;
     margin-top: 10px;
     font-weight: 700;
