@@ -72,7 +72,9 @@
     const lastSearchId = lastItem.querySelector('.item_cost').textContent || null;
     const keyword = [[${keyword}]];
 
-    fetch(`/user/search/all/${lastSearchId}?keyword=${keyword}`)
+    const url = `/user/search/all/${lastSearchId}` + (keyword ? `?keyword=${keyword}` : '');
+
+    fetch(url)
             .then(response => response.json())
             .then(data => {
               const searchList = data.searchList;
