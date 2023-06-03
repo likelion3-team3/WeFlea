@@ -42,6 +42,7 @@
 </div>
 
 <script th:inline="javascript">
+  let isFetching = false;
   const itemRow = document.querySelector('.item_row');
 
   const drawSearchList = (searchList) => {
@@ -61,9 +62,11 @@
         `;
       itemRow.appendChild(newItem);
     });
+    isFetching = false;
   };
 
   const loadMoreItems = () => {
+    isFetching = true
     const items = document.querySelectorAll('.item_row .item');
     const lastItem = items[items.length - 1];
     const lastSearchId = lastItem.querySelector('.item_cost').textContent || null;
@@ -79,62 +82,18 @@
   window.addEventListener('scroll', handleScroll);
 
   function handleScroll() {
-    const scrollHeight = document.documentElement.scrollHeight;
-    const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-    const clientHeight = document.documentElement.clientHeight;
+    const SCROLLED_HEIGHT = window.scrollY;
+    const WINDOW_HEIGHT = window.innerHeight;
+    const DOC_TOTAL_HEIGHT = document.body.offsetHeight;
+    const IS_END = (WINDOW_HEIGHT + SCROLLED_HEIGHT > DOC_TOTAL_HEIGHT - 500);
 
     // 스크롤이 맨 아래에 도달했을 때 추가 데이터를 불러옵니다.
-    if (scrollTop + clientHeight >= scrollHeight) {
+    if (IS_END && !isFetching) {
       loadMoreItems();
     }
   }
 </script>
 
-<!--<script>-->
-<!--  // 스크롤 이벤트 리스너 추가-->
-<!--  window.addEventListener('scroll', handleScroll);-->
-
-<!--  function handleScroll() {-->
-<!--    const scrollHeight = document.documentElement.scrollHeight;-->
-<!--    const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;-->
-<!--    const clientHeight = document.documentElement.clientHeight;-->
-
-<!--    // 스크롤이 맨 아래에 도달했을 때 추가 데이터를 불러옵니다.-->
-<!--    if (scrollTop + clientHeight >= scrollHeight) {-->
-<!--      loadMoreItems();-->
-<!--    }-->
-<!--  }-->
-
-<!--  function loadMoreItems() {-->
-<!--    const items = document.querySelectorAll('.item_row .item');-->
-<!--    const lastItem = items[items.length - 1];-->
-<!--    const lastSearchId = lastItem.querySelector('.item_cost').textContent || null;-->
-
-<!--    fetch(`/user/search/all?lastSearchId=${lastSearchId}`)-->
-<!--            .then(response => response.json())-->
-<!--            .then(data => {-->
-<!--              const itemRow = document.querySelector('.item_row');-->
-<!--              data.forEach(item => {-->
-<!--                const newItem = document.createElement('div');-->
-<!--                newItem.classList.add('item');-->
-<!--                newItem.dataset.index = item.id;-->
-<!--                newItem.innerHTML = `-->
-<!--            <a th:href="${search.link}">-->
-<!--            <img th:src="${search.imageLink}" style="border-radius: 12px; width:200px">-->
-<!--            <h2 class="item_name" th:text="${search.title}"></h2>-->
-<!--            <h2 class="item_price" th:text="${search.price}"></h2>-->
-<!--            <h2 class="item_cost" th:text="${search.id}"></h2>-->
-<!--            <h1 class="item_place" th:text="${search.area}"></h1>-->
-<!--          </a>-->
-<!--          `;-->
-<!--                itemRow.appendChild(newItem);-->
-<!--              });-->
-<!--            });-->
-<!--  }-->
-
-<!--  // 페이지 로드 시 초기 데이터 로딩-->
-<!--  loadMoreItems();-->
-<!--</script>-->
 
 </body>
 </html>
