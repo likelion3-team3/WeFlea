@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface SearchRepositoryCustom {
 
-    List<Search> findSearchesById(Long lastSearchId, Pageable pageable);
+    List<Search> findSearchesById(Long lastSearchId, String keyword, Pageable pageable);
 }

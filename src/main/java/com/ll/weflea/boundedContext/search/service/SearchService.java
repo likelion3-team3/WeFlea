@@ -53,9 +53,9 @@ public class SearchService {
         return keywords;
     }
 
-    public List<Search> findSearchesById(Long lastSearchId, Pageable pageable) {
+    public List<Search> findSearchesById(Long lastSearchId, String keyword, Pageable pageable) {
 
-        return searchRepository.findSearchesById(lastSearchId, pageable);
+        return searchRepository.findSearchesById(lastSearchId, keyword, pageable);
     }
 
     public long countById() {

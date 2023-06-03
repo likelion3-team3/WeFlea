@@ -2,6 +2,7 @@ package com.ll.weflea.boundedContext.search.repository;
 
 import com.ll.weflea.boundedContext.search.entity.Search;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.util.StringUtils;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -18,11 +19,12 @@ public class SearchRepositoryImpl implements SearchRepositoryCustom {
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public List<Search> findSearchesById(Long lastSearchId, Pageable pageable) {
+    public List<Search> findSearchesById(Long lastSearchId, String keyword, Pageable pageable) {
 
         return jpaQueryFactory.selectFrom(search)
                 .where(
-                        ltSearchId(lastSearchId)
+                        ltSearchId(lastSearchId),
+                        containsKeyword(keyword)
                 )
                 .orderBy(search.id.desc())
                 .limit(pageable.getPageSize())
@@ -36,6 +38,14 @@ public class SearchRepositoryImpl implements SearchRepositoryCustom {
         }
 
         return search.id.lt(lastSearchId);
+    }
+
+    private BooleanExpression containsKeyword(String keyword) {
+        if (StringUtils.isNullOrEmpty(keyword)) {
+            return null;
+        }
+
+        return search.title.contains(keyword);
     }
 
 }

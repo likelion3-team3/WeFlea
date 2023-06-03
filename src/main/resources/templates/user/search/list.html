@@ -16,7 +16,7 @@
       <div class="keyword_wrap">
         <div class="keyword_wrap_row">
           <!-- 검색어 목록 출력 -->
-          <a th:each="keyword : ${keywords}" th:href="@{/user/search(keyword=${keyword})}">
+          <a th:each="keyword : ${keywords}" th:href="@{/user/search/all(keyword=${keyword})}">
             <button class="keyword" th:text="${keyword}"></button>
           </a>
         </div>
@@ -24,7 +24,7 @@
       <hr style="color:#495057">
     </div>
 
-    <h1 class="top_title">중고거래 최신매물</h1>
+    <h1 class="top_title" th:text="|${keyword != null ? keyword : '중고거래 최신'} 매물|"></h1>
     <div class="content_4_wrap">
       <div class="item_row">
         <div th:each="search, status : ${searchList}" class="item" data-index="${status.index}">
@@ -70,8 +70,9 @@
     const items = document.querySelectorAll('.item_row .item');
     const lastItem = items[items.length - 1];
     const lastSearchId = lastItem.querySelector('.item_cost').textContent || null;
+    const keyword = [[${keyword}]];
 
-    fetch(`/user/search/all/${lastSearchId}`)
+    fetch(`/user/search/all/${lastSearchId}?keyword=${keyword}`)
             .then(response => response.json())
             .then(data => {
               const searchList = data.searchList;
