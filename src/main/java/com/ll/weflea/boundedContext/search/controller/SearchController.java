@@ -5,6 +5,7 @@ import com.ll.weflea.boundedContext.search.service.SearchService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -40,7 +41,7 @@ public class SearchController {
 
     @GetMapping("/all/{lastSearchId}")
     @ResponseBody
-    public Map<String, Object> searchByLastSearchId(@PathVariable Long lastSearchId, String keyword) {
+    public ResponseEntity<Map<String, Object>> searchByLastSearchId(@PathVariable Long lastSearchId, String keyword) {
 
         List<Search> searchList = searchService.findSearchesById(lastSearchId, keyword, PageRequest.of(0, DEFAULT_SIZE));
 
@@ -50,7 +51,7 @@ public class SearchController {
 
         map.put("keywords", keywords);
         map.put("searchList", searchList);
-        return map;
+        return ResponseEntity.ok(map);
     }
 
 }
