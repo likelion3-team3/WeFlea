@@ -3,6 +3,7 @@ package com.ll.weflea.boundedContext.search.controller;
 import com.ll.weflea.boundedContext.search.entity.Search;
 import com.ll.weflea.boundedContext.search.service.SearchService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +16,7 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/user/search")
+@Slf4j
 public class SearchController {
 
     private final SearchService searchService;

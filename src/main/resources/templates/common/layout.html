@@ -1,4 +1,4 @@
-<html data-theme="light">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" data-theme="light">
 
 <head>
     <meta charset="UTF-8">
@@ -25,10 +25,11 @@
     <!-- 채팅방 CSS -->
     <link href="/starboot/css/chatStyle.css" rel="stylesheet" />
     <link href="/starboot/css/style.css" rel="stylesheet">
+    <link href="/starboot/css/styles.css" rel="stylesheet">
 
+  
     <!-- Bootstrap core JavaScript -->
     <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <script src="/vendor/jquery/jquery.min.js"></script>
     <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 
@@ -66,9 +67,9 @@
             <li><a href="/user/member/login">로그인</a></li>
             <li><a href="/user/member/me">마이페이지</a></li>
         </ul>
-    </header>
+    </header><br>
 
-    <main layout:fragment="main"></main>
+    <body layout:fragment="content"></body>
 </div>
 
 <script th:inline="javascript">
@@ -96,6 +97,15 @@
                 localStorage.removeItem(localStorageKeyAboutHistoryBackErrorMsg);
             }
         }
+    });
+
+    // toastr 라이브러리 사용하는 부분 스타일 변경
+    $(document).ready(function () {
+        // 배경색 변경
+        $('.toast').css('background-color', '#82B3ED');
+
+        // 폰트 색상 변경
+        $('.toast').css('color', '#FFFFFF');
     });
 </script>
 

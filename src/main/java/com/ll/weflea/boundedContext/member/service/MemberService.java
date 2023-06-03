@@ -20,6 +20,10 @@ public class MemberService {
         return memberRepository.findByUsername(name);
     }
 
+    public Optional<Member> findByNickname(String nickname) {
+        return memberRepository.findByNickname(nickname);
+    }
+
     @Transactional
     public RsData<Member> join(String providerTypeCode, String username){
         if (findByUsername(username).isPresent()) {
@@ -45,5 +49,26 @@ public class MemberService {
 
         // 소셜 로그인를 통한 가입시 비번은 없다.
         return join(providerTypeCode, username); // 최초 로그인 시 딱 한번 실행
+    }
+
+    @Transactional
+    public RsData<Member> updateNickname(Member member, String nickname) {
+
+        if (isExistNickname(nickname)) {
+            return RsData.of("F-3", "이미 존재하는 닉네임입니다.");
+        }
+
+        member.updateNickname(nickname);
+        return RsData.of("S-3", "닉네임이 수정되었습니다.");
+    }
+
+    private boolean isExistNickname(String nickname) {
+        Member member = memberRepository.findByNickname(nickname).orElse(null);
+
+        if (member == null) {
+            return false;
+        }
+
+        return true;
     }
 }

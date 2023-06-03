@@ -98,29 +98,28 @@
     align-items: center;
 }
 
-.search-form {
-    display: flex;
+
+#login-container {
+    box-shadow: 5px 5px 5px 5px gray;
+    border: 2px solid #B0E0E6;
+    border-radius: 10px;
+    padding: 10px;
 }
 
-.search-form input {
-    height: 40px;
-    padding: 8px;
-    border: none;
-    border-radius: 4px 0 0 4px;
+#social-outline {
+    box-shadow: 2px 2px 2px 2px gray;
+    border-color: #FFE4E1;
 }
 
-.search-form button {
-    height: 40px;
-    padding: 8px;
-    background-color: #fff;
-    border: none;
-    border-radius: 0 4px 4px 0;
-    cursor: pointer;
+#social-outline2 {
+    box-shadow: 2px 2px 2px 2px gray;
+    border-color: #FFE4E1;
 }
 
-.search-form button i {
-    color: #4e69a2;
+.service-name {
+    font-size: 24px;
+    color: #333;
+    text-align: center;
 }
-
 
 

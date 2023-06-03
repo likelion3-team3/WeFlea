@@ -69,7 +69,8 @@ public class ChatService {
         //필요한거 : message, Member sender, ChatRoom 객체
         //임시로 repository에 해놧음 service 구현되면 수정할 것
         ChatRoom chatRoom = chatRoomRepository.findByRoomId(roomId).orElse(null);
-        Member sender = memberService.findByUsername(writer).orElse(null);
+        Member sender = memberService.findByNickname(writer).orElse(null);
+
         ChatMessage chatMessage = ChatMessage.create(message, sender, chatRoom);
         chatRoom.addMessage(chatMessage);
         chatMessageRepository.save(chatMessage);
