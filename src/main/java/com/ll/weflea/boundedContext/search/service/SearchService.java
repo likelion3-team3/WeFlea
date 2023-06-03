@@ -3,6 +3,7 @@ package com.ll.weflea.boundedContext.search.service;
 import com.ll.weflea.boundedContext.search.entity.Search;
 import com.ll.weflea.boundedContext.search.repository.SearchRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,6 +16,20 @@ import java.util.List;
 public class SearchService {
 
     private final SearchRepository searchRepository;
+
+    @Transactional
+    public void create(String area, String imageLink, String link, String price, String provider, String title) {
+        Search search = Search.builder()
+                .area(area)
+                .imageLink(imageLink)
+                .link(link)
+                .price(price)
+                .provider(provider)
+                .title(title)
+                .build();
+
+        searchRepository.save(search);
+    }
 
     public List<Search> findByKeyword(String keyword) {
         List<Search> searchList = searchRepository.findByTitleContaining(keyword);
@@ -36,5 +51,10 @@ public class SearchService {
         keywords.add("책상");
 
         return keywords;
+    }
+
+    public List<Search> findSearchesById(Long lastSearchId, Pageable pageable) {
+
+        return searchRepository.findSearchesById(lastSearchId, pageable);
     }
 }

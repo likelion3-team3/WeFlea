@@ -1,0 +1,46 @@
+<html layout:decorate="~{user/layout/layout.html}" />
+<head>
+  <!-- head 부분 생략 -->
+</head>
+<body>
+<div id="body">
+  <div>
+    <div class="content_5">
+      <div class="keyword_wrap">
+        <button class="keyword_title">중고거래 인기검색어</button>
+      </div>
+      <div class="keyword_wrap">
+        <div class="keyword_wrap_row">
+          <!-- 검색어 목록 출력 -->
+          <a th:each="keyword : ${keywords}" th:href="@{/user/search(keyword=${keyword})}">
+            <button class="keyword" th:text="${keyword}"></button>
+          </a>
+        </div>
+      </div>
+      <hr style="color:#495057">
+    </div>
+
+    <h1 class="top_title">중고거래 최신매물</h1>
+    <div class="content_4_wrap">
+      <div class="item_row">
+        <!-- 검색 결과 목록 출력 -->
+        <div th:each="search : ${searchList}" class="item">
+          <img th:src="${search.imageLink}" style="border-radius: 12px; width:200px">
+          <h2 class="item_name" th:text="${search.title}"></h2>
+          <h2 class="item_cost" th:text="${search.price}"></h2>
+          <h1 class="item_place" th:text="${search.area}"></h1>
+          <div class="like_chating">
+            <span class="like" th:text="${search.link}"></span>
+          </div>
+        </div>
+      </div>
+      <div class="more_item_wrap">
+        <button class="more_item_btn">인기매물 더보기</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 나머지 script 등의 코드 생략 -->
+</body>
+</html>
