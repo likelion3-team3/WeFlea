@@ -4,7 +4,9 @@ import com.ll.weflea.base.rq.Rq;
 import com.ll.weflea.base.rsData.RsData;
 import com.ll.weflea.boundedContext.member.dto.NicknameDto;
 import com.ll.weflea.boundedContext.member.entity.Member;
+import com.ll.weflea.boundedContext.member.entity.ProfileImage;
 import com.ll.weflea.boundedContext.member.service.MemberService;
+import com.ll.weflea.boundedContext.member.service.ProfileImageService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequestMapping("/user/member")
@@ -23,6 +26,7 @@ public class MemberController {
 
     private final MemberService memberService;
     private final Rq rq;
+    private final ProfileImageService profileImageService;
 
     @GetMapping("login")
     public String showLogin() {
@@ -60,4 +64,16 @@ public class MemberController {
         return rq.redirectWithMsg("/user/member/me", memberRsData);
     }
 
+    @PostMapping("/upload/profile")
+    public String uploadProfile(@AuthenticationPrincipal User user,
+                                @RequestParam("profileImage") MultipartFile profileImage) {
+
+        String username = user.getUsername();
+        RsData<ProfileImage> profileImageRsData = profileImageService.uploadProfileImage(username, profileImage);
+
+        if (profileImageRsData.isFail()) {
+            return rq.historyBack(profileImageRsData);
+        }
+        return rq.redirectWithMsg("/user/member/me", profileImageRsData);
+    }
 }

@@ -59,13 +59,19 @@ spring:
 #            user-name-attribute: username
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     properties:
       hibernate:
         show_sql: true
         format_sql: true
         use_sql_comments: true
 #        default_batch_fetch_size: 1000
+  servlet:
+    multipart:
+      maxFileSize: 10MB
+      maxRequestSize: 10MB
+      location: C:\\temp\\weflea\\
+      enabled: true
 logging:
   level:
     root: INFO

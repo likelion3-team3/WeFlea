@@ -3,11 +3,9 @@ package com.ll.weflea.boundedContext.member.entity;
 import com.ll.weflea.base.entity.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import lombok.AllArgsConstructor;
+import jakarta.persistence.OneToOne;
+import lombok.*;
 import jakarta.persistence.EntityListeners;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.core.GrantedAuthority;
@@ -55,4 +53,5 @@ public class Member extends BaseEntity {
     public void updateNickname(String nickname) {
         this.nickname = nickname;
     }
+
 }

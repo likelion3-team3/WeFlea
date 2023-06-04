@@ -21,6 +21,13 @@
             <div class="btn btn-create">
                 <a href="/user/member/update/nickname">닉네임 수정</a>
             </div>
+            <div class="btn btn-create">
+                <a href="#">프로필 수정</a>
+            </div>
+            <form method="post" th:action="@{/user/member/upload/profile}" enctype="multipart/form-data">
+                <input type="file" name="profileImage"/>
+                <input type="submit" value="저장" class="btn"/>
+            </form>
         </div>
         <div class="section">
             <!--            <p>중고거래는 위플리 !</p>-->
