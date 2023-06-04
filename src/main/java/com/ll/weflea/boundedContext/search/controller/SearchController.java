@@ -1,6 +1,7 @@
 package com.ll.weflea.boundedContext.search.controller;
 
 import com.ll.weflea.boundedContext.search.entity.Search;
+import com.ll.weflea.boundedContext.search.entity.SearchKeyword;
 import com.ll.weflea.boundedContext.search.service.SearchService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,7 +32,7 @@ public class SearchController {
 
         List<Search> searchList = searchService.findSearchesById(null, keyword, PageRequest.of(0, DEFAULT_SIZE));
 
-        List<String> keywords = searchService.keywords();
+        List<SearchKeyword> keywords = searchService.findAllSearchKeyword();
 
         model.addAttribute("keywords", keywords);
         model.addAttribute("keyword", keyword);
@@ -45,7 +46,7 @@ public class SearchController {
 
         List<Search> searchList = searchService.findSearchesById(lastSearchId, keyword, PageRequest.of(0, DEFAULT_SIZE));
 
-        List<String> keywords = searchService.keywords();
+        List<SearchKeyword> keywords = searchService.findAllSearchKeyword();
 
         Map<String, Object> map = new HashMap<String, Object>();
 

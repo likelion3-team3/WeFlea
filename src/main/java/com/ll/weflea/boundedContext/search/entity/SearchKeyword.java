@@ -22,4 +22,10 @@ public class SearchKeyword {
     private Long id;
 
     private String name;
+
+    public static SearchKeyword create(String name) {
+        SearchKeyword searchKeyword = new SearchKeyword();
+        searchKeyword.setName(name);
+        return searchKeyword;
+    }
 }

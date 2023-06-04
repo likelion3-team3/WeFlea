@@ -27,6 +27,15 @@ public class NotProd {
                             "https://web.joongna.com/product/114619250", "600,000원", "중고나라", "레노버 게이밍 노트북 (GTX1660ti,144hz)");
                 }
 
+                //인기키워드 생성
+                searchService.createSearchKeyword("자전거");
+                searchService.createSearchKeyword("의자");
+                searchService.createSearchKeyword("냉장고");
+                searchService.createSearchKeyword("노트북");
+                searchService.createSearchKeyword("모니터");
+                searchService.createSearchKeyword("아이패드");
+                searchService.createSearchKeyword("스타벅스");
+                searchService.createSearchKeyword("책상");
             }
         };
     }
