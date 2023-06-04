@@ -5,6 +5,7 @@ import com.ll.weflea.boundedContext.goods.entity.Goods;
 import com.ll.weflea.boundedContext.goods.repository.GoodsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
@@ -13,6 +14,7 @@ public class GoodsService {
     private final GoodsRepository goodsRepository;
 
     // 위플리 장터 상품 등록 기능
+    @Transactional
     public RsData<Goods> create(String title, String area, String status, int price, String description) {
         Goods goods = Goods
                 .builder()

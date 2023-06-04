@@ -15,7 +15,6 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @ToString(callSuper = true)
 public class GoodsImage extends File {
-
     private String imageLink;
 
     @ManyToOne(fetch = FetchType.LAZY)
