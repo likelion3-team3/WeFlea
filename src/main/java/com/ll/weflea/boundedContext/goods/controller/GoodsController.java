@@ -16,15 +16,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.util.StringUtils;
-import org.apache.commons.io.FilenameUtils;
-
-import java.nio.file.Path;
-
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
-import java.util.UUID;
 
 @Controller
 @RequiredArgsConstructor
@@ -67,72 +58,22 @@ public class GoodsController {
             this.price = 1;
             this.description = "기본 설명";
         }
-
-        // Getter 메서드 추가
-        public String getTitle() {
-            return title;
-        }
-
-        public String getArea() {
-            return area;
-        }
-
-        public String getStatus() {
-            return status;
-        }
-
-        public int getPrice() {
-            return price;
-        }
-
-        public String getDescription() {
-            return description;
-        }
-
-        public MultipartFile getPhoto() {
-            return photo;
-        }
     }
 
 
     // 위플리 상품 등록 기능 구현
     @PostMapping("/create")
-    public String create(@Valid CreateForm createForm, BindingResult bindingResult) throws IOException {
+    public String create(@Valid CreateForm createForm, BindingResult bindingResult) throws Exception {
         if (bindingResult.hasErrors()) {
             // 유효성 검사 오류가 있는 경우 폼 페이지로 다시 이동
             return "user/weflea/weflea_form";
         }
 
         // 서비스에서 추가 기능 구현
-        RsData<Goods> createRsData = goodsService.create(
-                createForm.getTitle(),
-                createForm.getArea(),
-                createForm.getStatus(),
-                createForm.getPrice(),
-                createForm.getDescription()
-        );
+        RsData<Goods> createRsData = goodsService.create(createForm);
 
         if (createRsData.isFail()) {
             return rq.historyBack(createRsData);
-        }
-
-        MultipartFile photo = createForm.getPhoto();
-        if (photo != null && !photo.isEmpty()) {
-            String originalFilename = StringUtils.cleanPath(photo.getOriginalFilename());
-            String extension = FilenameUtils.getExtension(originalFilename);
-            String fileName = UUID.randomUUID().toString() + "." + extension;
-            String uploadDir = "C:/weflea"; // 저장할 디렉토리 경로
-
-            Path uploadPath = Path.of(uploadDir);
-            if (!Files.exists(uploadPath)) {
-                Files.createDirectories(uploadPath);
-            }
-
-            Path filePath = uploadPath.resolve(fileName);
-            Files.copy(photo.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
-
-            // 파일 경로를 createRsData에 추가
-            createRsData.getData().setFilePath(filePath.toString());
         }
 
         // 게시물 등록 후 위플리 장터 목록 페이지로 다시 이동
