@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" href="../../static/starboot/css/styles.css">
+<th:block th:fragment="setContent(content)">
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- toastr 불러오기 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
+    <link rel="stylesheet" href="https://jhs512.github.io/toastr/toastr.css">
+
+    <!-- 	style -->
+    <link href="starboot/css/chatStyle.css" rel="stylesheet" />
+
+    <!-- 공통 JS 불러오기 -->
+    <script src="/resource/common.js"></script>
+    <!-- 공통 CSS 불러오기 -->
+    <link rel="stylesheet" href="/resource/common.css">
+
+    <!-- 	fontawsome -->
+    <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" crossorigin="anonymous"></script>
+
+    <title>위플리 채팅</title>
+
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{/vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link th:href="@{/css/simple-sidebar.css}" rel="stylesheet">
+    <link th:href="@{/starboot/css/style.css}" rel="stylesheet">
+
+    <!-- Bootstrap core JavaScript -->
+    <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+    <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{https://cdn.jsdelivr.net/npm/sockjs-client/dist/sockjs.min.js}"></script>
+  </head>
+
+  <body>
+
+  <div class="d-flex" id="wrapper">
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+
+      <header class="navbar" layout:fragment="header">
+        <div class="navbar__logo">
+          <a href="/">WeFlea</a>
+        </div>
+
+        <form class="search-form" th:action="@{/user/search(keyword=${keyword})}" method="get">
+          <input type="text" placeholder="중고장터통합검색" name="keyword">
+          <button type="submit"><i class="fas fa-search"></i></button>
+        </form>
+
+        <ul class="navbar__menu">
+          <li><a href="/user/weflea/list">위플리장터</a></li>
+          <li><a href="/user/search/all">통합검색</a></li>
+          <li><a href="/chat/rooms">채팅</a></li>
+          <li><a href="/user/member/login">로그인</a></li>
+          <li><a href="/user/member/me">마이페이지</a></li>
+
+        </ul>
+      </header>
+
+      <div class="container-fluid">
+        <th:block th:replace="${content}"></th:block>
+      </div>
+
+    </div>
+  </div>
+
+  </body>
+</th:block>
+</html>
