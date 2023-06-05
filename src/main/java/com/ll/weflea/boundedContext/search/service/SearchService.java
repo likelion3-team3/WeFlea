@@ -50,6 +50,7 @@ public class SearchService {
     }
 
     //NotProd에 데이터 넣기 위한임시 테스트 메서드
+    @Transactional
     public void createSearchKeyword(String name) {
         SearchKeyword searchKeyword = SearchKeyword.create(name);
         searchKeywordRepository.save(searchKeyword);
