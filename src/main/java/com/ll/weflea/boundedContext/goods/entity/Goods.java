@@ -33,13 +33,16 @@ public class Goods extends BaseEntity {
 
     private String description;
 
+    private String filePath;
+
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
 
     @OneToMany(mappedBy = "goods")
     private List<GoodsImage> goodsImages = new ArrayList<>();
 
-
-
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
+    }
 
 }
