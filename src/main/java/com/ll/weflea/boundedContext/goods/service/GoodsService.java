@@ -4,6 +4,7 @@ import com.ll.weflea.base.rsData.RsData;
 import com.ll.weflea.boundedContext.goods.controller.GoodsController;
 import com.ll.weflea.boundedContext.goods.entity.Goods;
 import com.ll.weflea.boundedContext.goods.repository.GoodsRepository;
+import com.ll.weflea.boundedContext.member.entity.Member;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.FilenameUtils;
@@ -26,10 +27,11 @@ public class GoodsService {
 
     // 위플리 장터 상품 등록 기능
     @Transactional
-    public RsData<Goods> create(@Valid GoodsController.CreateForm createForm) throws Exception {
+    public RsData<Goods> create(Member member, @Valid GoodsController.CreateForm createForm) throws Exception {
         try {
             Goods goods = Goods
                     .builder()
+                    .member(member)
                     .title(createForm.getTitle())
                     .area(createForm.getArea())
                     .status(createForm.getStatus())
