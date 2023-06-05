@@ -4,20 +4,6 @@ spring:
     url: '${custom.prod_database.url}'
     username: '${custom.prod_database.username}'
     password: '${custom.prod_database.password}'
-  security:
-    oauth2:
-      client:
-        registration:
-          naver:
-            redirect-uri: '${custom.site.baseUrl}/{action}/oauth2/code/{registrationId}'
-          kakao:
-            redirect-uri: '${custom.site.baseUrl}/{action}/oauth2/code/{registrationId}'
-          google:
-            redirect-uri: '${custom.site.baseUrl}/{action}/oauth2/code/{registrationId}'
-          facebook:
-            redirect-uri: '${custom.site.baseUrl}/{action}/oauth2/code/{registrationId}'
-          instagram:
-            redirect-uri: '${custom.site.baseUrl}/{action}/oauth2/code/{registrationId}'
   jpa:
     hibernate:
       ddl-auto: update
@@ -29,9 +15,9 @@ spring:
 logging:
   level:
     root: INFO
-    com.ll.gramgram: INFO
+    com.ll.weflea: INFO
     org.hibernate.orm.jdbc.bind: INFO
     org.hibernate.orm.jdbc.extract: INFO
 custom:
   site:
-    baseUrl:
+    baseUrl: http://101.101.211.6
