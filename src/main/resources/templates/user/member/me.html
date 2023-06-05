@@ -12,11 +12,19 @@
             <h1>마이 페이지</h1>
         </div>
         <div class="profile">
-            <div class="profile-img img">
-                <img src="/images/default-profile.jpg" alt="프로필">
+            <div class="card bg-base-60">
+            <div class="card-body">
+                <div class="profile-img img">
+                    <img src="/images/default-profile.jpg" alt="프로필">
+                </div>
+                <form method="post" th:action="@{/user/member/upload/profile}" enctype="multipart/form-data">
+                    <input type="file" name="profileImage"/>
+                    <input type="submit" value="저장"/>
+                </form>
+                <div class="profile-info">
+                    <h2 th:utext="${@rq.member.nickname}"></h2>
+                </div>
             </div>
-            <div class="profile-info">
-                <h2 th:utext="${@rq.member.nickname}"></h2>
             </div>
             <div class="btn btn-create">
                 <a href="/user/member/update/nickname">닉네임 수정</a>
@@ -24,10 +32,7 @@
             <div class="btn btn-create">
                 <a href="#">프로필 수정</a>
             </div>
-            <form method="post" th:action="@{/user/member/upload/profile}" enctype="multipart/form-data">
-                <input type="file" name="profileImage"/>
-                <input type="submit" value="저장" class="btn"/>
-            </form>
+
         </div>
         <div class="section">
             <!--            <p>중고거래는 위플리 !</p>-->

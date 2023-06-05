@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.util.Optional;
 import java.util.UUID;
 
 @Slf4j
@@ -26,26 +28,61 @@ public class ProfileImageService {
     @Value("${spring.servlet.multipart.location}")
     private String storageLocation;
 
+    public Optional<ProfileImage> findByMember(Member member){
+        return profileImageRepository.findByMember(member);
+    }
+
     @Transactional
     public RsData<ProfileImage> uploadProfileImage(String username, MultipartFile image){
 
-
         Member member = memberRepository.findByUsername(username).orElse(null);
 
+        // 기존 프로필 이미지가 있다면 삭제
+        ProfileImage existingProfileImage = member.getProfileImage();
+        if (existingProfileImage != null) {
+            log.debug("=============================삭제 시작==============================");
+            member.updateProfileImage(null);
+            deleteProfileImage(existingProfileImage);
+            log.debug("=============================삭제 끝=============================");
+
+        }
+
+/*
+        // 파일이 업로드되지 않았을 경우 디폴트 프로필 사진으로 업데이트
+        if(image.isEmpty()){
+            member.setDefaultImage(true);
+
+            String defaultPath = "images/";
+            String defaultName = "default-profile.jpg";
+            ProfileImage profileImage = ProfileImage
+                    .builder()
+                    .name(defaultName)
+                    .path(defaultPath)
+                    .build();
+            member.updateProfileImage(profileImage);
+
+            memberRepository.save(member);
+            profileImageRepository.save(profileImage);
+
+            return RsData.of("S-2", "프로필 사진이 기본 이미지로 변경되었습니다.");
+        }*/
+
         String fileName = generateUniqueFileName(image.getOriginalFilename());
-        String filePath = storageLocation + fileName;
-
-        log.debug("========================================filePath : " + filePath);
-
+        String filePath = storageLocation + "\\\\" + fileName;
 
         // DB에 프로필 이미지 정보를 저장
         ProfileImage profileImage = ProfileImage
                 .builder()
-                .member(member)
                 .name(fileName)
                 .path(filePath)
+                .member(member)
                 .build();
+
+        member.updateProfileImage(profileImage);
+
+        memberRepository.save(member);
         profileImageRepository.save(profileImage);
+
        return RsData.of("S-1", "프로필 사진이 변경되었습니다.");
     }
 
@@ -53,6 +90,11 @@ public class ProfileImageService {
         String extension = FilenameUtils.getExtension(originalFilename);
         String uniqueFileName = UUID.randomUUID().toString() + "." + extension;
         return uniqueFileName;
+    }
+
+    @Transactional
+    public void deleteProfileImage(ProfileImage profileImage) {
+        profileImageRepository.deleteById(profileImage.getId());
     }
 
 }
