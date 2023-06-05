@@ -245,38 +245,51 @@ img{
 
 
 .item{
-    width: 200px;
+    /*width: 200px;*/
     height: 300px;
     flex-grow: 0;
     flex-basis: auto;
+    /*flex: 0 0 calc(25% - 20px); !* 필요에 따라 너비 조정 *!*/
+    width: calc(25% - 20px);
     margin: auto;
 }
 
 .item_row{
     display: flex;
-    flex-direction: row;
-    margin-bottom: 50px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 100px;
 }
 
 .item_name{
+    text-align: center;
     margin-top: 10px;
     font-weight: 400;
 }
 
-.item_cost{
+.item_price{
     color: #ff8a3d;
+    text-align: center;
     margin-top: 10px;
     font-weight: 700;
 }
 .item_place{
     font-weight: 400;
+    text-align: center;
+    font-size: smaller;
+    margin-top: 10px;
+}
+
+.item_cost{
+    font-weight: 400;
+    text-align: center;
     font-size: smaller;
     margin-top: 10px;
 }
 
 .like_chating{
-    display: flex;
     flex-direction: row;
+    text-align: center;
     color: #868e96;
     margin-top: 10px;
 }

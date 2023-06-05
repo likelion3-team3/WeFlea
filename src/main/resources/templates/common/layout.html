@@ -54,7 +54,7 @@
             <a href="/">WeFlea</a>
         </div>
 
-        <form class="search-form" th:action="@{/user/search(keyword=${keyword})}" method="get">
+        <form class="search-form" th:action="@{/user/search/all(keyword=${keyword})}" method="get">
             <input type="text" placeholder="중고장터통합검색" name="keyword">
             <button type="submit"><i class="fas fa-search"></i></button>
         </form>
