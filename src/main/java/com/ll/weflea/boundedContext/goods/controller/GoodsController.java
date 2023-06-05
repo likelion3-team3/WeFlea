@@ -3,14 +3,12 @@ package com.ll.weflea.boundedContext.goods.controller;
 import com.ll.weflea.base.rq.Rq;
 import com.ll.weflea.base.rsData.RsData;
 import com.ll.weflea.boundedContext.goods.entity.Goods;
-import com.ll.weflea.boundedContext.goods.repository.GoodsImageRepository;
 import com.ll.weflea.boundedContext.goods.service.GoodsService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,8 +21,6 @@ import org.springframework.web.multipart.MultipartFile;
 public class GoodsController {
     private final Rq rq;
     private final GoodsService goodsService;
-    @Autowired
-    private final GoodsImageRepository goodsImageRepository;
 
     @GetMapping("/list")
     public String wefleaList() {
