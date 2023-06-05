@@ -24,7 +24,7 @@ public class GoodsController {
 
     @GetMapping("/list")
     public String wefleaList() {
-        return "/user/weflea/list";
+        return "user/weflea/list";
     }
 
     // showCreate 로 변경할까 고민중

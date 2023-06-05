@@ -37,7 +37,7 @@ public class SearchController {
         model.addAttribute("keywords", keywords);
         model.addAttribute("keyword", keyword);
         model.addAttribute("searchList", searchList);
-        return "/user/search/list";
+        return "user/search/list";
     }
 
     @GetMapping("/all/{lastSearchId}")
