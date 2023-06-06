@@ -2,7 +2,7 @@ package com.ll.weflea.boundedContext.search.controller;
 
 import com.ll.weflea.boundedContext.member.entity.Member;
 import com.ll.weflea.boundedContext.member.service.MemberService;
-import com.ll.weflea.boundedContext.search.service.SearchService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,15 +32,18 @@ class SearchControllerTest {
     @Autowired
     private MemberService memberService;
 
+    @BeforeEach
+    public void setup() {
+        //given
+        Member member = memberService.findByUsername("bigsand").orElse(null);
+        member.updateNickname("큰모래");
+    }
+
 
     @Test
     @DisplayName("통합 검색 목록 조회 (키워드 X)")
     @WithUserDetails("bigsand")
     public void t01() throws Exception {
-
-        //given
-        Member member = memberService.findByUsername("bigsand").orElse(null);
-        member.updateNickname("큰모래");
 
 
         //when
@@ -66,10 +69,6 @@ class SearchControllerTest {
     @DisplayName("통합 검색 목록 조회 (키워드 O)")
     @WithUserDetails("bigsand")
     public void t02() throws Exception {
-
-        //given
-        Member member = memberService.findByUsername("bigsand").orElse(null);
-        member.updateNickname("큰모래");
 
 
         //when
@@ -97,8 +96,6 @@ class SearchControllerTest {
     public void t03() throws Exception {
 
         //given
-        Member member = memberService.findByUsername("bigsand").orElse(null);
-        member.updateNickname("큰모래");
 
         Long lastSearchId = 10L;
         String keyword = "노트북";
