@@ -33,12 +33,6 @@ public class SearchService {
         searchRepository.save(search);
     }
 
-    public List<Search> findByKeyword(String keyword) {
-        List<Search> searchList = searchRepository.findByTitleContaining(keyword);
-
-        return searchList;
-    }
-
     public List<Search> findSearchesById(Long lastSearchId, String keyword, Pageable pageable) {
 
         return searchRepository.findSearchesById(lastSearchId, keyword, pageable);
