@@ -2,8 +2,6 @@ package com.ll.weflea.boundedContext.goods.entity;
 
 import com.ll.weflea.base.entity.BaseEntity;
 import com.ll.weflea.boundedContext.member.entity.Member;
-import com.ll.weflea.boundedContext.notification.entity.Notification;
-import com.ll.weflea.boundedContext.wish.entity.Wish;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.ManyToOne;

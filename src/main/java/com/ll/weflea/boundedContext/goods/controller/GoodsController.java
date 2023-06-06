@@ -29,17 +29,18 @@ public class GoodsController {
     private final GoodsService goodsService;
     private final MemberRepository memberRepository;
 
+
     @GetMapping("/list")
     public String wefleaList() {
         return "/user/weflea/list";
     }
 
-    // showCreate 로 변경할까 고민중
+
     @GetMapping("/create")
     public String wefleaCreate(Model model) {
         // CreateForm 객체를 모델에 추가
         model.addAttribute("createForm", new CreateForm());
-        return "user/weflea/weflea_form";
+        return "user/weflea/form";
     }
 
     // 입력받은 상품 가져오기
@@ -63,13 +64,12 @@ public class GoodsController {
         }
     }
 
-
     // 위플리 상품 등록 기능 구현
     @PostMapping("/create")
     public String create(@Valid CreateForm createForm, BindingResult bindingResult, @AuthenticationPrincipal User user) throws Exception {
         if (bindingResult.hasErrors()) {
             // 유효성 검사 오류가 있는 경우 폼 페이지로 다시 이동
-            return "user/weflea/weflea_form";
+            return "form";
         }
 
         // 현재 로그인한 사용자의 username 가져오기
