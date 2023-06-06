@@ -19,6 +19,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -31,7 +32,10 @@ public class GoodsController {
 
 
     @GetMapping("/list")
-    public String wefleaList() {
+    public String wefleaList(Model model) {
+        List<Goods> goodsList = goodsService.getGoodsList();
+        model.addAttribute("goodsList", goodsList);
+
         return "/user/weflea/list";
     }
 
@@ -40,7 +44,7 @@ public class GoodsController {
     public String wefleaCreate(Model model) {
         // CreateForm 객체를 모델에 추가
         model.addAttribute("createForm", new CreateForm());
-        return "user/weflea/form";
+        return "/user/weflea/form";
     }
 
     // 입력받은 상품 가져오기

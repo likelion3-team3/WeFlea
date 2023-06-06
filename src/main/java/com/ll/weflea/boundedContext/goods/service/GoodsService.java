@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.util.List;
 import java.util.UUID;
 
 
@@ -23,7 +24,6 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class GoodsService {
     private final GoodsRepository goodsRepository;
-
 
     // 위플리 장터 상품 등록 기능
     @Transactional
@@ -64,5 +64,9 @@ public class GoodsService {
             e.printStackTrace();
             return RsData.of("F-1", "상품 등록 중 오류가 발생했습니다.");
         }
+    }
+
+    public List<Goods> getGoodsList() {
+        return goodsRepository.findAll();
     }
 }
