@@ -1,12 +1,36 @@
-<html layout:decorate="~{user/layout/layout.html}">
-
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>MainPage</title>
+    <title>상품 목록</title>
 </head>
 <body>
+<h1>상품 목록</h1>
 
-<h1>위플리 장터 목록 페이지</h1>
+<table>
+    <thead>
+    <tr>
+        <th>상품명</th>
+        <th>지역</th>
+        <th>상태</th>
+        <th>가격</th>
+        <th>설명</th>
+        <th>수정일</th>
 
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr th:each="goods : ${goodsList}">
+        <td th:text="${goods.title}"></td>
+        <td th:text="${goods.area}"></td>
+        <td th:text="${goods.status}"></td>
+        <td th:text="${goods.price}"></td>
+        <td th:text="${goods.description}"></td>
+        <td th:text="${goods.modifyDate}"></td>
+
+    </tr>
+    </tbody>
+</table>
 </body>
 </html>
