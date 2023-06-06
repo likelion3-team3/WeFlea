@@ -69,7 +69,7 @@ public class GoodsController {
     public String create(@Valid CreateForm createForm, BindingResult bindingResult, @AuthenticationPrincipal User user) throws Exception {
         if (bindingResult.hasErrors()) {
             // 유효성 검사 오류가 있는 경우 폼 페이지로 다시 이동
-            return "form";
+            return "/user/weflea/form";
         }
 
         // 현재 로그인한 사용자의 username 가져오기
