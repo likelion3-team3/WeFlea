@@ -20,7 +20,7 @@ public class Search extends BaseEntity {
     @Column(columnDefinition = "TEXT")
     private String title;           // 게시글 제목
 
-    private String price;           // 상품 가격
+    private int price;           // 상품 가격
 
     private String sellDate;        // 판매 시간  ex) 1분 전, 10초 전, 1시간 전
 
