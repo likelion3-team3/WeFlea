@@ -26,6 +26,37 @@
 
     <h1 class="top_title" th:text="|${keyword != null ? keyword : '중고거래 최신'} 검색 결과|"></h1>
     <div class="content_4_wrap">
+      <form class="flex flex-row gap-3 flex-nowrap m-auto" style="max-width: 400px">
+        <div class="form-control-sm">
+          <select name="provider" class="select select-bordered select-small"
+                  onchange="$(this).closest('form').submit();">
+            <option value="">전체</option>
+            <option value="당근마켓">당근마켓</option>
+            <option value="번개장터">번개장터</option>
+            <option value="중고나라">중고나라</option>
+            <option value="헬로마켓">헬로마켓</option>
+          </select>
+          <script>
+            if (params.provider) {
+              $(`select[name="provider"]:last`).val(params.provider[0]);
+            }
+          </script>
+        </div>
+
+        <div class="form-control-sm">
+          <select name="sortCode" class="select select-bordered select-small"
+                  onchange="$(this).closest('form').submit();">
+            <option value="1">최신순</option>
+            <option value="2">가격 높은 순</option>
+            <option value="3">가격 낮은 순</option>
+          </select>
+          <script>
+            if (params.sortCode) {
+              $(`select[name="sortCode"]:last`).val(params.sortCode[0]);
+            }
+          </script>
+        </div>
+      </form>
       <div class="item_row">
         <div th:each="search, status : ${searchList}" class="item" data-index="${status.index}">
           <a th:href="${search.link}">
