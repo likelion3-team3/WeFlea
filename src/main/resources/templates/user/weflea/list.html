@@ -1,15 +1,39 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html layout:decorate="~{/common/layout.html}" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>상품 목록</title>
 </head>
-<body>
-<h1>상품 목록</h1>
+<body layout:fragment="content">
+
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 8px;
+        text-align: left;
+        vertical-align: top;
+        border: 1px solid #ddd;
+        word-wrap: break-word;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    img {
+        max-width: 100px;
+        max-height: 100px;
+    }
+</style>
 
 <table>
     <thead>
     <tr>
+        <th>상품 사진</th>
         <th>상품명</th>
         <th>지역</th>
         <th>상태</th>
@@ -22,6 +46,10 @@
     <tbody>
 
     <tr th:each="goods : ${goodsList}">
+        <td>
+            <img th:if="${goods.filePath}" th:src="@{'C:/weflea/' + ${goods.filePath}}">
+            <span th:unless="${goods.filePath}">No Image</span>
+        </td>
         <td th:text="${goods.title}"></td>
         <td th:text="${goods.area}"></td>
         <td th:text="${goods.status}"></td>
