@@ -63,7 +63,7 @@
             <img th:src="${search.imageLink}" style="border-radius: 12px; width:200px">
             <div style="border-radius: 12px; width:200px">
               <h2 class="item_name" th:text="${search.title}"></h2>
-              <h2 class="item_price" th:text="|${search.price}원|"></h2>
+              <h2 class="item_price" data-th-text="${#numbers.formatInteger(search.price, 3, 'COMMA') + '원'}"></h2>
               <h2 class="item_cost" th:text="${search.id}"></h2>
               <h1 class="item_place" th:text="${search.area}"></h1>
               <h1 class="item_provider" th:text="${search.provider}"></h1>
@@ -91,7 +91,7 @@
                 <img src="${imageLink}" style="border-radius: 12px; width:200px">
                 <div style="border-radius: 12px; width:200px">
                   <h2 class="item_name">${title}</h2>
-                  <h2 class="item_price">${price}원</h2>
+                  <h2 class="item_price">${price.toLocaleString()}원</h2>
                   <h2 class="item_cost">${id}</h2>
                   <h1 class="item_place">${area}</h1>
                   <h1 class="item_provider">${provider}</h1>
