@@ -3,32 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <title>상품 목록</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            vertical-align: top;
+            border: 1px solid #ddd;
+            word-wrap: break-word;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        img {
+            max-width: 100px;
+            max-height: 100px;
+        }
+
+        .btn {
+            padding: 5px 10px;
+            white-space: nowrap;
+        }
+    </style>
 </head>
+
 <body layout:fragment="content">
 
-<style>
-    table {
-        width: 100%;
-        border-collapse: collapse;
-    }
-
-    th, td {
-        padding: 8px;
-        text-align: left;
-        vertical-align: top;
-        border: 1px solid #ddd;
-        word-wrap: break-word;
-    }
-
-    th {
-        background-color: #f2f2f2;
-    }
-
-    img {
-        max-width: 100px;
-        max-height: 100px;
-    }
-</style>
+<a href="/user/weflea/create" class="btn">상품 등록하기</a><br><br>
 
 <table>
     <thead>
