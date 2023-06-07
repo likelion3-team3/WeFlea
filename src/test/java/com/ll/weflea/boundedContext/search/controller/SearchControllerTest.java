@@ -118,7 +118,7 @@ class SearchControllerTest {
                 .andExpect(jsonPath("$.keywords[0].name").value("자전거"))
                 .andExpect(jsonPath("$.keywords[1].name").value("의자"))
                 .andExpect(jsonPath("$.searchList").isArray())
-                .andExpect(jsonPath("$.searchList[0].id").value(9L));
+                .andExpect(jsonPath("$.searchList[0].id").value(11L));
 
     }
 
