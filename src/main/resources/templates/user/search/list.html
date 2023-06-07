@@ -30,10 +30,14 @@
         <div th:each="search, status : ${searchList}" class="item" data-index="${status.index}">
           <a th:href="${search.link}">
             <img th:src="${search.imageLink}" style="border-radius: 12px; width:200px">
-            <h2 class="item_name" th:text="${search.title}"></h2>
-            <h2 class="item_price" th:text="${search.price}"></h2>
-            <h2 class="item_cost" th:text="${search.id}"></h2>
-            <h1 class="item_place" th:text="${search.area}"></h1>
+            <div style="border-radius: 12px; width:200px">
+              <h2 class="item_name" th:text="${search.title}"></h2>
+              <h2 class="item_price" th:text="${search.price}"></h2>
+              <h2 class="item_cost" th:text="${search.id}"></h2>
+              <h1 class="item_place" th:text="${search.area}"></h1>
+              <h1 class="item_provider" th:text="${search.provider}"></h1>
+            </div>
+
           </a>
         </div>
       </div>
@@ -47,17 +51,20 @@
 
   const drawSearchList = (searchList) => {
     searchList.forEach((search, index) => {
-      const { link, imageLink, title, price, id, area } = search;
+      const { link, imageLink, title, price, id, area, provider } = search;
       const newItem = document.createElement('div');
       newItem.classList.add('item');
       newItem.dataset.index = index;
       newItem.innerHTML = `
             <a href="${link}">
                 <img src="${imageLink}" style="border-radius: 12px; width:200px">
-                <h2 class="item_name">${title}</h2>
-                <h2 class="item_price">${price}</h2>
-                <h2 class="item_cost">${id}</h2>
-                <h1 class="item_place">${area}</h1>
+                <div style="border-radius: 12px; width:200px">
+                  <h2 class="item_name">${title}</h2>
+                  <h2 class="item_price">${price}</h2>
+                  <h2 class="item_cost">${id}</h2>
+                  <h1 class="item_place">${area}</h1>
+                  <h1 class="item_provider">${provider}</h1>
+                </div>
             </a>
         `;
       itemRow.appendChild(newItem);

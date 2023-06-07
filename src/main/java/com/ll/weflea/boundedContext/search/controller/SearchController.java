@@ -48,7 +48,7 @@ public class SearchController {
 
         List<SearchKeyword> keywords = searchService.findAllSearchKeyword();
 
-        Map<String, Object> map = new HashMap<String, Object>();
+        Map<String, Object> map = new HashMap<>();
 
         map.put("keywords", keywords);
         map.put("searchList", searchList);
