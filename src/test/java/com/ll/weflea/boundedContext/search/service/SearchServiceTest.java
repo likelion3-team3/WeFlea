@@ -51,7 +51,7 @@ class SearchServiceTest {
     private static final int DEFAULT_SIZE = 12;
 
     @Test
-    @DisplayName("lastSearchId가 null, keyword도 null이면 id가 가장 큰 순부터 조회")
+    @DisplayName("lastSearchId가 null, keyword도 null이면 id가 가장 작은 순부터 조회")
     public void t02_findSearchesById() throws Exception {
 
         //given
@@ -67,12 +67,12 @@ class SearchServiceTest {
 
         //then
         assertThat(searchList.size()).isEqualTo(12);
-        assertThat(searchList.get(0).getId()).isEqualTo(1000);
+        assertThat(searchList.get(0).getId()).isEqualTo(1);
 
     }
 
     @Test
-    @DisplayName("lastSearchId만 null, id가 가장 큰 순부터 조회")
+    @DisplayName("lastSearchId만 null, id가 가장 작은 순부터 조회")
     public void t03_findSearchesById() throws Exception {
 
         //given
@@ -89,12 +89,12 @@ class SearchServiceTest {
         //then
         assertThat(searchList.size()).isEqualTo(12);
         assertThat(searchList.get(0).getTitle()).contains("노트북");
-        assertThat(searchList.get(0).getId()).isEqualTo(1000);
+        assertThat(searchList.get(0).getId()).isEqualTo(1);
 
     }
 
     @Test
-    @DisplayName("lastSearchId가 null이 아닌 경우, lastSearchId-1부터 내림차순 조회")
+    @DisplayName("lastSearchId가 null이 아닌 경우, lastSearchId+1부터 오름차순 조회")
     public void t04_findSearchesById() throws Exception {
 
         //given
@@ -111,7 +111,7 @@ class SearchServiceTest {
         //then
         assertThat(searchList.size()).isEqualTo(12);
         assertThat(searchList.get(0).getTitle()).contains("노트북");
-        assertThat(searchList.get(0).getId()).isEqualTo(899L);
+        assertThat(searchList.get(0).getId()).isEqualTo(901L);
 
     }
 
