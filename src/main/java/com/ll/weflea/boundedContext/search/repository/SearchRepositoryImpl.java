@@ -25,7 +25,7 @@ public class SearchRepositoryImpl implements SearchRepositoryCustom {
                         ltSearchId(lastSearchId),
                         containsKeyword(keyword)
                 )
-                .orderBy(search.id.desc())
+                .orderBy(search.id.asc())
                 .limit(pageable.getPageSize())
                 .fetch();
     }
@@ -36,7 +36,7 @@ public class SearchRepositoryImpl implements SearchRepositoryCustom {
             return null;
         }
 
-        return search.id.lt(lastSearchId);
+        return search.id.gt(lastSearchId);
     }
 
     private BooleanExpression containsKeyword(String keyword) {
