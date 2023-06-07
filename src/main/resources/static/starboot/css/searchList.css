@@ -243,53 +243,65 @@ img{
     margin-bottom: 100px;
 }
 
-
 .item{
-    /*width: 200px;*/
+    text-overflow: ellipsis;
+    width: 200px;
     height: 300px;
     flex-grow: 0;
-    flex-basis: auto;
-    /*flex: 0 0 calc(25% - 20px); !* 필요에 따라 너비 조정 *!*/
-    width: calc(25% - 20px);
-    margin: auto;
+    flex-basis: 25%;
+    margin-top: 50px;
+    display: flex;
+    justify-content: space-around;
 }
 
 .item_row{
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
-    margin-bottom: 100px;
+    flex-direction: row;
+    margin-top: 50px;
+}
+
+.item_image{
+    flex-grow: 0;
+    width:200px;
 }
 
 .item_name{
-    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     margin-top: 10px;
     font-weight: 400;
 }
 
 .item_price{
-    color: #ff8a3d;
-    text-align: center;
     margin-top: 10px;
     font-weight: 700;
-}
-.item_place{
-    font-weight: 400;
-    text-align: center;
-    font-size: smaller;
-    margin-top: 10px;
+    color: #B0C4DE;
 }
 
 .item_cost{
+    display: none;
+    margin-top: 10px;
+    font-weight: 700;
+}
+
+.item_place{
     font-weight: 400;
-    text-align: center;
     font-size: smaller;
     margin-top: 10px;
 }
 
+.item_provider{
+    font-weight: 400;
+    font-size: smaller;
+    margin-top: 10px;
+    color: #F4A460;
+}
+
 .like_chating{
+    display: flex;
     flex-direction: row;
-    text-align: center;
     color: #868e96;
     margin-top: 10px;
 }

@@ -37,7 +37,7 @@ public class SearchController {
         model.addAttribute("keywords", keywords);
         model.addAttribute("keyword", keyword);
         model.addAttribute("searchList", searchList);
-        return "/user/search/list";
+        return "user/search/list";
     }
 
     @GetMapping("/all/{lastSearchId}")
@@ -48,7 +48,7 @@ public class SearchController {
 
         List<SearchKeyword> keywords = searchService.findAllSearchKeyword();
 
-        Map<String, Object> map = new HashMap<String, Object>();
+        Map<String, Object> map = new HashMap<>();
 
         map.put("keywords", keywords);
         map.put("searchList", searchList);

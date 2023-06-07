@@ -33,12 +33,6 @@ public class SearchService {
         searchRepository.save(search);
     }
 
-    public List<Search> findByKeyword(String keyword) {
-        List<Search> searchList = searchRepository.findByTitleContaining(keyword);
-
-        return searchList;
-    }
-
     public List<Search> findSearchesById(Long lastSearchId, String keyword, Pageable pageable) {
 
         return searchRepository.findSearchesById(lastSearchId, keyword, pageable);
@@ -50,6 +44,7 @@ public class SearchService {
     }
 
     //NotProd에 데이터 넣기 위한임시 테스트 메서드
+    @Transactional
     public void createSearchKeyword(String name) {
         SearchKeyword searchKeyword = SearchKeyword.create(name);
         searchKeywordRepository.save(searchKeyword);
