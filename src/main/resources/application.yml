@@ -59,7 +59,7 @@ spring:
 #            user-name-attribute: username
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     properties:
       hibernate:
         show_sql: true
@@ -70,8 +70,9 @@ spring:
     multipart:
       maxFileSize: 10MB
       maxRequestSize: 10MB
-      location: C:\\temp\\weflea
+      location: C:\temp\weflea\
       enabled: true
+
 logging:
   level:
     root: INFO

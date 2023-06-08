@@ -65,8 +65,10 @@
             <li><a href="/user/search/all">통합검색</a></li>
             <li><a href="/chat/rooms">채팅</a></li>
             <li th:if="${@rq.logout}"><a href="/user/member/login">로그인</a></li>
-<!--            todo : 로그아웃 구현-->
-            <li th:if="${@rq.login}"><a href="/main" >로그아웃</a></li>
+            <li th:if="${@rq.login}">
+                <a href="javascript:" onclick="$(this).next().submit();">로그아웃</a>
+                <form class="!hidden" hidden th:action="|/user/member/logout|" method="POST"></form>
+            </li>
             <li><a href="/user/member/me">마이페이지</a></li>
         </ul>
     </header><br>

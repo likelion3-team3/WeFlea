@@ -61,10 +61,6 @@ public class Member extends BaseEntity {
     }
 
     public void updateProfileImage(ProfileImage profileImage) {
-        // 기존의 프로필 이미지가 있는 경우 삭제
-        if (this.profileImage != null) {
-            this.profileImage.updateMember(null);
-        }
 
         // 새로운 프로필 이미지 설정
         this.profileImage = profileImage;

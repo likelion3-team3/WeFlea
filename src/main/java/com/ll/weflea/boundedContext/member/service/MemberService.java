@@ -29,6 +29,10 @@ public class MemberService {
         return memberRepository.findByNickname(nickname);
     }
 
+    public Optional<Member> findById(Long id) {
+        return memberRepository.findById(id);
+    }
+
     @Transactional
     public RsData<Member> join(String providerTypeCode, String username){
         if (findByUsername(username).isPresent()) {
@@ -39,6 +43,7 @@ public class MemberService {
                 .builder()
                 .username(username)
                 .providerTypeCode(providerTypeCode)
+                .profileImage(null)
                 .build();
 
         memberRepository.save(member);
