@@ -31,7 +31,7 @@ public class SearchRepositoryImpl implements SearchRepositoryCustom {
 
         return jpaQueryFactory.selectFrom(search)
                 .where(
-                        ltSearchId(lastSearchId),
+//                        ltSearchId(lastSearchId),
                         containsKeyword(keyword),
                         eqProvider(provider)
                 )
@@ -71,8 +71,9 @@ public class SearchRepositoryImpl implements SearchRepositoryCustom {
 
 
         switch (sortCode != null ? sortCode : 1) {
+            //최신순
             case 1:
-                orderSpecifiers.add(new OrderSpecifier<>(Order.ASC, search.id));
+                orderSpecifiers.add(new OrderSpecifier<>(Order.DESC, search.sellDate));
                 break;
 
             //가격 높은 순

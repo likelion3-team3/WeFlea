@@ -66,7 +66,10 @@
               <h2 class="item_price" data-th-text="${#numbers.formatInteger(search.price, 3, 'COMMA') + '원'}"></h2>
               <h2 class="item_cost" th:text="${search.id}"></h2>
               <h1 class="item_place" th:text="${search.area}"></h1>
-              <h1 class="item_provider" th:text="${search.provider}"></h1>
+              <div class="item_info">
+                <h1 class="item_provider" th:text="${search.provider}"></h1>
+                <h1 class="item_sellDate" th:text="${#temporals.format(search.sellDate, 'MM-dd HH:mm')}"></h1>
+              </div>
             </div>
 
           </a>
@@ -82,8 +85,16 @@
 
   const drawSearchList = (searchList) => {
     searchList.forEach((search, index) => {
-      const { link, imageLink, title, price, id, area, provider } = search;
+      const { link, imageLink, title, price, id, area, provider, sellDate } = search;
       const newItem = document.createElement('div');
+      const sellDateValue = new Date(sellDate); // 판매 일시
+      const formattedSellDate = sellDateValue.toLocaleString('en-US', {
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false,
+      });
       newItem.classList.add('item');
       newItem.dataset.index = index;
       newItem.innerHTML = `
@@ -94,7 +105,10 @@
                   <h2 class="item_price">${price.toLocaleString()}원</h2>
                   <h2 class="item_cost">${id}</h2>
                   <h1 class="item_place">${area}</h1>
-                  <h1 class="item_provider">${provider}</h1>
+                  <div class="item_info">
+                    <h1 class="item_provider">${provider}</h1>
+                    <h1 class="item_sellDate">${formattedSellDate}</h1>
+                  </div>
                 </div>
             </a>
         `;

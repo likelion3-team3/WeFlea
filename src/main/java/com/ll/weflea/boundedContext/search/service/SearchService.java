@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -21,7 +22,7 @@ public class SearchService {
     private final SearchKeywordRepository searchKeywordRepository;
 
     @Transactional
-    public void create(String area, String imageLink, String link, int price, String provider, String title) {
+    public void create(String area, String imageLink, String link, int price, String provider, String title, LocalDateTime time) {
         Search search = Search.builder()
                 .area(area)
                 .imageLink(imageLink)
@@ -29,6 +30,7 @@ public class SearchService {
                 .price(price)
                 .provider(provider)
                 .title(title)
+                .sellDate(time)
                 .build();
 
         searchRepository.save(search);
