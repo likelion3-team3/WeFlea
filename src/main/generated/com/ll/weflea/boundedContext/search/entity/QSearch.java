@@ -40,6 +40,8 @@ public class QSearch extends EntityPathBase<Search> {
 
     public final StringPath provider = createString("provider");
 
+    public final DateTimePath<java.time.LocalDateTime> sellDate = createDateTime("sellDate", java.time.LocalDateTime.class);
+
     public final StringPath siteProduct = createString("siteProduct");
 
     public final StringPath title = createString("title");
