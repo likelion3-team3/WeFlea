@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface SearchRepositoryCustom {
 
-    List<Search> findSearchesById(Long lastSearchId, SearchDto searchDto, Pageable pageable);
+    List<Search> findSearchesById(SearchDto searchDto, Pageable pageable);
 }

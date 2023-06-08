@@ -124,8 +124,9 @@
     const lastItem = items[items.length - 1];
     const lastSearchId = lastItem.querySelector('.item_cost').textContent || null;
     const keyword = [[${keyword}]];
+    const currentPage = Math.floor(items.length / 12); // 현재 페이지 계산
 
-    const url = `/user/search/all/${lastSearchId}` + (keyword ? `?keyword=${keyword}` : '');
+    const url = `/user/search/all/${currentPage + 1}` + (keyword ? `?keyword=${keyword}` : '');
 
     fetch(url)
             .then(response => response.json())
