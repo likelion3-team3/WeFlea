@@ -23,4 +23,12 @@ public class Wish extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Goods goods;
+
+
+    public static Wish create(Member member, Goods goods) {
+        return Wish.builder()
+                .member(member)
+                .goods(goods)
+                .build();
+    }
 }
