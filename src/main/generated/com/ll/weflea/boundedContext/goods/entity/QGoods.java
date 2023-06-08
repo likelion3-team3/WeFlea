@@ -67,7 +67,7 @@ public class QGoods extends EntityPathBase<Goods> {
 
     public QGoods(Class<? extends Goods> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.member = inits.isInitialized("member") ? new com.ll.weflea.boundedContext.member.entity.QMember(forProperty("member")) : null;
+        this.member = inits.isInitialized("member") ? new com.ll.weflea.boundedContext.member.entity.QMember(forProperty("member"), inits.get("member")) : null;
     }
 
 }

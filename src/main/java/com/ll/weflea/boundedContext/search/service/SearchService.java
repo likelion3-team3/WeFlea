@@ -1,5 +1,6 @@
 package com.ll.weflea.boundedContext.search.service;
 
+import com.ll.weflea.boundedContext.search.dto.SearchDto;
 import com.ll.weflea.boundedContext.search.entity.Search;
 import com.ll.weflea.boundedContext.search.entity.SearchKeyword;
 import com.ll.weflea.boundedContext.search.repository.SearchKeywordRepository;
@@ -9,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -20,7 +22,7 @@ public class SearchService {
     private final SearchKeywordRepository searchKeywordRepository;
 
     @Transactional
-    public void create(String area, String imageLink, String link, String price, String provider, String title) {
+    public void create(String area, String imageLink, String link, int price, String provider, String title, LocalDateTime time) {
         Search search = Search.builder()
                 .area(area)
                 .imageLink(imageLink)
@@ -28,14 +30,15 @@ public class SearchService {
                 .price(price)
                 .provider(provider)
                 .title(title)
+                .sellDate(time)
                 .build();
 
         searchRepository.save(search);
     }
 
-    public List<Search> findSearchesById(Long lastSearchId, String keyword, Pageable pageable) {
+    public List<Search> findSearchesById(Long lastSearchId, SearchDto searchDto, Pageable pageable) {
 
-        return searchRepository.findSearchesById(lastSearchId, keyword, pageable);
+        return searchRepository.findSearchesById(lastSearchId, searchDto, pageable);
     }
 
 
