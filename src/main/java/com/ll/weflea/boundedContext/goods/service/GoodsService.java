@@ -17,6 +17,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.zip.DataFormatException;
@@ -75,7 +76,8 @@ public class GoodsService {
     public Goods getGoods(long id) {
         Optional<Goods> goods = goodsRepository.findById(id);
 
-        // 존재하지 않는 상품의 id가 입력되는 경우 따로 메세지 출력 기능 추가
+        // 존재하지 않는 상품의 id가 입력되는 경우 에러 처리
+        if (goods.isPresent() == false) throw new NoSuchElementException("상품이 존재하지 않습니다.");
 
         return goods.get();
     }
