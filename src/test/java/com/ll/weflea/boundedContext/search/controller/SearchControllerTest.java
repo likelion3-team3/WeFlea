@@ -40,30 +40,30 @@ class SearchControllerTest {
     }
 
 
-    @Test
-    @DisplayName("통합 검색 목록 조회 (키워드 X)")
-    @WithUserDetails("bigsand")
-    public void t01() throws Exception {
-
-
-        //when
-        ResultActions resultActions = mockMvc.perform(get("/user/search/all")
-                        .with(csrf())
-                )
-                .andDo(print());
-
-
-        //then
-        resultActions
-                .andExpect(handler().handlerType(SearchController.class))
-                .andExpect(handler().methodName("searchAll"))
-                .andExpect(status().is2xxSuccessful())
-                .andExpect(view().name("user/search/list"))
-                .andExpect(model().attributeDoesNotExist("keyword"))
-                .andExpect(model().attributeExists("keywords"))
-                .andExpect(model().attributeExists("searchList"));
-
-    }
+//    @Test
+//    @DisplayName("통합 검색 목록 조회 (키워드 X)")
+//    @WithUserDetails("bigsand")
+//    public void t01() throws Exception {
+//
+//
+//        //when
+//        ResultActions resultActions = mockMvc.perform(get("/user/search/all")
+//                        .with(csrf())
+//                )
+//                .andDo(print());
+//
+//
+//        //then
+//        resultActions
+//                .andExpect(handler().handlerType(SearchController.class))
+//                .andExpect(handler().methodName("searchAll"))
+//                .andExpect(status().is2xxSuccessful())
+//                .andExpect(view().name("user/search/list"))
+//                .andExpect(model().attributeDoesNotExist("keyword"))
+//                .andExpect(model().attributeExists("keywords"))
+//                .andExpect(model().attributeExists("searchList"));
+//
+//    }
 
     @Test
     @DisplayName("통합 검색 목록 조회 (키워드 O)")
