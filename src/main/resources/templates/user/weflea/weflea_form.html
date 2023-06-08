@@ -14,7 +14,7 @@
 </head>
 <body layout:fragment="content">
 <!--<h1>상품 등록</h1>-->
-<form th:object="${createForm}" th:action="@{/user/weflea/create}" method="POST" style="margin: 10px 40px">
+<form th:object="${createForm}" th:action="@{/user/weflea/create}" method="POST" enctype="multipart/form-data" style="margin: 10px 40px">
     <label for="title">제목 :</label><br>
     <input type="text" id="title" th:field="*{title}"><br><br>
 
@@ -29,6 +29,9 @@
 
     <label for="description">설명 :</label><br>
     <textarea id="description" th:field="*{description}" rows="4" cols="50"></textarea><br><br>
+
+    <label for="photo">사진 :</label><br>
+    <input type="file" id="photo" name="photo"><br><br>
 
     <button type="submit" onclick="showSuccessMessage()" style="background-color: aliceblue; font-size: 1.2em; padding: 10px 20px; border-radius: 10px">등록</button>
 </form>

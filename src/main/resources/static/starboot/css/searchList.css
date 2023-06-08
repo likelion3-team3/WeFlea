@@ -243,35 +243,61 @@ img{
     margin-bottom: 100px;
 }
 
-
 .item{
+    text-overflow: ellipsis;
     width: 200px;
     height: 300px;
     flex-grow: 0;
-    flex-basis: auto;
-    margin: auto;
+    flex-basis: 25%;
+    margin-top: 50px;
+    display: flex;
+    justify-content: space-around;
 }
 
 .item_row{
     display: flex;
+    flex-wrap: wrap;
     flex-direction: row;
-    margin-bottom: 50px;
+    margin-top: 50px;
+}
+
+.item_image{
+    flex-grow: 0;
+    width:200px;
 }
 
 .item_name{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     margin-top: 10px;
+    padding-top: 10px;
     font-weight: 400;
 }
 
+.item_price{
+    margin-top: 10px;
+    font-weight: 700;
+    color: #B0C4DE;
+}
+
 .item_cost{
-    color: #ff8a3d;
+    display: none;
     margin-top: 10px;
     font-weight: 700;
 }
+
 .item_place{
     font-weight: 400;
     font-size: smaller;
     margin-top: 10px;
+}
+
+.item_provider{
+    font-weight: 400;
+    font-size: smaller;
+    margin-top: 10px;
+    color: #F4A460;
 }
 
 .like_chating{

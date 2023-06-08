@@ -1,23 +1,19 @@
 package com.ll.weflea.boundedContext.search.controller;
 
 import com.ll.weflea.boundedContext.search.entity.Search;
+import com.ll.weflea.boundedContext.search.entity.SearchKeyword;
 import com.ll.weflea.boundedContext.search.service.SearchService;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -26,32 +22,37 @@ import java.util.List;
 public class SearchController {
 
     private final SearchService searchService;
+    private static final int DEFAULT_SIZE = 12;
 
 
     //전체조회
     @GetMapping("/all")
-    public String searchAll(Model model, HttpServletRequest request) {
+    public String searchAll(Model model, String keyword) {
 
-        List<String> keywords = searchService.keywords();
+
+        List<Search> searchList = searchService.findSearchesById(null, keyword, PageRequest.of(0, DEFAULT_SIZE));
+
+        List<SearchKeyword> keywords = searchService.findAllSearchKeyword();
 
         model.addAttribute("keywords", keywords);
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("searchList", searchList);
         return "user/search/list";
     }
 
-    //위플리에서 뽑은 인기 검색 키워드
-    @GetMapping
-    public String searchByKeyword(@RequestParam String keyword, Model model) {
+    @GetMapping("/all/{lastSearchId}")
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> searchByLastSearchId(@PathVariable Long lastSearchId, String keyword) {
 
-        List<Search> searchList = searchService.findByKeyword(keyword);
-        List<String> keywords = searchService.keywords();
+        List<Search> searchList = searchService.findSearchesById(lastSearchId, keyword, PageRequest.of(0, DEFAULT_SIZE));
 
-        model.addAttribute("keyword", keyword);
-        model.addAttribute("searches", searchList);
-        model.addAttribute("keywords", keywords);
+        List<SearchKeyword> keywords = searchService.findAllSearchKeyword();
 
-        return "user/search/keywordList";
+        Map<String, Object> map = new HashMap<>();
+
+        map.put("keywords", keywords);
+        map.put("searchList", searchList);
+        return ResponseEntity.ok(map);
     }
-
-
 
 }
