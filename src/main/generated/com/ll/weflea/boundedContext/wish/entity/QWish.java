@@ -56,7 +56,7 @@ public class QWish extends EntityPathBase<Wish> {
     public QWish(Class<? extends Wish> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.goods = inits.isInitialized("goods") ? new com.ll.weflea.boundedContext.goods.entity.QGoods(forProperty("goods"), inits.get("goods")) : null;
-        this.member = inits.isInitialized("member") ? new com.ll.weflea.boundedContext.member.entity.QMember(forProperty("member")) : null;
+        this.member = inits.isInitialized("member") ? new com.ll.weflea.boundedContext.member.entity.QMember(forProperty("member"), inits.get("member")) : null;
     }
 
 }

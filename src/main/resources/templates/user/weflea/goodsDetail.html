@@ -1,0 +1,209 @@
+<html layout:decorate="~{user/layout/layout.html}"/>
+
+<head>
+    <meta charset="UTF-8">
+    <title>마이페이지</title>
+</head>
+<body>
+
+<main layout:fragment="main" class="flex-grow flex items-center justify-center">
+
+    <div class="wrapper">
+        <div class="wrap">
+            <div class="top_gnb_area">
+                <ul class="list">
+                    <c:if test = "${member == null}">	<!-- 로그인 x -->
+                        <li >
+                            <a href="/member/login">로그인</a>
+                        </li>
+                        <li>
+                            <a href="/member/join">회원가입</a>
+                        </li>
+                    </c:if>
+                    <c:if test="${member != null }">	<!-- 로그인 o -->
+                        <c:if test="${member.adminCk == 1 }">	<!-- 관리자 계정 -->
+                            <li><a href="/admin/main">관리자 페이지</a></li>
+                        </c:if>
+                        <li>
+                            <a id="gnb_logout_button">로그아웃</a>
+                        </li>
+                        <li>
+                            마이룸
+                        </li>
+                        <li>
+                            <a href="/cart/${member.memberId}">장바구니</a>
+                        </li>
+                    </c:if>
+                    <li>
+                        고객센터
+                    </li>
+                </ul>
+            </div>
+            <div class="top_area">
+                <!-- 로고영역 -->
+                <div class="logo_area">
+                    <a href="/main"><img src="/resources/img/mLogo.png"></a>
+                </div>
+                <div class="search_area">
+                    <div class="search_wrap">
+                        <form id="searchForm" action="/search" method="get">
+                            <div class="search_input">
+                                <select name="type">
+                                    <option value="T">책 제목</option>
+                                    <option value="A">작가</option>
+                                </select>
+                                <input type="text" name="keyword" value="<c:out value="${pageMaker.cri.keyword}"/>">
+                                <button class='btn search_btn'>검 색</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="login_area">
+
+                    <!-- 로그인 하지 않은 상태 -->
+                    <c:if test = "${member == null }">
+                        <div class="login_button"><a href="/member/login">로그인</a></div>
+                        <span><a href="/member/join">회원가입</a></span>
+                    </c:if>
+
+                    <!-- 로그인한 상태 -->
+                    <c:if test="${ member != null }">
+                        <div class="login_success_area">
+                            <span>회원 : ${member.memberName}</span>
+                            <span>충전금액 : <fmt:formatNumber value="${member.money }" pattern="\#,###.##"/></span>
+                            <span>포인트 : <fmt:formatNumber value="${member.point }" pattern="#,###" /></span>
+                            <a href="/member/logout.do">로그아웃</a>
+                        </div>
+                    </c:if>
+
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="content_area">
+                <div class="line">
+                </div>
+                <div class="content_top">
+                    <div class="ct_left_area">
+                        <div class="image_wrap" data-bookid="${goodsInfo.imageList[0].bookId}" data-path="${goodsInfo.imageList[0].uploadPath}" data-uuid="${goodsInfo.imageList[0].uuid}" data-filename="${goodsInfo.imageList[0].fileName}">
+                            <img>
+                        </div>
+                    </div>
+                    <div class="ct_right_area">
+                        <div class="title">
+                            <h1>
+                                ${goodsInfo.bookName}
+                            </h1>
+                        </div>
+                        <div class="line">
+                        </div>
+                        <div class="author">
+						 <span>
+						 	${goodsInfo.authorName} 지음
+						 </span>
+                            <span>|</span>
+                            <span>
+						 	${goodsInfo.publisher}
+						 </span>
+                            <span>|</span>
+                            <span class="publeyear">
+						 	${goodsInfo.publeYear}
+						 </span>
+                        </div>
+                        <div class="line">
+                        </div>
+                        <div class="price">
+                            <div class="sale_price">정가 : <fmt:formatNumber value="${goodsInfo.bookPrice}" pattern="#,### 원" /></div>
+                            <div class="discount_price">
+                                판매가 : <span class="discount_price_number"><fmt:formatNumber value="${goodsInfo.bookPrice - (goodsInfo.bookPrice*goodsInfo.bookDiscount)}" pattern="#,### 원" /></span>
+                                [<fmt:formatNumber value="${goodsInfo.bookDiscount*100}" pattern="###" />%
+                                <fmt:formatNumber value="${goodsInfo.bookPrice*goodsInfo.bookDiscount}" pattern="#,### 원" /> 할인]
+                            </div>
+                            <div>
+                                적립 포인트 : <span class="point_span"></span>원
+                            </div>
+                        </div>
+                        <div class="line">
+                        </div>
+                        <div class="button">
+                            <div class="button_quantity">
+                                주문수량
+                                <input type="text" class="quantity_input" value="1">
+                                <span>
+								<button class="plus_btn">+</button>
+								<button class="minus_btn">-</button>
+							</span>
+                            </div>
+                            <div class="button_set">
+                                <a class="btn_cart">장바구니 담기</a>
+                                <a class="btn_buy">바로구매</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="line">
+                </div>
+                <div class="content_middle">
+                    <div class="book_intro">
+                        ${goodsInfo.bookIntro}
+                    </div>
+                    <div class="book_content">
+                        ${goodsInfo.bookContents }
+                    </div>
+                </div>
+                <div class="line">
+                </div>
+                <div class="content_bottom">
+                    <div class="reply_subject">
+                        <h2>리뷰</h2>
+                    </div>
+                    <div class="reply_not_div">
+
+                    </div>
+                    <ul class="reply_content_ul">
+                        <!--
+                        <li>
+                            <div class="comment_wrap">
+                                <div class="reply_top">
+                                    <span class="id_span">sjinjin7</span>
+                                    <span class="date_span">2021-10-11</span>
+                                    <span class="rating_span">평점 : <span class="rating_value_span">4</span>점</span>
+                                    <a class="update_reply_btn">수정</a><a class="delete_reply_btn">삭제</a>
+                                </div>
+                                <div class="reply_bottom">
+                                    <div class="reply_bottom_txt">
+                                        사실 기대를 많이하고 읽기시작했는데 읽으면서 가가 쓴것이 맞는지 의심들게합니다 문체도그렇고 간결하지 않네요 제가 기대가 크던 작았던간에 책장이 사실 안넘겨집니다.
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                         -->
+                    </ul>
+                    <div class="repy_pageInfo_div">
+                        <ul class="pageMaker">
+                            <!--
+                                <li class="pageMaker_btn prev">
+                                    <a>이전</a>
+                                </li>
+                                <li class="pageMaker_btn">
+                                    <a>1</a>
+                                </li>
+                                <li class="pageMaker_btn">
+                                    <a>2</a>
+                                </li>
+                                <li class="pageMaker_btn active">
+                                    <a>3</a>
+                                </li>
+                                <li class="pageMaker_btn next">
+                                    <a>다음</a>
+                                </li>
+                             -->
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>	<!-- class="wrap" -->
+    </div>	<!-- class="wrapper" -->
+
+</main>
