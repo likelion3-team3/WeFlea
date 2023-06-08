@@ -3,6 +3,8 @@ package com.ll.weflea.boundedContext.goods.controller;
 import com.ll.weflea.base.rq.Rq;
 import com.ll.weflea.base.rsData.RsData;
 import com.ll.weflea.boundedContext.goods.entity.Goods;
+import com.ll.weflea.boundedContext.goods.entity.GoodsImage;
+import com.ll.weflea.boundedContext.goods.service.GoodsImageService;
 import com.ll.weflea.boundedContext.goods.service.GoodsService;
 import com.ll.weflea.boundedContext.member.entity.Member;
 import com.ll.weflea.boundedContext.member.repository.MemberRepository;
@@ -11,6 +13,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -29,6 +32,7 @@ public class GoodsController {
     private final Rq rq;
     private final GoodsService goodsService;
     private final MemberRepository memberRepository;
+    private final GoodsImageService goodsImageService;
 
 
     @GetMapping("/list")
@@ -70,7 +74,12 @@ public class GoodsController {
 
     // 위플리 상품 등록 기능 구현
     @PostMapping("/create")
-    public String create(@Valid CreateForm createForm, BindingResult bindingResult, @AuthenticationPrincipal User user) throws Exception {
+    public String create(
+            @Valid CreateForm createForm,
+            BindingResult bindingResult,
+            @AuthenticationPrincipal User user,
+            @RequestParam("image") MultipartFile image
+    ) throws Exception {
         if (bindingResult.hasErrors()) {
             // 유효성 검사 오류가 있는 경우 폼 페이지로 다시 이동
             return "/user/weflea/form";
@@ -89,6 +98,9 @@ public class GoodsController {
         if (createRsData.isFail()) {
             return rq.historyBack(createRsData);
         }
+
+        // 이미지 업로드를 위해 GoodsImageService를 사용하여 이미지 업로드 수행
+
 
         // 게시물 등록 후 위플리 장터 목록 페이지로 다시 이동
         return rq.redirectWithMsg("/user/weflea/list", createRsData);

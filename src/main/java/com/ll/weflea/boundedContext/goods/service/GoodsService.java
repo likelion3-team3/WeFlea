@@ -3,11 +3,13 @@ package com.ll.weflea.boundedContext.goods.service;
 import com.ll.weflea.base.rsData.RsData;
 import com.ll.weflea.boundedContext.goods.controller.GoodsController;
 import com.ll.weflea.boundedContext.goods.entity.Goods;
+import com.ll.weflea.boundedContext.goods.entity.GoodsImage;
 import com.ll.weflea.boundedContext.goods.repository.GoodsRepository;
 import com.ll.weflea.boundedContext.member.entity.Member;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.FilenameUtils;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -27,6 +29,7 @@ import java.util.zip.DataFormatException;
 @RequiredArgsConstructor
 public class GoodsService {
     private final GoodsRepository goodsRepository;
+    private final GoodsImageService goodsImageService;
 
     // 위플리 장터 상품 등록 기능
     @Transactional
@@ -45,21 +48,13 @@ public class GoodsService {
             goodsRepository.save(goods);
 
             MultipartFile photo = createForm.getPhoto();
+
             if (photo != null && !photo.isEmpty()) {
                 String originalFilename = StringUtils.cleanPath(photo.getOriginalFilename());
                 String extension = FilenameUtils.getExtension(originalFilename);
                 String fileName = UUID.randomUUID().toString() + "." + extension;
-                String uploadDir = "C:/weflea"; // 저장할 디렉토리 경로
 
-                Path uploadPath = Path.of(uploadDir);
-                if (!Files.exists(uploadPath)) {
-                    Files.createDirectories(uploadPath);
-                }
 
-                Path filePath = uploadPath.resolve(fileName);
-                Files.copy(photo.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
-
-                goods.setFilePath(filePath.toString());
             }
 
             return RsData.of("S-1", "입력하신 상품이 등록되었습니다.", goods);

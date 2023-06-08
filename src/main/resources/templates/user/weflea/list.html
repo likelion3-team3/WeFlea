@@ -22,10 +22,9 @@
         }
 
         img {
-            max-width: 100px;
-            max-height: 100px;
+            max-width: 200px;
+            max-height: 200px;
         }
-
         .btn {
             padding: 5px 10px;
             white-space: nowrap;
@@ -52,8 +51,8 @@
     <tbody>
     <tr th:each="goods : ${goodsList}">
         <td>
-            <img th:if="${goods.filePath}" th:src="@{'file:///' + #strings.urlEncode(goods.filePath)}">
-            <span th:unless="${goods.filePath}">No Image</span>
+            <img th:if="${goods.goodsImages}" th:src="${goods.goodsImages[0].path}" alt="Goods Image" width="200px" height="200px">
+            <span th:unless="${goods.goodsImages}">No Image</span>
         </td>
         <td th:text="${goods.title}"></td>
         <td th:text="${goods.area}"></td>
