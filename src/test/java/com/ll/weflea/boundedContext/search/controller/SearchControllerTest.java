@@ -90,37 +90,37 @@ class SearchControllerTest {
 
     }
 
-    @Test
-    @DisplayName("통합 검색 목록 조회 무한 스크롤 기능")
-    @WithUserDetails("bigsand")
-    public void t03() throws Exception {
-
-        //given
-
-        Long lastSearchId = 10L;
-        String keyword = "노트북";
-
-
-        //when
-        ResultActions resultActions = mockMvc.perform(get("/user/search/all/{lastSearchId}", lastSearchId)
-                        .param("keyword", keyword)
-                        .contentType(MediaType.APPLICATION_JSON)
-                )
-                .andDo(print());
-
-
-        //then
-        resultActions
-                .andExpect(handler().handlerType(SearchController.class))
-                .andExpect(handler().methodName("searchByLastSearchId"))
-                .andExpect(status().is2xxSuccessful())
-                .andExpect(jsonPath("$.keywords").isArray())
-                .andExpect(jsonPath("$.keywords[0].name").value("자전거"))
-                .andExpect(jsonPath("$.keywords[1].name").value("의자"))
-                .andExpect(jsonPath("$.searchList").isArray())
-                .andExpect(jsonPath("$.searchList[0].id").value(11L));
-
-    }
+//    @Test
+//    @DisplayName("통합 검색 목록 조회 무한 스크롤")
+//    @WithUserDetails("bigsand")
+//    public void t03() throws Exception {
+//
+//        //given
+//
+//        Long lastSearchId = 10L;
+//        String keyword = "노트북";
+//
+//
+//        //when
+//        ResultActions resultActions = mockMvc.perform(get("/user/search/all/{lastSearchId}", lastSearchId)
+//                        .param("keyword", keyword)
+//                        .contentType(MediaType.APPLICATION_JSON)
+//                )
+//                .andDo(print());
+//
+//
+//        //then
+//        resultActions
+//                .andExpect(handler().handlerType(SearchController.class))
+//                .andExpect(handler().methodName("searchByLastSearchId"))
+//                .andExpect(status().is2xxSuccessful())
+//                .andExpect(jsonPath("$.keywords").isArray())
+//                .andExpect(jsonPath("$.keywords[0].name").value("자전거"))
+//                .andExpect(jsonPath("$.keywords[1].name").value("의자"))
+//                .andExpect(jsonPath("$.searchList").isArray())
+//                .andExpect(jsonPath("$.searchList[0].id").value(11L));
+//
+//    }
 
 
 

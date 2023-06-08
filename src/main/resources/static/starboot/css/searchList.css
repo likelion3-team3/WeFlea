@@ -293,6 +293,17 @@ img{
     margin-top: 10px;
 }
 
+.item_info {
+    display: flex;
+    justify-content: space-between;
+}
+
+.item_sellDate{
+    font-weight: 400;
+    font-size: smaller;
+    margin-top: 10px;
+}
+
 .item_provider{
     font-weight: 400;
     font-size: smaller;
