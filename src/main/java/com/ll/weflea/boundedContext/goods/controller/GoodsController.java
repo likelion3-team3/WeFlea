@@ -94,4 +94,13 @@ public class GoodsController {
         return rq.redirectWithMsg("/user/weflea/list", createRsData);
     }
 
+    @GetMapping("/detail/{id}")
+    public String detail(Model model, @PathVariable("id") long id) {
+        Goods goods = goodsService.getGoods(id);
+
+        model.addAttribute("goods", goods);
+
+        return "/user/weflea/detail";
+    }
+
 }

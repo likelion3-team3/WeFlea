@@ -52,7 +52,7 @@
     <tbody>
     <tr th:each="goods : ${goodsList}">
         <td>
-            <img th:if="${goods.filePath}" th:src="@{'C:/weflea/' + ${goods.filePath}}">
+            <img th:if="${goods.filePath}" th:src="@{'file:///' + #strings.urlEncode(goods.filePath)}">
             <span th:unless="${goods.filePath}">No Image</span>
         </td>
         <td th:text="${goods.title}"></td>
