@@ -10,6 +10,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,11 +28,13 @@ public class SearchRepositoryImpl implements SearchRepositoryCustom {
         String keyword = searchDto.getKeyword();
         String provider = searchDto.getProvider();
         Integer sortCode = searchDto.getSortCode();
-
+        LocalDateTime lastDate = searchDto.getLastDate();
+        Integer lastPrice = searchDto.getLastPrice();
 
         return jpaQueryFactory.selectFrom(search)
                 .where(
-//                        ltSearchId(lastSearchId),
+                        ltLastDate(lastDate),
+                        ltOrRtLastPrice(lastPrice, sortCode),
                         containsKeyword(keyword),
                         eqProvider(provider)
                 )
@@ -41,13 +44,26 @@ public class SearchRepositoryImpl implements SearchRepositoryCustom {
     }
 
 
-    private BooleanExpression ltSearchId(Long lastSearchId) {
-        if (lastSearchId == null) {
+    private BooleanExpression ltLastDate(LocalDateTime lastDate) {
+        if (lastDate == null) {
             return null;
         }
 
-        return search.id.gt(lastSearchId);
+        return search.sellDate.lt(lastDate);
     }
+
+    private BooleanExpression ltOrRtLastPrice(Integer lastPrice, Integer sortCode) {
+        if (lastPrice == null) {
+            return null;
+        }
+
+        if (sortCode == 2) {
+            return search.price.lt(lastPrice);
+        }
+
+        return search.price.gt(lastPrice);
+    }
+
 
     private BooleanExpression containsKeyword(String keyword) {
         if (StringUtils.isNullOrEmpty(keyword)) {
