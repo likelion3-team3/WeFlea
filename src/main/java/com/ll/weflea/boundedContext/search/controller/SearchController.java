@@ -29,8 +29,9 @@ public class SearchController {
 
     //전체조회
     @GetMapping("/all")
-    public String searchAll(Model model, SearchDto searchDto) {
+    public String searchAll(Model model, @RequestParam(defaultValue = "") String keyword, @RequestParam(defaultValue = "") String provider, @RequestParam(defaultValue = "1") Integer sortCode) {
 
+        SearchDto searchDto = new SearchDto(keyword, provider, sortCode);
 
         List<Search> searchList = searchService.findSearchesById(searchDto, PageRequest.of(0, DEFAULT_SIZE));
         log.info("페이지 번호 = {}" , 0);
@@ -45,9 +46,11 @@ public class SearchController {
 
     @GetMapping("/all/{pageNumber}")
     @ResponseBody
-    public ResponseEntity<Map<String, Object>> searchByPageNumber(@PathVariable int pageNumber, SearchDto searchDto) {
+    public ResponseEntity<Map<String, Object>> searchByPageNumber(@PathVariable int pageNumber, @RequestParam(defaultValue = "") String keyword, @RequestParam(defaultValue = "") String provider, @RequestParam(defaultValue = "1") Integer sortCode) {
 
         log.info("페이지 번호 = {}" , pageNumber);
+
+        SearchDto searchDto = new SearchDto(keyword, provider, sortCode);
 
         List<Search> searchList = searchService.findSearchesById(searchDto, PageRequest.of(pageNumber, DEFAULT_SIZE));
 
