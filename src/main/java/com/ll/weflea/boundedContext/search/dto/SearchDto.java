@@ -17,9 +17,5 @@ public class SearchDto {
 
     private Integer sortCode;
 
-    private LocalDateTime lastDate;
-
-    private Integer lastPrice;
-
 
 }

@@ -7,6 +7,7 @@ import com.ll.weflea.boundedContext.search.service.SearchService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,7 +32,8 @@ public class SearchController {
     public String searchAll(Model model, SearchDto searchDto) {
 
 
-        List<Search> searchList = searchService.findSearchesById(null, searchDto, PageRequest.of(0, DEFAULT_SIZE));
+        List<Search> searchList = searchService.findSearchesById(searchDto, PageRequest.of(0, DEFAULT_SIZE));
+        log.info("페이지 번호 = {}" , 0);
 
         List<SearchKeyword> keywords = searchService.findAllSearchKeyword();
 
@@ -41,11 +43,13 @@ public class SearchController {
         return "user/search/list";
     }
 
-    @GetMapping("/all/{lastSearchId}")
+    @GetMapping("/all/{pageNumber}")
     @ResponseBody
-    public ResponseEntity<Map<String, Object>> searchByLastSearchId(@PathVariable Long lastSearchId, SearchDto searchDto) {
+    public ResponseEntity<Map<String, Object>> searchByPageNumber(@PathVariable int pageNumber, SearchDto searchDto) {
 
-        List<Search> searchList = searchService.findSearchesById(lastSearchId, searchDto, PageRequest.of(0, DEFAULT_SIZE));
+        log.info("페이지 번호 = {}" , pageNumber);
+
+        List<Search> searchList = searchService.findSearchesById(searchDto, PageRequest.of(pageNumber, DEFAULT_SIZE));
 
         List<SearchKeyword> keywords = searchService.findAllSearchKeyword();
 

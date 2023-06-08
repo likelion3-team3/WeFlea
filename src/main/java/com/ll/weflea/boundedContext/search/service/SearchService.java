@@ -36,29 +36,9 @@ public class SearchService {
         searchRepository.save(search);
     }
 
-    public List<Search> findSearchesById(Long lastSearchId, SearchDto searchDto, Pageable pageable) {
+    public List<Search> findSearchesById(SearchDto searchDto, Pageable pageable) {
 
-        if (lastSearchId == null) {
-            return searchRepository.findSearchesById(lastSearchId, searchDto, pageable);
-        }
-
-        Search search = findById(lastSearchId);
-
-        if (searchDto.getSortCode() == null) {
-            searchDto.setSortCode(1);
-
-        }
-
-        if (searchDto.getSortCode() == 1) {
-            searchDto.setLastDate(search.getSellDate());
-        }
-
-        if (searchDto.getSortCode() == 2 || searchDto.getSortCode() == 3) {
-            searchDto.setLastPrice(search.getPrice());
-        }
-
-
-        return searchRepository.findSearchesById(lastSearchId, searchDto, pageable);
+        return searchRepository.findSearchesById(searchDto, pageable);
     }
 
 
