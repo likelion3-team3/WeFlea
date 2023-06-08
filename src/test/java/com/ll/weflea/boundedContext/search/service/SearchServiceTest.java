@@ -1,5 +1,6 @@
 package com.ll.weflea.boundedContext.search.service;
 
+import com.ll.weflea.boundedContext.search.dto.SearchDto;
 import com.ll.weflea.boundedContext.search.entity.Search;
 import com.ll.weflea.boundedContext.search.entity.SearchKeyword;
 import com.ll.weflea.boundedContext.search.repository.SearchKeywordRepository;
@@ -56,13 +57,13 @@ class SearchServiceTest {
 
         //given
         //NotProd에서 1000개의 search 객체 생성
+        SearchDto searchDto = new SearchDto();
         Long lastSearchId = null;
-        String keyword = "";
         Pageable pageable = PageRequest.of(0, DEFAULT_SIZE);
 
 
         //when
-        List<Search> searchList = searchService.findSearchesById(lastSearchId, keyword, pageable);
+        List<Search> searchList = searchService.findSearchesById(lastSearchId, searchDto, pageable);
 
 
         //then
@@ -77,13 +78,14 @@ class SearchServiceTest {
 
         //given
         //NotProd에서 1000개의 search 객체 생성
+        SearchDto searchDto = new SearchDto();
+        searchDto.setKeyword("노트북");
         Long lastSearchId = null;
-        String keyword = "노트북";
         Pageable pageable = PageRequest.of(0, DEFAULT_SIZE);
 
 
         //when
-        List<Search> searchList = searchService.findSearchesById(lastSearchId, keyword, pageable);
+        List<Search> searchList = searchService.findSearchesById(lastSearchId, searchDto, pageable);
 
 
         //then
@@ -99,13 +101,14 @@ class SearchServiceTest {
 
         //given
         //NotProd에서 1000개의 search 객체 생성
+        SearchDto searchDto = new SearchDto();
         Long lastSearchId = 900L;
-        String keyword = "노트북";
+        searchDto.setKeyword("노트북");
         Pageable pageable = PageRequest.of(0, DEFAULT_SIZE);
 
 
         //when
-        List<Search> searchList = searchService.findSearchesById(lastSearchId, keyword, pageable);
+        List<Search> searchList = searchService.findSearchesById(lastSearchId, searchDto, pageable);
 
 
         //then

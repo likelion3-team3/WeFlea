@@ -12,6 +12,14 @@ spring:
         show_sql: false
         format_sql: false
         use_sql_comments: false
+  servlet:
+    multipart:
+      maxFileSize: 10MB
+      maxRequestSize: 10MB
+      location: ${custom.prod_fileLocation}
+      enabled: true
+
+
 logging:
   level:
     root: INFO

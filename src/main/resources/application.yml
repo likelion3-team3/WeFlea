@@ -50,7 +50,7 @@ spring:
     multipart:
       maxFileSize: 10MB
       maxRequestSize: 10MB
-      location: C:\temp\weflea\
+      location: ${custom.dev_fileLocation}
       enabled: true
 
 logging:
