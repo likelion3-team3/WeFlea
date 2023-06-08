@@ -24,7 +24,7 @@ public class NotProd {
                 //통합검색게시글 생성
                 for (int i = 0; i < 1000; i++) {
                     searchService.create("평동", "https://img2.joongna.com/media/original/2023/05/23/1684842327279E36_HaZLQ.jpg?impolicy=thumb&size=150",
-                            "https://web.joongna.com/product/114619250", "600,000원", "중고나라", "레노버 게이밍 노트북 (GTX1660ti,144hz)");
+                            "https://web.joongna.com/product/114619250", 600000, "중고나라", "레노버 게이밍 노트북 (GTX1660ti,144hz)");
                 }
 
                 //인기키워드 생성

@@ -11,16 +11,16 @@ import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
- * QProfile is a Querydsl query type for Profile
+ * QProfileImage is a Querydsl query type for ProfileImage
  */
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
-public class QProfile extends EntityPathBase<Profile> {
+public class QProfileImage extends EntityPathBase<ProfileImage> {
 
-    private static final long serialVersionUID = -314163245L;
+    private static final long serialVersionUID = 1544512840L;
 
     private static final PathInits INITS = PathInits.DIRECT2;
 
-    public static final QProfile profile = new QProfile("profile");
+    public static final QProfileImage profileImage = new QProfileImage("profileImage");
 
     public final com.ll.weflea.base.entity.QFile _super = new com.ll.weflea.base.entity.QFile(this);
 
@@ -47,25 +47,25 @@ public class QProfile extends EntityPathBase<Profile> {
     //inherited
     public final NumberPath<Integer> type_code = _super.type_code;
 
-    public QProfile(String variable) {
-        this(Profile.class, forVariable(variable), INITS);
+    public QProfileImage(String variable) {
+        this(ProfileImage.class, forVariable(variable), INITS);
     }
 
-    public QProfile(Path<? extends Profile> path) {
+    public QProfileImage(Path<? extends ProfileImage> path) {
         this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
     }
 
-    public QProfile(PathMetadata metadata) {
+    public QProfileImage(PathMetadata metadata) {
         this(metadata, PathInits.getFor(metadata, INITS));
     }
 
-    public QProfile(PathMetadata metadata, PathInits inits) {
-        this(Profile.class, metadata, inits);
+    public QProfileImage(PathMetadata metadata, PathInits inits) {
+        this(ProfileImage.class, metadata, inits);
     }
 
-    public QProfile(Class<? extends Profile> type, PathMetadata metadata, PathInits inits) {
+    public QProfileImage(Class<? extends ProfileImage> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.member = inits.isInitialized("member") ? new QMember(forProperty("member")) : null;
+        this.member = inits.isInitialized("member") ? new QMember(forProperty("member"), inits.get("member")) : null;
     }
 
 }

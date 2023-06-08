@@ -1,5 +1,6 @@
 package com.ll.weflea.boundedContext.search.controller;
 
+import com.ll.weflea.boundedContext.search.dto.SearchDto;
 import com.ll.weflea.boundedContext.search.entity.Search;
 import com.ll.weflea.boundedContext.search.entity.SearchKeyword;
 import com.ll.weflea.boundedContext.search.service.SearchService;
@@ -27,24 +28,24 @@ public class SearchController {
 
     //전체조회
     @GetMapping("/all")
-    public String searchAll(Model model, String keyword) {
+    public String searchAll(Model model, SearchDto searchDto) {
 
 
-        List<Search> searchList = searchService.findSearchesById(null, keyword, PageRequest.of(0, DEFAULT_SIZE));
+        List<Search> searchList = searchService.findSearchesById(null, searchDto, PageRequest.of(0, DEFAULT_SIZE));
 
         List<SearchKeyword> keywords = searchService.findAllSearchKeyword();
 
         model.addAttribute("keywords", keywords);
-        model.addAttribute("keyword", keyword);
+        model.addAttribute("keyword", searchDto.getKeyword());
         model.addAttribute("searchList", searchList);
         return "user/search/list";
     }
 
     @GetMapping("/all/{lastSearchId}")
     @ResponseBody
-    public ResponseEntity<Map<String, Object>> searchByLastSearchId(@PathVariable Long lastSearchId, String keyword) {
+    public ResponseEntity<Map<String, Object>> searchByLastSearchId(@PathVariable Long lastSearchId, SearchDto searchDto) {
 
-        List<Search> searchList = searchService.findSearchesById(lastSearchId, keyword, PageRequest.of(0, DEFAULT_SIZE));
+        List<Search> searchList = searchService.findSearchesById(lastSearchId, searchDto, PageRequest.of(0, DEFAULT_SIZE));
 
         List<SearchKeyword> keywords = searchService.findAllSearchKeyword();
 
