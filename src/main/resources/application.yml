@@ -62,4 +62,4 @@ logging:
 
 custom:
   site:
-    baseUrl: http://localhost:8080
+    baseUrl: https://localhost
