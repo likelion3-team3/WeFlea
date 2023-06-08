@@ -38,6 +38,26 @@ public class SearchService {
 
     public List<Search> findSearchesById(Long lastSearchId, SearchDto searchDto, Pageable pageable) {
 
+        if (lastSearchId == null) {
+            return searchRepository.findSearchesById(lastSearchId, searchDto, pageable);
+        }
+
+        Search search = findById(lastSearchId);
+
+        if (searchDto.getSortCode() == null) {
+            searchDto.setSortCode(1);
+
+        }
+
+        if (searchDto.getSortCode() == 1) {
+            searchDto.setLastDate(search.getSellDate());
+        }
+
+        if (searchDto.getSortCode() == 2 || searchDto.getSortCode() == 3) {
+            searchDto.setLastPrice(search.getPrice());
+        }
+
+
         return searchRepository.findSearchesById(lastSearchId, searchDto, pageable);
     }
 
@@ -51,6 +71,10 @@ public class SearchService {
     public void createSearchKeyword(String name) {
         SearchKeyword searchKeyword = SearchKeyword.create(name);
         searchKeywordRepository.save(searchKeyword);
+    }
+
+    public Search findById(Long id) {
+        return searchRepository.findById(id).orElse(null);
     }
 
 

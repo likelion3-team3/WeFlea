@@ -27,6 +27,7 @@
     <h1 class="top_title" th:text="|${keyword != null ? keyword : '중고거래 최신'} 검색 결과|"></h1>
     <div class="content_4_wrap">
       <form class="flex flex-row gap-3 flex-nowrap m-auto" style="max-width: 400px">
+        <input type="hidden" name="keyword" th:value="${keyword}">
         <div class="form-control-sm">
           <select name="provider" class="select select-bordered select-small"
                   onchange="$(this).closest('form').submit();">
