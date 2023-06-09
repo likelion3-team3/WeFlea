@@ -61,8 +61,8 @@ public class QChatRoom extends EntityPathBase<ChatRoom> {
 
     public QChatRoom(Class<? extends ChatRoom> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.receiver = inits.isInitialized("receiver") ? new com.ll.weflea.boundedContext.member.entity.QMember(forProperty("receiver")) : null;
-        this.sender = inits.isInitialized("sender") ? new com.ll.weflea.boundedContext.member.entity.QMember(forProperty("sender")) : null;
+        this.receiver = inits.isInitialized("receiver") ? new com.ll.weflea.boundedContext.member.entity.QMember(forProperty("receiver"), inits.get("receiver")) : null;
+        this.sender = inits.isInitialized("sender") ? new com.ll.weflea.boundedContext.member.entity.QMember(forProperty("sender"), inits.get("sender")) : null;
     }
 
 }

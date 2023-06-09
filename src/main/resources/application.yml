@@ -1,13 +1,13 @@
 spring:
   mvc:
-    hiddenmethod:
+    hidden-method:
       filter:
         enabled: true
   profiles:
     active: dev
     include: secret
   datasource:
-    driver-class-name: org.mariadb.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
     url: '${custom.dev_database.url}'
     username: '${custom.dev_database.username}'
     password: '${custom.dev_database.password}'
@@ -39,7 +39,7 @@ spring:
             user-name-attribute: response
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: create
     properties:
       hibernate:
         show_sql: true
@@ -48,10 +48,12 @@ spring:
 #        default_batch_fetch_size: 1000
   servlet:
     multipart:
-      max-file-size: 10MB
-      max-request-size: 10MB
-      location: C:\temp\weflea
+      maxFileSize: 10MB
+      maxRequestSize: 10MB
+      location: ${custom.dev_fileLocation}
       enabled: true
+
+
 logging:
   level:
     root: INFO
@@ -61,4 +63,4 @@ logging:
 
 custom:
   site:
-    baseUrl: http://localhost:8080
+    baseUrl: https://localhost
