@@ -82,4 +82,8 @@ public class GoodsService {
 
         return goods.get();
     }
+
+    public void deleteById(Long id) {
+        goodsRepository.deleteById(id);
+    }
 }

@@ -108,4 +108,12 @@ public class GoodsController {
 
         return "/user/weflea/detail";
     }
+
+    @PostMapping("/detail/delete/{id}")
+    public String delete(@PathVariable("id") Long id) {
+
+        goodsService.deleteById(id);
+
+        return rq.redirectWithMsg("/user/weflea/list", "게시물이 삭제되었습니다.");
+    }
 }
