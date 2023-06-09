@@ -54,11 +54,8 @@ public class SearchController {
 
         List<Search> searchList = searchService.findSearchesById(searchDto, PageRequest.of(pageNumber, DEFAULT_SIZE));
 
-        List<SearchKeyword> keywords = searchService.findAllSearchKeyword();
-
         Map<String, Object> map = new HashMap<>();
 
-        map.put("keywords", keywords);
         map.put("searchList", searchList);
         return ResponseEntity.ok(map);
     }
