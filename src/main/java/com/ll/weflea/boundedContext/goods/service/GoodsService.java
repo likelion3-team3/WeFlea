@@ -17,6 +17,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 
@@ -68,5 +69,13 @@ public class GoodsService {
 
     public List<Goods> getGoodsList() {
         return goodsRepository.findAll();
+    }
+    public Goods findById(Long id){
+        Optional<Goods> goods = goodsRepository.findById(id);
+        if(goods.isPresent()){
+            return goods.get();
+        } else {
+            return null;
+        }
     }
 }

@@ -32,8 +32,11 @@ public class GoodsController {
 
 
     @GetMapping("/list")
-    public String wefleaList() {
-        return "user/weflea/list";
+    public String wefleaList(Model model) {
+        List<Goods> goodsList = goodsService.getGoodsList();
+        model.addAttribute("goodsList", goodsList);
+
+        return "/user/weflea/list";
     }
 
 
@@ -89,6 +92,14 @@ public class GoodsController {
 
         // 게시물 등록 후 위플리 장터 목록 페이지로 다시 이동
         return rq.redirectWithMsg("/user/weflea/list", createRsData);
+    }
+
+    @GetMapping("/detail/{id}")
+    public String detail(Model model, @PathVariable("id") Long id){
+        Goods goods = goodsService.findById(id);
+        model.addAttribute("goods", goods);
+
+        return "/user/weflea/detail";
     }
 
 }
