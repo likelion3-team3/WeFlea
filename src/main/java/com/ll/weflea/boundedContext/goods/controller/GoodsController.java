@@ -32,11 +32,8 @@ public class GoodsController {
 
 
     @GetMapping("/list")
-    public String wefleaList(Model model) {
-        List<Goods> goodsList = goodsService.getGoodsList();
-        model.addAttribute("goodsList", goodsList);
-
-        return "/user/weflea/list";
+    public String wefleaList() {
+        return "user/weflea/list";
     }
 
 

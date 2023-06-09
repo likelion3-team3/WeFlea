@@ -36,11 +36,13 @@ public class QSearch extends EntityPathBase<Search> {
     //inherited
     public final DateTimePath<java.time.LocalDateTime> modifyDate = _super.modifyDate;
 
-    public final StringPath price = createString("price");
+    public final NumberPath<Integer> price = createNumber("price", Integer.class);
 
     public final StringPath provider = createString("provider");
 
-    public final StringPath sellDate = createString("sellDate");
+    public final DateTimePath<java.time.LocalDateTime> sellDate = createDateTime("sellDate", java.time.LocalDateTime.class);
+
+    public final StringPath siteProduct = createString("siteProduct");
 
     public final StringPath title = createString("title");
 

@@ -1,17 +1,39 @@
-<html layout:decorate="~{user/layout/layout.html}">
+<html layout:decorate="~{user/layout/layout.html}"/>
 
 <head>
-    <title>메인</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="/starboot/css/searchList.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>메인페이지</title>
 </head>
 
 <body>
 
-<main layout:fragment="main" class="flex-grow flex items-center justify-center">
-    <div class="text-center" id="navbar-wrapper">
-        위플리에 오신 것을 환영합니다.
+    <div id="body">
+        <div class="body_content_1">
+            <div class="body_wrap">
+                <h2 class="big">빠르고 쉬운 검색 <br>위플리</h2>
+                <p class="small">중고장터 일일이 검색하기 귀찮지 않으세요??<br>통합 검색에서 빠르게 검색해보세요!</p>
+            </div>
+            <div class="body_wrap">
+                <img class="image_1" src="https://d1unjqcospf8gs.cloudfront.net/assets/home/main/3x/image-top-d6869a79bc4cb58ea59aa5a408decfdf4a4ba60ac639837081da12861083cdbb.webp" width="650" height="auto">
+            </div>
+        </div>
+        <div class="body_content_2">
+
+            <div class="body_wrap">
+                <img src="https://d1unjqcospf8gs.cloudfront.net/assets/home/main/3x/image-1-cc678e9a217b96f5cb459f7f0684f5ba67706f9889801618b8cf879fbc2c0ea7.webp" width="500" height="auto">
+            </div>
+            <div class="body_wrap">
+                <h2 class="medium">위플리 장터 <br>중고 상품을 거래하세요</h2>
+                <p class="small">위플리 자체 장터 시스템을 이용해보세요</p>
+                <a th:href="@{/user/weflea/list}">
+                    <button class="gray_button mt-2">위플리 장터 이동하기</button>
+                </a>
+            </div>
+        </div>
     </div>
-</main>
 
 </body>
-</html>
 

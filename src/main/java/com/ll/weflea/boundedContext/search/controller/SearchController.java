@@ -1,11 +1,13 @@
 package com.ll.weflea.boundedContext.search.controller;
 
+import com.ll.weflea.boundedContext.search.dto.SearchDto;
 import com.ll.weflea.boundedContext.search.entity.Search;
 import com.ll.weflea.boundedContext.search.entity.SearchKeyword;
 import com.ll.weflea.boundedContext.search.service.SearchService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,30 +29,33 @@ public class SearchController {
 
     //전체조회
     @GetMapping("/all")
-    public String searchAll(Model model, String keyword) {
+    public String searchAll(Model model, @RequestParam(defaultValue = "") String keyword, @RequestParam(defaultValue = "") String provider, @RequestParam(defaultValue = "1") Integer sortCode) {
 
+        SearchDto searchDto = new SearchDto(keyword, provider, sortCode);
 
-        List<Search> searchList = searchService.findSearchesById(null, keyword, PageRequest.of(0, DEFAULT_SIZE));
+        List<Search> searchList = searchService.findSearchesById(searchDto, PageRequest.of(0, DEFAULT_SIZE));
+        log.info("페이지 번호 = {}" , 0);
 
         List<SearchKeyword> keywords = searchService.findAllSearchKeyword();
 
         model.addAttribute("keywords", keywords);
-        model.addAttribute("keyword", keyword);
+        model.addAttribute("keyword", searchDto.getKeyword());
         model.addAttribute("searchList", searchList);
-        return "/user/search/list";
+        return "user/search/list";
     }
 
-    @GetMapping("/all/{lastSearchId}")
+    @GetMapping("/all/{pageNumber}")
     @ResponseBody
-    public ResponseEntity<Map<String, Object>> searchByLastSearchId(@PathVariable Long lastSearchId, String keyword) {
+    public ResponseEntity<Map<String, Object>> searchByPageNumber(@PathVariable int pageNumber, @RequestParam(defaultValue = "") String keyword, @RequestParam(defaultValue = "") String provider, @RequestParam(defaultValue = "1") Integer sortCode) {
 
-        List<Search> searchList = searchService.findSearchesById(lastSearchId, keyword, PageRequest.of(0, DEFAULT_SIZE));
+        log.info("페이지 번호 = {}" , pageNumber);
 
-        List<SearchKeyword> keywords = searchService.findAllSearchKeyword();
+        SearchDto searchDto = new SearchDto(keyword, provider, sortCode);
 
-        Map<String, Object> map = new HashMap<String, Object>();
+        List<Search> searchList = searchService.findSearchesById(searchDto, PageRequest.of(pageNumber, DEFAULT_SIZE));
 
-        map.put("keywords", keywords);
+        Map<String, Object> map = new HashMap<>();
+
         map.put("searchList", searchList);
         return ResponseEntity.ok(map);
     }

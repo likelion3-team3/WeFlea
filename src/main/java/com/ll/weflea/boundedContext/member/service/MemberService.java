@@ -2,19 +2,24 @@ package com.ll.weflea.boundedContext.member.service;
 
 import com.ll.weflea.base.rsData.RsData;
 import com.ll.weflea.boundedContext.member.entity.Member;
+import com.ll.weflea.boundedContext.member.entity.ProfileImage;
 import com.ll.weflea.boundedContext.member.repository.MemberRepository;
+import com.ll.weflea.boundedContext.member.repository.ProfileImageRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class MemberService {
     private final MemberRepository memberRepository;
+    private final ProfileImageRepository profileImageRepository;
 
     public Optional<Member> findByUsername(String name) {
         return memberRepository.findByUsername(name);
@@ -22,6 +27,10 @@ public class MemberService {
 
     public Optional<Member> findByNickname(String nickname) {
         return memberRepository.findByNickname(nickname);
+    }
+
+    public Optional<Member> findById(Long id) {
+        return memberRepository.findById(id);
     }
 
     @Transactional
@@ -34,6 +43,7 @@ public class MemberService {
                 .builder()
                 .username(username)
                 .providerTypeCode(providerTypeCode)
+                .profileImage(null)
                 .build();
 
         memberRepository.save(member);
@@ -71,4 +81,7 @@ public class MemberService {
 
         return true;
     }
+
+
+
 }

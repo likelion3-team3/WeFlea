@@ -1,13 +1,68 @@
 /* 수정된 CSS */
 
+/*.chat-list {*/
+/*    width: 300px;*/
+/*    margin: 0 auto;*/
+/*}*/
+
+/*.chat-history {*/
+/*    list-style-type: none;*/
+/*    padding: 0;*/
+/*}*/
 .chat-list {
-    width: 300px;
-    margin: 0 auto;
+    background-color: #F0FFFF;
+    padding: 20px;
+    display:flex;
+    flex-direction: column;
+    max-width: 700px;
+    max-height: 500px;
+    margin-top: 50px;
+    margin-right: auto;
+    margin-left: auto;
+    border-radius: 5px;
+    overflow: scroll;
 }
 
-.chat-history {
-    list-style-type: none;
-    padding: 0;
+.chat-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: 	#F8F8FF;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.chat-item img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.chat-item .chat-info {
+    flex: 1;
+}
+
+.chat-item .chat-info .chat-name {
+    font-weight: bold;
+}
+
+.chat-item .chat-info .chat-preview {
+    color: #888;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.chat-item .chat-info .chat-time {
+    font-size: 12px;
+    color: #888;
+}
+
+.chat-item .chat-unread {
+    font-weight: bold;
+    color: #555;
 }
 
 .message {
@@ -36,24 +91,32 @@
     justify-content: flex-start;
 }
 
-.chat {
-    max-width: 1000px;
-    margin: 0 auto;
-    background-color: #f6f6f6;
-    border-radius: 5px;
-    overflow: hidden;
-    display: flex;
+#chat {
+    display:flex;
     flex-direction: column;
+    max-width: 700px;
+    max-height: 500px;
+    margin-top: 50px;
+    margin-right: auto;
+    margin-left: auto;
+    background-color: #F0FFFF;
+    border-radius: 5px;
+    overflow: scroll;
 }
 
 .chat-header {
-    background-color: #4e69a2;
+    background-color: #87CEFA;
     color: #fff;
-    padding: 15px
+    padding: 15px;
+    position: fixed;
+    /* width: 100% */
+    width: 700px;
+    z-index: 1;
+
 }
 
 .chat-history {
-    padding: 20px;
+    padding: 60px 10px 50px;
 }
 
 
@@ -64,12 +127,12 @@
 
 .my-message .message-content {
     background-color: #dff2ff;
-    color: #000;
+    color: 	#191970;
 }
 
 .other-message .message-content {
-    background-color: #fff;
-    color: #000;
+    background-color: #FFDAB9;
+    color: 	#8A2BE2;
 }
 
 .chat-input {
@@ -84,7 +147,11 @@
 }
 
 .chat-message.clearfix {
+    position: sticky;
+    bottom: 0;
     display: flex;
+    width: 680px;
+    z-index: 1;
 }
 
 #msg {
