@@ -71,4 +71,8 @@ public class Member extends BaseEntity {
         }
     }
 
+    public void updatePoint(Long point) {
+        this.point = point;
+    }
+
 }

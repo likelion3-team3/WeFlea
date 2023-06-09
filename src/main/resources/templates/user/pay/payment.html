@@ -12,31 +12,45 @@
 
 <body>
 
-<section class="hero is-link">
-  <div class="hero-body">
-    <div class="container">
-      <h1 class="title">
-        위플리 안전결제
-      </h1>
-
+<div class="container container-mt">
+  <div class="row justify-content-center">
+    <div class="col-lg-6">
+      <div class="card-body bg-white mt-0 shadow flex">
+        <section class="hero is-link">
+          <div class="hero-body">
+            <div class="container has-text-centered">
+              <h1 class="title">
+                위플리 안전결제
+              </h1>
+            </div>
+          </div>
+        </section>
+        <section class="section">
+          <div class="container">
+            <div class="columns is-centered">
+              <div class="column is-4">
+                <div class="buttons is-centered">
+                  <button class="button is-link is-large is-fullwidth" onclick="pay('카드', jsons.card)">일반결제창</button>
+                  <button class="button is-link is-large is-fullwidth" onclick="pay('가상계좌', jsons.vaccount)">가상계좌</button>
+                  <button class="button is-link is-large is-fullwidth" onclick="pay('계좌이체', jsons.transfer)">계좌이체</button>
+                  <button class="button is-link is-large is-fullwidth" onclick="pay('휴대폰', jsons.phone)">휴대폰</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
     </div>
   </div>
-</section>
-<section class="section ">
-  <div class="container">
-    <button class="button is-link" onclick="pay('카드',jsons.card);">일반결제창</button>
-    <button class="button is-link" onclick="pay('가상계좌',jsons.vaccount);">가상계좌</button>
-    <button class="button is-link" onclick="pay('계좌이체',jsons.transfer);">계좌이체</button>
-    <button class="button is-link" onclick="pay('휴대폰',jsons.phone);">휴대폰</button>
-    <button class="button is-link" onclick="pay('문화상품권',jsons.certificate);">문화상품권</button>
-    <button class="button is-link" onclick="pay('도서문화상품권',jsons.bookcert);">도서문화상품권</button>
-    <button class="button is-link" onclick="pay('게임문화상품권',jsons.gamecert);">게임문화상품권</button>
-  </div>
-</section>
+</div>
+
 </body>
 
-<script>
-  let amount = 50000;
+<script th:inline="javascript">
+
+  let amount = [[${goods.price}]];
+  let orderName = [[${goods.title}]];
+  let customerName = [[${customer.nickname}]];
 
   let tossPayments = TossPayments("test_ck_jkYG57Eba3GwB6Gn6JQ3pWDOxmA1");
 
@@ -55,23 +69,23 @@
   }
 
   let path = "/";
-  let successUrl = window.location.origin + path + "/pay/success";
-  let failUrl = window.location.origin + path + "/pay/fail";
-  let callbackUrl = window.location.origin + path + "/pay/va_callback";
+  let successUrl = window.location.origin + path + "/pay/success/" + [[${goods.id}]];
+  let failUrl = window.location.origin + path + "/pay/fail" + [[${goods.id}]];
+  let callbackUrl = window.location.origin + path + "/pay/va_callback" + [[${goods.id}]];
   let orderId = new Date().getTime();
 
   let jsons = {
     "card": {
       "amount": amount,
       "orderId": "sample-" + orderId,
-      "orderName": "토스 티셔츠 외 2건",
+      "orderName": orderName,
       "successUrl": successUrl,
       "failUrl": failUrl,
       "cardCompany": null,
       "cardInstallmentPlan": null,
       "maxCardInstallmentPlan": null,
       "useCardPoint": false,
-      "customerName": "박토스",
+      "customerName": customerName,
       "customerEmail": null,
       "customerMobilePhone": null,
       "taxFreeAmount": null,
@@ -84,12 +98,12 @@
 
       "amount": amount,
       "orderId": "sample-" + orderId,
-      "orderName": "토스 티셔츠 외 2건",
+      "orderName": orderName,
       "successUrl": successUrl,
       "failUrl": failUrl,
       "validHours": 72,
       "virtualAccountCallbackUrl": callbackUrl,
-      "customerName": "박토스",
+      "customerName": customerName,
       "customerEmail": null,
       "customerMobilePhone": null,
       "taxFreeAmount": null,
@@ -103,10 +117,10 @@
 
       "amount": amount,
       "orderId": "sample-" + orderId,
-      "orderName": "토스 티셔츠 외 2건",
+      "orderName": orderName,
       "successUrl": successUrl,
       "failUrl": failUrl,
-      "customerName": "박토스",
+      "customerName": customerName,
       "customerEmail": null,
       "customerMobilePhone": null,
       "taxFreeAmount": null,
@@ -120,36 +134,13 @@
 
       "amount": amount,
       "orderId": "sample-" + orderId,
-      "orderName": "토스 티셔츠 외 2건",
+      "orderName": orderName,
+      "customerName": customerName,
       "successUrl": successUrl,
       "failUrl": failUrl,
       "mobileCarrier": null
 
-    },
-
-    "certificate": { //상품권 결제창
-      "amount": amount,
-      "orderId": "sample-" + orderId,
-      "orderName": "토스 티셔츠 외 2건",
-      "successUrl": successUrl,
-      "failUrl": failUrl
-    },
-
-    "bookcert": { //도서문화상품권 결제창
-      "amount": amount,
-      "orderId": "sample-" + orderId,
-      "orderName": "토스 티셔츠 외 2건",
-      "successUrl": successUrl,
-      "failUrl": failUrl
-    },
-    "gamecert": { // 게임문화상품권 결제창
-      "amount": amount,
-      "orderId": "sample-" + orderId,
-      "orderName": "토스 티셔츠 외 2건",
-      "successUrl": successUrl,
-      "failUrl": failUrl
     }
-
 
   }
 </script>
