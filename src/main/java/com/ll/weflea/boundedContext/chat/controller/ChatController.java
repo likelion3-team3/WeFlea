@@ -1,8 +1,11 @@
 package com.ll.weflea.boundedContext.chat.controller;
 
+import com.ll.weflea.base.rq.Rq;
 import com.ll.weflea.boundedContext.chat.dto.ChatRoomDetailDTO;
 import com.ll.weflea.boundedContext.chat.entity.ChatMessage;
 import com.ll.weflea.boundedContext.chat.service.ChatService;
+import com.ll.weflea.boundedContext.goods.entity.Goods;
+import com.ll.weflea.boundedContext.goods.service.GoodsService;
 import com.ll.weflea.boundedContext.member.entity.Member;
 import com.ll.weflea.boundedContext.member.repository.MemberRepository;
 import com.ll.weflea.boundedContext.member.service.MemberService;
@@ -13,10 +16,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,50 +27,58 @@ import java.util.List;
 public class ChatController {
 
     private final ChatService chatService;
-    private final MemberRepository memberRepository;
-
     private final MemberService memberService;
+    private final GoodsService goodsService;
+    private final Rq rq;
 
-    //나의 채팅방 목록 조회
-//    @GetMapping("/rooms")
-//    @PreAuthorize("hasRole('member')")
-//    public String myRooms(@AuthenticationPrincipal User user, Model model) {
-//        String username = user.getUsername();
-//        List<ChatRoomDetailDTO> chatRooms = chatService.findByUsername(username);
-//        model.addAttribute("list", chatRooms);
-//        return "chat/rooms";
-//    }
-
-
-//    모든 채팅방 목록 조회 (임시)
+//    나의 채팅방 목록 조회
     @GetMapping("/rooms")
-    public String rooms(Model model){
-
-        List<ChatRoomDetailDTO> rooms = chatService.findAllRooms();
-
-        log.info("# All Chat Rooms");
-        model.addAttribute("list", rooms);
-
+    @PreAuthorize("hasRole('member')")
+    public String myRooms(@AuthenticationPrincipal User user, Model model) {
+        String username = user.getUsername();
+        List<ChatRoomDetailDTO> chatRooms = chatService.findByUsername(username);
+        model.addAttribute("myNickname", rq.getMember().getNickname());
+        model.addAttribute("list", chatRooms);
         return "chat/rooms";
     }
 
+
+////    모든 채팅방 목록 조회 (임시)
+//    @GetMapping("/rooms")
+//    public String rooms(Model model){
+//
+//        List<ChatRoomDetailDTO> rooms = chatService.findAllRooms();
+//
+//        log.info("# All Chat Rooms");
+//        model.addAttribute("list", rooms);
+//
+//        return "chat/rooms";
+//    }
+
     //채팅방 개설
-    @PostMapping("/room")
+    @PostMapping("/room/{id}")
     @PreAuthorize("hasRole('member')")
-    public String create(@AuthenticationPrincipal User user,@RequestParam String name, Model model){
-        //@AuthenticationPrincipal 매개변수 작업 필요
+    public String create(@PathVariable Long id, @AuthenticationPrincipal User user, Model model){
+
         Member member1 = memberService.findByUsername(user.getUsername()).orElse(null);
-        Member member2 = memberRepository.findById(2L).orElse(null);
+        Goods goods = goodsService.findById(id);
+        Member member2 = goods.getMember();
 
-        log.info("# Create Chat Room , name: " + name);
+        if (member1.equals(member2)) {
+            return rq.historyBack("본인이 올린 글에 채팅 신청할 수 없습니다.");
+        }
 
-        model.addAttribute("roomName", chatService.createChatRoomDetailDTO(name, member1, member2).getName());
+        if (chatService.isExistChatRoom(member1.getId(), member2.getId())) {
+            return rq.historyBack("이미 판매자와의 채팅방이 존재합니다. ");
+        }
+
+
+        model.addAttribute("roomName", chatService.createChatRoomDetailDTO(member1, member2).getName());
 
         return "redirect:/chat/rooms";
     }
 
     //채팅방 상세
-    //db에서 기존 채팅이 있다면 채팅내역을 끌고와야됨
     @GetMapping("/room")
     @PreAuthorize("hasRole('member')")
     public String getRoom(String roomId, Model model, @AuthenticationPrincipal User user){
