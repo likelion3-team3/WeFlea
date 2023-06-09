@@ -126,9 +126,9 @@
     const keyword = [[${keyword}]];
     const provider = document.querySelector('select[name="provider"]').value;
     const sortCode = document.querySelector('select[name="sortCode"]').value;
-    const currentPage = Math.floor(items.length / 12); // 현재 페이지 계산
+    const currentPage = Math.ceil((items.length) / 12); // 현재 페이지 계산
 
-    const url = `/user/search/all/${currentPage + 1}` + (keyword ? `?keyword=${keyword}` : `?keyword=`) + (provider ? `&provider=${provider}` : `&provider=`) + (sortCode ? `&sortCode=${sortCode}` : `&sortCode=`);
+    const url = `/user/search/all/${currentPage}` + (keyword ? `?keyword=${keyword}` : `?keyword=`) + (provider ? `&provider=${provider}` : `&provider=`) + (sortCode ? `&sortCode=${sortCode}` : `&sortCode=`);
 
 
 
@@ -146,7 +146,7 @@
     const SCROLLED_HEIGHT = window.scrollY;
     const WINDOW_HEIGHT = window.innerHeight;
     const DOC_TOTAL_HEIGHT = document.body.offsetHeight;
-    const IS_END = (WINDOW_HEIGHT + SCROLLED_HEIGHT > DOC_TOTAL_HEIGHT - 500);
+    const IS_END = (WINDOW_HEIGHT + SCROLLED_HEIGHT >= DOC_TOTAL_HEIGHT);
 
     // 스크롤이 맨 아래에 도달했을 때 추가 데이터를 불러옵니다.
     if (IS_END && !isFetching) {
