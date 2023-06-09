@@ -22,6 +22,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -74,12 +75,7 @@ public class GoodsController {
 
     // 위플리 상품 등록 기능 구현
     @PostMapping("/create")
-    public String create(
-            @Valid CreateForm createForm,
-            BindingResult bindingResult,
-            @AuthenticationPrincipal User user,
-            @RequestParam("image") MultipartFile image
-    ) throws Exception {
+    public String create(@Valid CreateForm createForm, BindingResult bindingResult, @AuthenticationPrincipal User user) throws Exception {
         if (bindingResult.hasErrors()) {
             // 유효성 검사 오류가 있는 경우 폼 페이지로 다시 이동
             return "/user/weflea/form";
@@ -98,8 +94,6 @@ public class GoodsController {
         if (createRsData.isFail()) {
             return rq.historyBack(createRsData);
         }
-
-        // 이미지 업로드를 위해 GoodsImageService를 사용하여 이미지 업로드 수행
 
 
         // 게시물 등록 후 위플리 장터 목록 페이지로 다시 이동

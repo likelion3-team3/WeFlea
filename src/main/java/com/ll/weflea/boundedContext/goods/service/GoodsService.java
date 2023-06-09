@@ -48,14 +48,22 @@ public class GoodsService {
             goodsRepository.save(goods);
 
             MultipartFile photo = createForm.getPhoto();
-
             if (photo != null && !photo.isEmpty()) {
                 String originalFilename = StringUtils.cleanPath(photo.getOriginalFilename());
                 String extension = FilenameUtils.getExtension(originalFilename);
                 String fileName = UUID.randomUUID().toString() + "." + extension;
 
-
+                // 이미지를 업로드하는 곳으로 변경
+                RsData<GoodsImage> uploadRsData = goodsImageService.uploadGoodsImage(goods.getId(), photo);
+                if (uploadRsData.isSuccess()) {
+                    GoodsImage uploadedImage = uploadRsData.getData();
+                    goods.setFilePath(uploadedImage.getPath());
+                } else {
+                    // 업로드 실패 시 예외 처리
+                    throw new Exception("상품을 등록할 수 없습니다.");
+                }
             }
+
 
             return RsData.of("S-1", "입력하신 상품이 등록되었습니다.", goods);
         } catch (Exception e) {

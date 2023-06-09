@@ -9,14 +9,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
@@ -66,12 +63,4 @@ public class GoodsImageService {
 
         return uniqueFileName;
     }
-
-    public ResponseEntity<byte[]> getGoodsImg(long goodId) throws IOException {
-        GoodsImage goodsImage = goodsImageRepository.findById(goodId).orElse(null);
-
-        InputStream inputStream = new FileInputStream(goodsImage.getPath());
-        // 수정 필요함
-    }
-
 }
