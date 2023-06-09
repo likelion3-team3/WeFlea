@@ -2,6 +2,7 @@
 
 <head>
     <title>상품 상세 페이지</title>
+    <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 </head>
 
 <body>
@@ -54,6 +55,19 @@
                     <form th:action="@{/user/wish/add/{id}(id=${goods.id})}" method="post">
                         <button type="submit" class="btn btn-light border border-primary btn-lg">찜하기</button>
                     </form>
+
+                    <form th:action="@{/pay/{id}(id=${goods.id})}" method="get">
+                        <button type="submit" class="btn btn-light border border-primary btn-lg">안전결제</button>
+                    </form>
+                </div>
+
+                <div class="card-body bg-white mt-0 shadow">
+                    <p style="font-weight: bold">안전결제 현재 사용가능</p>
+                    <label class="box-radio-input"><input type="radio" name="cp_item" value="5000"><span>5,000원</span></label>
+                    <label class="box-radio-input"><input type="radio" name="cp_item" value="10000"><span>10,000원</span></label>
+                    <label class="box-radio-input"><input type="radio" name="cp_item" value="15000"><span>15,000원</span></label>
+                    <p  style="color: #ac2925; margin-top: 30px">카카오페이의 최소 충전금액은 5,000원이며 <br/>최대 충전금액은 50,000원 입니다.</p>
+                    <button type="button" class="btn btn-lg btn-block  btn-custom" id="charge_toss">안전결제</button>
                 </div>
 
                 <!--                <div th:unless="${goods.itemSellStatus == T(kr.co.codewiki.shoppingmall.constant.ItemSellStatus).SELL}" class="text-right">-->
