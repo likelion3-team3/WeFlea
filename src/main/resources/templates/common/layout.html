@@ -48,7 +48,7 @@
 <!-- 테일윈드 불러오기 -->
 <script src="https://cdn.tailwindcss.com"></script>
 
-<div class="d-flex">
+<div class="d-flex flex-column">
     <header class="navbar" layout:fragment="header">
         <div class="navbar__logo">
             <a href="/">WeFlea</a>
@@ -75,7 +75,7 @@
         </ul>
     </header><br>
 
-    <body layout:fragment="content"></body>
+    <div layout:fragment="content"></div>
 </div>
 
 <script th:inline="javascript">

@@ -1,126 +1,68 @@
-<html layout:decorate="~{user/layout/layout.html}" />
+
+<!DOCTYPE html>
+<html layout:decorate="~{common/layout.html}" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="stylesheet" href="/starboot/css/searchList.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>상품 목록</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            vertical-align: top;
+            border: 1px solid #ddd;
+            word-wrap: break-word;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        img {
+            max-width: 200px;
+            max-height: 200px;
+        }
+        .btn {
+            padding: 5px 10px;
+            white-space: nowrap;
+        }
+    </style>
 </head>
-<body>
 
-<div id="body">
-    <div>
-        <h1 class="top_title">위플리장터 최신매물</h1>
-        <div class="content_4_wrap">
-            <div class="item_row">
-                <div class="item">
-                    <a href="">
-                        <img src="https://dnvefa72aowie.cloudfront.net/origin/article/202303/2e3462bb439e276d12b809c12f515a5ee4ed128aa4799ca88879a79de0df7c79.webp?q=82&s=300x300&t=crop" style="border-radius: 12px; width:200px">
-                        <div style="border-radius: 12px; width:200px">
-                            <h2 class="item_name">위닉스제습기</h2>
-                            <h2 class="item_price">50,000원</h2>
-                            <h1 class="item_place">서울 성동구 행당동</h1>
-                            <h1 class="item_provider" >번개장터</h1>
-                        </div>
-                    </a>
-                </div>
-                <div class="item">
-                    <a href="">
-                        <img src="https://dnvefa72aowie.cloudfront.net/origin/article/202303/8c895d09679a822fc66fc85d9171a4c93af08f25b69c66b245e6dda3d3334702.webp?q=82&s=300x300&t=crop" style="border-radius: 12px; width:200px">
-                        <div style="border-radius: 12px; width:200px">
-                            <h2 class="item_name">LG 43인치 UHDtv 팝니다.</h2>
-                            <h2 class="item_price">250,000원</h2>
-                            <h1 class="item_place">경기도 안양시 만안구 안양동</h1>
-                            <h1 class="item_provider" >당근마켓</h1>
-                        </div>
-                    </a>
-                </div>
-                <div class="item">
-                    <a href="">
-                        <img src="https://dnvefa72aowie.cloudfront.net/origin/article/202303/c2bbbad3e6b2b451aac966c26938a4ef8db909109c61876a2c614d204a888529.webp?q=82&s=300x300&t=crop" style="border-radius: 12px; width:200px">
-                        <div style="border-radius: 12px; width:200px">
-                        <h2 class="item_name">lg 레드로 tv</h2>
-                        <h2 class="item_price">50,000원</h2>
-                        <h1 class="item_place">광주 남구 임암동</h1>
-                        <h1 class="item_provider" >중고나라</h1>
-                        </div>
-                    </a>
+<body layout:fragment="content">
 
-                </div>
-                <div class="item">
-                    <a href="">
-                        <img src="https://dnvefa72aowie.cloudfront.net/origin/article/202303/c2bbbad3e6b2b451aac966c26938a4ef8db909109c61876a2c614d204a888529.webp?q=82&s=300x300&t=crop" style="border-radius: 12px; width:200px">
-                        <div style="border-radius: 12px; width:200px">
-                            <h2 class="item_name">lg 레드로 tv</h2>
-                            <h2 class="item_price">50,000원</h2>
-                            <h1 class="item_place">광주 남구 임암동</h1>
-                            <h1 class="item_provider" >중고나라</h1>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="item_row">
-                <div class="item">
-                    <a href="">
-                        <img src="https://dnvefa72aowie.cloudfront.net/origin/article/202303/8c895d09679a822fc66fc85d9171a4c93af08f25b69c66b245e6dda3d3334702.webp?q=82&s=300x300&t=crop" style="border-radius: 12px; width:200px">
-                        <div style="border-radius: 12px; width:200px">
-                            <h2 class="item_name">LG 43인치 UHDtv 팝니다.</h2>
-                            <h2 class="item_price">250,000원</h2>
-                            <h1 class="item_place">경기도 안양시 만안구 안양동</h1>
-                            <h1 class="item_provider" >당근마켓</h1>
-                        </div>
-                    </a>
-                </div>
-                <div class="item">
-                    <a href="">
-                        <img src="https://dnvefa72aowie.cloudfront.net/origin/article/202303/d7e2b2bc48a4a3baf62001316228f72a948dcdead02b5a2f665ea188676fe44e.jpg?q=82&s=300x300&t=crop" style="border-radius: 12px; width:200px">
-                        <div style="border-radius: 12px; width:200px">
-                            <h2 class="item_name">발뮤다 더 토스터, 더 오븐레인지...</h2>
-                            <h2 class="item_price">100,000원</h2>
-                            <h1 class="item_place">경기도 성남시 분당구 이매동</h1>
-                        </div>
-                    </a>
-                </div>
-                <div class="item">
-                    <a href="">
-                        <img src="https://dnvefa72aowie.cloudfront.net/origin/article/202303/e7d0c5184c3271677158ba9ddea950c23f1d8d545ad678d2e809a4efef69bef2.webp?q=82&s=300x300&t=crop" style="border-radius: 12px; width:200px">
-                        <div style="border-radius: 12px; width:200px">
-                            <h2 class="item_name">캠핑테이블</h2>
-                            <h2 class="item_price">10,000원</h2>
-                            <h1 class="item_place">경기도 부천시 중동</h1>
-                        </div>
-                    </a>
+<a href="/user/weflea/create" class="btn">상품 등록하기</a><br><br>
 
-                </div>
-                <div class="item">
-                    <a href="">
-                        <img src="https://dnvefa72aowie.cloudfront.net/origin/article/202303/c2bbbad3e6b2b451aac966c26938a4ef8db909109c61876a2c614d204a888529.webp?q=82&s=300x300&t=crop" style="border-radius: 12px; width:200px">
-                        <div style="border-radius: 12px; width:200px">
-                            <h2 class="item_name">lg 레드로 tv</h2>
-                            <h2 class="item_price">50,000원</h2>
-                            <h1 class="item_place">광주 남구 임암동</h1>
-                            <h1 class="item_provider" >중고나라</h1>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="more_item_wrap">
-                <button class="more_item_btn">인기매물 더보기</button>
-            </div>
-
-        </div>
-
-    </div>
-</div>
-
-<script>
-    function submitForm(event) {
-        event.preventDefault(); // 기본 제출 이벤트 막기
-
-        // 입력된 값 가져오기
-        const search_input = document.getElementsByClassName("search_input")[0].value;
-        // 입력된 값 출력
-        alert(`검색어: ${search_input}`);
-    }
-</script>
+<table>
+    <thead>
+    <tr>
+        <th>상품 사진</th>
+        <th>상품명</th>
+        <th>지역</th>
+        <th>상태</th>
+        <th>가격</th>
+        <th>설명</th>
+        <th>수정일</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="goods : ${goodsList}">
+        <td>
+            <img th:if="${goods.goodsImages}" th:src="${goods.goodsImages[0].path}" alt="Goods Image" width="200px" height="200px">
+            <span th:unless="${goods.goodsImages}">No Image</span><span th:unless="${goods.goodsImages}">No Image</span>
+        </td>
+        <td th:text="${goods.title}"></td>
+        <td th:text="${goods.area}"></td>
+        <td th:text="${goods.status}"></td>
+        <td th:text="${goods.price}"></td>
+        <td th:text="${goods.description}"></td>
+        <td th:text="${goods.modifyDate}"></td>
+    </tr>
+    </tbody>
+</table>
 </body>
+</html>
