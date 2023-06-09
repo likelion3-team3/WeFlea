@@ -74,6 +74,11 @@
           <li><a href="/user/member/me">마이페이지</a></li>
 
         </ul>
+
+        <script>
+          // 타임리프 문법(파라미터, ? 뒤에 입력된 매개변수들)
+          const params = JSON.parse('[( ${@rq.paramsJsonStr} )]');
+        </script>
       </header>
 
       <div class="container-fluid">
@@ -82,6 +87,48 @@
 
     </div>
   </div>
+
+  <script th:inline="javascript">
+    if (params.msg) {
+      toastNotice(params.msg[0]);
+    }
+
+    if (params.errorMsg) {
+      toastWarning(params.errorMsg[0]);
+    }
+
+    // history.back 에 의해서 돌아온 경우에 실행됨
+    // 평소에도 실행됨
+    $(window).bind("pageshow", function (event) {
+      const localStorageKeyAboutHistoryBackErrorMsg = "historyBackErrorMsg___" + location.href;
+
+      if (localStorage.getItem(localStorageKeyAboutHistoryBackErrorMsg)) {
+        toastWarning(localStorage.getItem(localStorageKeyAboutHistoryBackErrorMsg));
+        localStorage.removeItem(localStorageKeyAboutHistoryBackErrorMsg);
+      } else {
+        const localStorageKeyAboutHistoryBackErrorMsg = "historyBackErrorMsg___null";
+
+        if (localStorage.getItem(localStorageKeyAboutHistoryBackErrorMsg)) {
+          toastWarning(localStorage.getItem(localStorageKeyAboutHistoryBackErrorMsg));
+          localStorage.removeItem(localStorageKeyAboutHistoryBackErrorMsg);
+        }
+      }
+    });
+
+    // toastr 라이브러리 사용하는 부분 스타일 변경
+    $(document).ready(function () {
+      // 배경색 변경
+      $('.toast').css('background-color', '#82B3ED');
+
+      // 폰트 색상 변경
+      $('.toast').css('color', '#FFFFFF');
+    });
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/jdenticon@3.2.0/dist/jdenticon.min.js" async
+          integrity="sha384-yBhgDqxM50qJV5JPdayci8wCfooqvhFYbIKhv0hTtLvfeeyJMJCscRfFNKIxt43M"
+          crossorigin="anonymous">
+  </script>
 
   </body>
 </th:block>
