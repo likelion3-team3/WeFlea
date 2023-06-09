@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -30,31 +31,26 @@ public class GoodsImageService {
     @Value("${spring.servlet.multipart.location}")
     private String storageLocation;
 
-    public RsData<GoodsImage> uploadGoodsImage(long id, MultipartFile image) {
+    public RsData<GoodsImage> uploadGoodsImage(Long id, MultipartFile image) throws IOException {
 
         Goods goods = goodsRepository.findById(id).orElse(null);
 
         String fileName = generatedUniqueFileName(image.getOriginalFilename());
-        Path filePath = Path.of(storageLocation, fileName);
+        String filePath = storageLocation + fileName;
+
+        File goodsImg=  new File(filePath);
+        image.transferTo(goodsImg);
 
         GoodsImage goodsImage = GoodsImage
                 .builder()
                 .goods(goods)
                 .name(fileName)
-                .path(filePath.toString())
+                .path(filePath)
                 .build();
 
-        try {
-            // 이미지 파일 저장
-            Files.copy(image.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+        goodsImageRepository.save(goodsImage);
 
-            goodsImageRepository.save(goodsImage);
-
-            return RsData.of("S-1", "상품 사진이 등록되었습니다.");
-        } catch (IOException e) {
-            e.printStackTrace();
-            return RsData.of("F-3", "상품 사진 업로드 중 오류가 발생했습니다.");
-        }
+        return RsData.of("S-1", "상품 사진이 등록되었습니다.", goodsImage);
     }
 
     private String generatedUniqueFileName(String originalFilename) {

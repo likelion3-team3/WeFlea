@@ -3,7 +3,6 @@ package com.ll.weflea.boundedContext.goods.controller;
 import com.ll.weflea.base.rq.Rq;
 import com.ll.weflea.base.rsData.RsData;
 import com.ll.weflea.boundedContext.goods.entity.Goods;
-import com.ll.weflea.boundedContext.goods.entity.GoodsImage;
 import com.ll.weflea.boundedContext.goods.service.GoodsImageService;
 import com.ll.weflea.boundedContext.goods.service.GoodsService;
 import com.ll.weflea.boundedContext.member.entity.Member;
@@ -62,7 +61,7 @@ public class GoodsController {
         private String status;
         private int price;
         private String description;
-        private MultipartFile photo;
+        private MultipartFile image;
 
         public CreateForm() {
             this.title = "제목";
@@ -85,8 +84,7 @@ public class GoodsController {
         String username = user.getUsername();
 
         // username을 기반으로 member 객체 찾기
-        Optional<Member> optionalMember = memberRepository.findByUsername(username);
-        Member member = optionalMember.get();
+        Member member = memberRepository.findByUsername(username).orElse(null);
 
         // 서비스에서 추가 기능 구현
         RsData<Goods> createRsData = goodsService.create(member, createForm);
@@ -107,5 +105,13 @@ public class GoodsController {
         model.addAttribute("goods", goods);
 
         return "/user/weflea/detail";
+    }
+
+    @GetMapping("/goodsImage/{id}")
+    public ResponseEntity<byte[]> getGoodsImg (@PathVariable("id") Long id) throws IOException {
+        Goods goods = goodsService.findById(id);
+        ResponseEntity<byte[]> goodsImage = goodsService.getGoodsImg(goods);
+
+        return goodsImage;
     }
 }

@@ -25,6 +25,7 @@
             max-width: 200px;
             max-height: 200px;
         }
+
         .btn {
             padding: 5px 10px;
             white-space: nowrap;
@@ -39,34 +40,37 @@
 <table>
     <thead>
     <tr>
-        <th>상품 사진</th>
-        <th>상품명</th>
-        <th>지역</th>
-        <th>상태</th>
-        <th>가격</th>
-        <th>설명</th>
-        <th>수정일</th>
+        <th th:width="200px">상품 사진</th>
+        <th th:width="350px">제목</th>
+        <th th:width="130px">지역</th>
+        <th th:width="130px">상태</th>
+        <th th:width="150px">가격</th>
+        <th th:width="200px">등록일</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="goods : ${goodsList}">
         <td>
-            <a th:href="@{|/user/weflea/detail/${goods.id}|}" th:text = "${goods.title}"></a>
+            <div class="goods-img img">
+                <a th:href="@{|/user/weflea/detail/${goods.id}|}">
+                    <img id="imgId" th:src="@{|/user/weflea/goodsImage/${goods.id}|}"/>
+                </a>
+            </div>
         </td>
         <td>
-            <a th:href="@{|/user/weflea/detail/${goods.id}|}" th:text = "${goods.area}"></a>
+            <a th:href="@{|/user/weflea/detail/${goods.id}|}" th:text="${goods.title}"></a>
         </td>
         <td>
-            <a th:href="@{|/user/weflea/detail/${goods.id}|}" th:text = "${goods.status}"></a>
+            <a th:href="@{|/user/weflea/detail/${goods.id}|}" th:text="${goods.area}"></a>
         </td>
         <td>
-            <a th:href="@{|/user/weflea/detail/${goods.id}|}" th:text = "${goods.price}"></a>
+            <a th:href="@{|/user/weflea/detail/${goods.id}|}" th:text="${goods.status}"></a>
         </td>
         <td>
-            <a th:href="@{|/user/weflea/detail/${goods.id}|}" th:text = "${goods.description}"></a>
+            <a th:href="@{|/user/weflea/detail/${goods.id}|}" th:text="${goods.price}+원"></a>
         </td>
         <td>
-            <a th:href="@{|/user/weflea/detail/${goods.id}|}" th:text = "${goods.modifyDate}"></a>
+            <a th:href="@{|/user/weflea/detail/${goods.id}|}" th:text="${goods.modifyDate}"></a>
         </td>
 
     </tr>

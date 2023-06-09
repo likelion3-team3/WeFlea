@@ -6,28 +6,36 @@ import com.ll.weflea.boundedContext.goods.entity.Goods;
 import com.ll.weflea.boundedContext.goods.entity.GoodsImage;
 import com.ll.weflea.boundedContext.goods.repository.GoodsRepository;
 import com.ll.weflea.boundedContext.member.entity.Member;
+import com.ll.weflea.boundedContext.member.repository.MemberRepository;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.IOUtils;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.zip.DataFormatException;
 
-
+@Slf4j
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class GoodsService {
     private final GoodsRepository goodsRepository;
     private final GoodsImageService goodsImageService;
+    private final MemberRepository memberRepository;
 
     // 위플리 장터 상품 등록 기능
     @Transactional
@@ -45,23 +53,19 @@ public class GoodsService {
 
             goodsRepository.save(goods);
 
-            MultipartFile photo = createForm.getPhoto();
-            if (photo != null && !photo.isEmpty()) {
-                String originalFilename = StringUtils.cleanPath(photo.getOriginalFilename());
-                String extension = FilenameUtils.getExtension(originalFilename);
-                String fileName = UUID.randomUUID().toString() + "." + extension;
+            MultipartFile image = createForm.getImage();
+
+            if (image != null && !image.isEmpty()) {
+                String originalFilename = StringUtils.cleanPath(image.getOriginalFilename());
 
                 // 이미지를 업로드하는 곳으로 변경
-                RsData<GoodsImage> uploadRsData = goodsImageService.uploadGoodsImage(goods.getId(), photo);
-                if (uploadRsData.isSuccess()) {
-                    GoodsImage uploadedImage = uploadRsData.getData();
-                    goods.setFilePath(uploadedImage.getPath());
-                } else {
-                    // 업로드 실패 시 예외 처리
-                    throw new Exception("상품을 등록할 수 없습니다.");
-                }
-            }
+                RsData<GoodsImage> uploadRsData = goodsImageService.uploadGoodsImage(goods.getId(), image);
 
+                GoodsImage uploadedImage = uploadRsData.getData();
+
+                goods.setFilePath(uploadedImage.getPath());
+
+            }
 
             return RsData.of("S-1", "입력하신 상품이 등록되었습니다.", goods);
         } catch (Exception e) {
@@ -81,5 +85,16 @@ public class GoodsService {
         if (goods.isPresent() == false) throw new NoSuchElementException("상품이 존재하지 않습니다.");
 
         return goods.get();
+    }
+
+    public ResponseEntity<byte[]> getGoodsImg(Goods goods) throws IOException {
+        GoodsImage goodsImage = goods.getGoodsImages().get(0);
+
+        log.debug("=======파일 경로 : "+goodsImage.getPath());
+
+        InputStream inputStream = new FileInputStream(goodsImage.getPath());
+        byte[] imageByteArray = IOUtils.toByteArray(inputStream);
+        inputStream.close();
+        return new ResponseEntity<>(imageByteArray, HttpStatus.OK);
     }
 }
