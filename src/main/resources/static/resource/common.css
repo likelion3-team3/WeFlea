@@ -34,6 +34,8 @@ html > body .label-text {
 .navbar__menu {
     display: flex;
     list-style: none;
+    align-items: center;
+    font-family: GmarketSansMedium;
 }
 
 .navbar__menu li {
@@ -50,8 +52,10 @@ html > body .label-text {
 }
 
 .search-form {
+    margin-left: 350px;
     display: flex;
     align-items: center;
+    align-self: center;
 }
 
 .search-form input {

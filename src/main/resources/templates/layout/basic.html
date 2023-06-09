@@ -41,6 +41,11 @@
 
   <body>
 
+  <!-- 데이지 UI 불러오기 -->
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@2.51.5/dist/full.css" rel="stylesheet" type="text/css"/>
+  <!-- 테일윈드 불러오기 -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
   <div class="d-flex" id="wrapper">
 
     <!-- Page Content -->
@@ -52,7 +57,7 @@
         </div>
 
         <form class="search-form" th:action="@{/user/search/all(keyword=${keyword})}" method="get">
-          <input type="text" placeholder="중고장터통합검색" name="keyword">
+          <input  type="text" placeholder="중고장터 통합검색" name="keyword">
           <button type="submit"><i class="fas fa-search"></i></button>
         </form>
 
