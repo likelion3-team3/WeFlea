@@ -65,10 +65,10 @@ public class WishController {
     }
 
     @PostMapping("/delete/{wishId}")
-    public String deleteWish(@PathVariable Long id) {
+    public String deleteWish(@PathVariable Long wishId) {
 
-        RsData<Wish> rsData = wishService.deleteWish(id);
+        RsData<Wish> rsData = wishService.deleteWish(wishId);
 
-        return rq.redirectWithMsg("user/wish/list", rsData);
+        return rq.redirectWithMsg("/user/wish/list", rsData);
     }
 }

@@ -21,8 +21,11 @@
                         <h1 class="item_sellDate" th:text="${#temporals.format(wish.goods.createDate, 'MM-dd HH:mm')}"></h1>
                     </div>
                 </div>
-
             </a>
+            <form th:action="@{/user/wish/delete/{wishId}(wishId=${wish.id})}" method="post">
+            <input type="hidden" name="_method" value="post">
+                <button type="submit" onclick="return confirm('해당 상품의 찜을 해제하겠습니까?')">찜 삭제</button>
+            </form>
         </div>
     </div>
 </div>

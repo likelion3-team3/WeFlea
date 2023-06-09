@@ -27,13 +27,13 @@
 
                     <div class="flex">
                         <form class="mr-3" th:action="@{/chat/room/{id}(id=${goods.id})}" method="post">
-                            <button type="submit" class="btn btn-light border border-primary btn-lg">채팅하기</button>
+                            <button type="submit" class="btn btn-light border">채팅하기</button>
                         </form>
                         <form class="mr-3" th:action="@{/user/wish/add/{id}(id=${goods.id})}" method="post">
-                            <button type="submit" class="btn btn-light border border-primary btn-lg">찜하기</button>
+                            <button type="submit" class="btn btn-light border">찜하기</button>
                         </form>
                         <form th:action="@{/pay/{id}(id=${goods.id})}" method="get">
-                            <button type="submit" class="btn btn-light border border-primary btn-lg">안전결제</button>
+                            <button type="submit" class="btn btn-light border">안전결제</button>
                         </form>
                     </div>
                 </div>
