@@ -91,6 +91,7 @@ public class ChatController {
         model.addAttribute("messages", messages);
         model.addAttribute("member", member);
         model.addAttribute("user", user);
+        model.addAttribute("admin", "관리자");
 
         return "chat/room";
     }

@@ -1,6 +1,8 @@
 package com.ll.weflea.boundedContext.pay.Controller;
 
 import com.ll.weflea.base.rq.Rq;
+import com.ll.weflea.boundedContext.chat.dto.ChatMessageDTO;
+import com.ll.weflea.boundedContext.chat.service.ChatService;
 import com.ll.weflea.boundedContext.goods.entity.Goods;
 import com.ll.weflea.boundedContext.goods.service.GoodsService;
 import com.ll.weflea.boundedContext.member.entity.Member;
@@ -9,6 +11,7 @@ import com.ll.weflea.boundedContext.pay.Service.PayService;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -35,6 +38,8 @@ public class PayController {
     private final GoodsService goodsService;
     private final MemberService memberService;
     private final PayService payService;
+    private final ChatService chatService;
+    private final SimpMessagingTemplate template;
     private final Rq rq;
 
     @GetMapping("/{goodsId}")
@@ -56,7 +61,8 @@ public class PayController {
             @PathVariable Long goodsId,
             @RequestParam(value = "orderId") String orderId,
             @RequestParam(value = "amount") Integer amount,
-            @RequestParam(value = "paymentKey") String paymentKey) throws Exception {
+            @RequestParam(value = "paymentKey") String paymentKey,
+            @AuthenticationPrincipal User user) throws Exception {
 
         Goods goods = goodsService.findById(goodsId);
 
@@ -116,7 +122,18 @@ public class PayController {
         //판매자에게 포인트 충전
         payService.chargePoint((long) goods.getPrice(), goods.getMember());
 
-//        return "user/pay/success";
+        //채팅방에 "안전결제가 완료되었습니다" 메시지 전송
+        Member sender = memberService.findByUsername(user.getUsername()).orElse(null);
+        String chatRoomId = chatService.findExistChatRoom(sender.getId(), goods.getMember().getId()).getRoomId();
+        ChatMessageDTO messageDTO = new ChatMessageDTO();
+        messageDTO.setMessage("안전결제가 완료되었습니다.");
+        messageDTO.setWriter("관리자");
+        messageDTO.setRoomId(chatRoomId);
+        chatService.createChatMessage(messageDTO);
+
+//        template.convertAndSend("/sub/chat/room/" + chatRoomId, message);
+
+
         return rq.redirectWithMsg("/user/weflea/detail/" + goodsId, "안전결제가 완료되었습니다.");
     }
 
