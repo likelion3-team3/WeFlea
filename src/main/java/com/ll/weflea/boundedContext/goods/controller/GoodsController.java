@@ -101,12 +101,11 @@ public class GoodsController {
     }
 
     @GetMapping("/detail/{id}")
-    public String detail(Model model, @PathVariable("id") long id) {
-        Goods goods = goodsService.getGoods(id);
+    public String detail(Model model, @PathVariable("id") Long id) {
+        Goods goods = goodsService.findById(id);
 
         model.addAttribute("goods", goods);
 
         return "/user/weflea/detail";
     }
-
 }

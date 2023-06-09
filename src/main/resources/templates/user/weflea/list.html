@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html layout:decorate="~{common/layout.html}" xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -52,17 +51,34 @@
     <tbody>
     <tr th:each="goods : ${goodsList}">
         <td>
-            <img th:if="${goods.goodsImages}" th:src="${goods.goodsImages[0].path}" alt="Goods Image" width="200px" height="200px">
-            <span th:unless="${goods.goodsImages}">No Image</span><span th:unless="${goods.goodsImages}">No Image</span>
+            <a th:href="@{|/user/weflea/detail/${goods.id}|}" th:text = "${goods.title}"></a>
         </td>
-        <td th:text="${goods.title}"></td>
-        <td th:text="${goods.area}"></td>
-        <td th:text="${goods.status}"></td>
-        <td th:text="${goods.price}"></td>
-        <td th:text="${goods.description}"></td>
-        <td th:text="${goods.modifyDate}"></td>
+        <td>
+            <a th:href="@{|/user/weflea/detail/${goods.id}|}" th:text = "${goods.area}"></a>
+        </td>
+        <td>
+            <a th:href="@{|/user/weflea/detail/${goods.id}|}" th:text = "${goods.status}"></a>
+        </td>
+        <td>
+            <a th:href="@{|/user/weflea/detail/${goods.id}|}" th:text = "${goods.price}"></a>
+        </td>
+        <td>
+            <a th:href="@{|/user/weflea/detail/${goods.id}|}" th:text = "${goods.description}"></a>
+        </td>
+        <td>
+            <a th:href="@{|/user/weflea/detail/${goods.id}|}" th:text = "${goods.modifyDate}"></a>
+        </td>
+
     </tr>
     </tbody>
 </table>
+<script>
+    function redirectToUrl(element) {
+        var url = $(element).data("url");
+        window.location.href = url;
+    }
+</script>
+
 </body>
 </html>
+

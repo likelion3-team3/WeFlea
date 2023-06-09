@@ -15,10 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
 import java.util.List;
+
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
@@ -76,7 +74,7 @@ public class GoodsService {
         return goodsRepository.findAll();
     }
 
-    public Goods getGoods(long id) {
+    public Goods findById(long id) {
         Optional<Goods> goods = goodsRepository.findById(id);
 
         // 존재하지 않는 상품의 id가 입력되는 경우 에러 처리
