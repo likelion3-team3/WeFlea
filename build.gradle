@@ -41,10 +41,13 @@ dependencies {
 
 	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
 
-//	사진 업로드
+
+  //사진 업로드
+	implementation 'commons-io:commons-io:2.11.0'
 	implementation 'commons-fileupload:commons-fileupload:1.4'
 	implementation 'org.apache.commons:commons-lang3:3.12.0'
-	implementation 'commons-io:commons-io:2.11.0'
+
+
 
 	//Querydsl 추가
 	implementation "com.querydsl:querydsl-jpa:5.0.0:jakarta"

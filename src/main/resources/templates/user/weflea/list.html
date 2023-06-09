@@ -50,13 +50,25 @@
     </thead>
     <tbody>
     <tr th:each="goods : ${goodsList}">
-        <a th:href="@{|/user/weflea/detail/${goods.id}|}" th:text="${goods.title}"></a>
-        <td class="clickable" th:href="@{|/user/weflea/detail/${goods.id}|}"><span th:text="${goods.title}"></span></td>
-        <td class="clickable" data-url="@{/user/weflea/detail/{goodsId}(goodsId=${goods.id})}" onclick="redirectToUrl(this)"><span th:text="${goods.area}"></span></td>
-        <td class="clickable" data-url="@{/user/weflea/detail/{goodsId}(goodsId=${goods.id})}" onclick="redirectToUrl(this)"><span th:text="${goods.status}"></span></td>
-        <td class="clickable" data-url="@{/user/weflea/detail/{goodsId}(goodsId=${goods.id})}" onclick="redirectToUrl(this)"><span th:text="${goods.price}"></span></td>
-        <td class="clickable" data-url="@{/user/weflea/detail/{goodsId}(goodsId=${goods.id})}" onclick="redirectToUrl(this)"><span th:text="${goods.description}"></span></td>
-        <td class="clickable" data-url="@{/user/weflea/detail/{goodsId}(goodsId=${goods.id})}" onclick="redirectToUrl(this)"><span th:text="${goods.modifyDate}"></span></td>
+        <td>
+            <a th:href="@{|/user/weflea/detail/${goods.id}|}" th:text = "${goods.title}"></a>
+        </td>
+        <td>
+            <a th:href="@{|/user/weflea/detail/${goods.id}|}" th:text = "${goods.area}"></a>
+        </td>
+        <td>
+            <a th:href="@{|/user/weflea/detail/${goods.id}|}" th:text = "${goods.status}"></a>
+        </td>
+        <td>
+            <a th:href="@{|/user/weflea/detail/${goods.id}|}" th:text = "${goods.price}"></a>
+        </td>
+        <td>
+            <a th:href="@{|/user/weflea/detail/${goods.id}|}" th:text = "${goods.description}"></a>
+        </td>
+        <td>
+            <a th:href="@{|/user/weflea/detail/${goods.id}|}" th:text = "${goods.modifyDate}"></a>
+        </td>
+
     </tr>
     </tbody>
 </table>
@@ -69,3 +81,4 @@
 
 </body>
 </html>
+

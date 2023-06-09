@@ -39,7 +39,7 @@ spring:
             user-name-attribute: response
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     properties:
       hibernate:
         show_sql: true
@@ -52,6 +52,7 @@ spring:
       maxRequestSize: 10MB
       location: ${custom.dev_fileLocation}
       enabled: true
+
 
 logging:
   level:
