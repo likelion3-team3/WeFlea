@@ -51,6 +51,9 @@
                             <input type="hidden" th:value="${goods.price}" id="price" name="price">
                             <span th:text="${goods.price}"></span>원
                         </div>
+                        <div class="h4 has-text-warning text-left border-bottom">
+                            <span th:text="${goods.status.toString()}"></span>
+                        </div>
                     </div>
 
                     <form style="max-width: 400px" method="post" id="statusForm" th:action="@{'/user/weflea/detail/update/' + ${goods.id}}">
@@ -82,13 +85,16 @@
 
                     <div class="flex">
                         <form class="mr-3" th:action="@{/chat/room/{id}(id=${goods.id})}" method="post">
-                            <button type="submit" class="btn btn-light border">채팅하기</button>
+                            <button type="submit" class="btn btn-light border"
+                                    th:disabled="${goods.status.toString() == '거래완료'}">채팅하기</button>
                         </form>
                         <form class="mr-3" th:action="@{/user/wish/add/{id}(id=${goods.id})}" method="post">
-                            <button type="submit" class="btn btn-light border">찜하기</button>
+                            <button type="submit" class="btn btn-light border"
+                                    th:disabled="${goods.status.toString() == '거래완료'}">찜하기</button>
                         </form>
                         <form th:action="@{/pay/{id}(id=${goods.id})}" method="get">
-                            <button type="submit" class="btn btn-light border">안전결제</button>
+                            <button type="submit" class="btn btn-light border"
+                                    th:disabled="${goods.status.toString() == '거래완료'}">안전결제</button>
                         </form>
                         <form th:action="@{/user/weflea/detail/delete/{id}(id=${goods.id})}" method="post" style="margin-left: 200px">
                             <button type="submit" class="btn btn-light border" th:if="${goods.member.username == @rq.member.username}"
