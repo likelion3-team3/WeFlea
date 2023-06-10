@@ -4,6 +4,7 @@ import com.ll.weflea.base.rq.Rq;
 import com.ll.weflea.boundedContext.chat.dto.ChatMessageDTO;
 import com.ll.weflea.boundedContext.chat.service.ChatService;
 import com.ll.weflea.boundedContext.goods.entity.Goods;
+import com.ll.weflea.boundedContext.goods.entity.Status;
 import com.ll.weflea.boundedContext.goods.service.GoodsService;
 import com.ll.weflea.boundedContext.member.entity.Member;
 import com.ll.weflea.boundedContext.member.service.MemberService;
@@ -48,6 +49,10 @@ public class PayController {
 
         if (member.getId().equals(goods.getMember().getId())) {
             return rq.historyBack("본인이 올린 상품을 안전결제할 수 없습니다.");
+        }
+
+        if (goods.getStatus().equals(Status.거래완료) || goods.getStatus().equals(Status.거래중)) {
+            return rq.historyBack("이미 거래 중이거나 거래완료된 상품입니다.");
         }
 
 
@@ -132,6 +137,7 @@ public class PayController {
         messageDTO.setWriter("관리자");
         messageDTO.setRoomId(chatRoomId);
         chatService.createChatMessage(messageDTO);
+        goodsService.updateStatus(goodsId, "거래중");
 
 
         return rq.redirectWithMsg("/user/weflea/detail/" + goodsId, "안전결제가 완료되었습니다.");
