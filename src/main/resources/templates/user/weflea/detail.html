@@ -19,11 +19,38 @@
                         <div class="h3 has-text-black text-left border-bottom">
                             <span th:text="${goods.description}"></span>
                         </div>
-                        <div class="h4 text-primary text-left">
+                        <div class="h4 text-primary text-left border-bottom">
                             <input type="hidden" th:value="${goods.price}" id="price" name="price">
                             <span th:text="${goods.price}"></span>원
                         </div>
                     </div>
+
+                    <form style="max-width: 400px" method="post" id="statusForm" th:action="@{'/user/weflea/detail/update/' + ${goods.id}}">
+                        <div class="form-group pb-3 border-bottom" th:if="${goods.member.username == @rq.member.username}">
+                            <label for="status">거래 상태</label>
+                            <select class="select select-bordered select-small form-control" id="status" name="status" onchange="submitForm()">
+                                <option value="구매가능" th:selected="${goods.status.toString() == '구매가능'}">구매가능</option>
+                                <option value="거래중" th:selected="${goods.status.toString() == '거래중'}">거래중</option>
+                                <option value="거래완료" th:selected="${goods.status.toString() == '거래완료'}">거래완료</option>
+                            </select>
+                        </div>
+                    </form>
+
+                    <script th:inline="javascript">
+                        function submitForm() {
+                            var form = document.getElementById("statusForm");
+                            form.submit();
+                        }
+                        var statusSelect = document.getElementById("status");
+                        var currentStatus = [[${goods.status}]];  // 서버에서 전달되는 현재 상태 값
+                        for (var i = 0; i < statusSelect.options.length; i++) {
+                            if (statusSelect.options[i].value === currentStatus) {
+                                statusSelect.selectedIndex = i;
+                                break;
+                            }
+                        }
+                    </script>
+
 
                     <div class="flex">
                         <form class="mr-3" th:action="@{/chat/room/{id}(id=${goods.id})}" method="post">

@@ -9,18 +9,15 @@ import com.ll.weflea.boundedContext.member.entity.Member;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.FilenameUtils;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.zip.DataFormatException;
 
 
 @Service
@@ -85,5 +82,13 @@ public class GoodsService {
 
     public void deleteById(Long id) {
         goodsRepository.deleteById(id);
+    }
+
+    @Transactional
+    public RsData<Goods> updateStatus(Long id, String status) {
+        Goods goods = findById(id);
+        goods.updateStatus(status);
+
+        return RsData.of("S-1", "거래상태가 " + status + "으로 변경되었습니다.");
     }
 }

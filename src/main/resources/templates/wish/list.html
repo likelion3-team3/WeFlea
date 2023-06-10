@@ -9,7 +9,7 @@
 <body>
 
 <div id="body">
-    <h1 class="top_title">찜 목록</h1>
+    <h1 class="top_title pb-4 border-bottom">찜 목록</h1>
     <div class="item_row">
         <div th:each="wish : ${wishList}" class="item" data-index="${status.index}">
             <a  th:href="|/user/weflea/detail/${wish.goods.id}|">
