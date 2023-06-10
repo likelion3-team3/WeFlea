@@ -22,7 +22,8 @@ public class Goods extends BaseEntity {
 
     private String title;
 
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private Status status = Status.구매가능;
 
     private int price;
 
@@ -35,6 +36,10 @@ public class Goods extends BaseEntity {
     @OneToMany(mappedBy = "goods")
     private List<GoodsImage> goodsImages = new ArrayList<>();
 
+    public void updateStatus(String status) {
+
+        this.status = Status.valueOf(status);
+    }
 
 /*
     // 게시글 수정 메소드

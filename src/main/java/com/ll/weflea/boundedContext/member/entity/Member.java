@@ -33,6 +33,8 @@ public class Member extends BaseEntity {
     @OneToOne(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     private ProfileImage profileImage;
 
+    private Long point;
+
     public List<? extends GrantedAuthority> getGrantedAuthorities() {
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
 
@@ -67,6 +69,10 @@ public class Member extends BaseEntity {
         if (profileImage != null) {
             profileImage.updateMember(this);
         }
+    }
+
+    public void updatePoint(Long point) {
+        this.point = point;
     }
 
 }

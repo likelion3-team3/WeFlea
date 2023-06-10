@@ -9,6 +9,7 @@ import com.ll.weflea.boundedContext.member.entity.Member;
 import com.ll.weflea.boundedContext.member.repository.MemberRepository;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.io.FilenameUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.springframework.http.HttpStatus;
@@ -22,9 +23,10 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
-
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.UUID;
+
 
 @Slf4j
 @Service
@@ -77,6 +79,17 @@ public class GoodsService {
         return goods.get();
     }
 
+    public void deleteById(Long id) {
+        goodsRepository.deleteById(id);
+    }
+
+    @Transactional
+    public RsData<Goods> updateStatus(Long id, String status) {
+        Goods goods = findById(id);
+        goods.updateStatus(status);
+
+        return RsData.of("S-1", "거래상태가 " + status + "으로 변경되었습니다.");
+    }
     public ResponseEntity<byte[]> getGoodsImg(Goods goods) throws IOException {
         GoodsImage goodsImage = goods.getGoodsImages().get(0);
 

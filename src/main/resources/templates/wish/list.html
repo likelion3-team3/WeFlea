@@ -9,98 +9,30 @@
 <body>
 
 <div id="body">
-    <div>
-        <h1 class="top_title">찜 목록</h1>
-        <div class="content_4_wrap">
-            <div class="item_row">
-                <div class="item">
-                    <a href="">
-                        <img src="https://dnvefa72aowie.cloudfront.net/origin/article/202303/2e3462bb439e276d12b809c12f515a5ee4ed128aa4799ca88879a79de0df7c79.webp?q=82&s=300x300&t=crop" style="border-radius: 12px; width:200px">
-                        <div style="border-radius: 12px; width:200px">
-                            <h2 class="item_name">위닉스제습기</h2>
-                            <h2 class="item_price">50,000원</h2>
-                            <h1 class="item_place">서울 성동구 행당동</h1>
-                            <h1 class="item_provider" >번개장터</h1>
+    <h1 class="top_title pb-4 border-bottom">찜 목록</h1>
+    <div class="item_row">
+        <div th:each="wish : ${wishList}" class="item" data-index="${status.index}">
+            <a  th:href="|/user/weflea/detail/${wish.goods.id}|">
+<!--                <img th:src="${wish.goods.goodsImages}" style="border-radius: 12px; width:200px">-->
+                <img src="https://img2.joongna.com/media/original/2023/05/23/1684842327279E36_HaZLQ.jpg?impolicy=thumb&size=150" style="border-radius: 12px; width:200px">
+                <div class="flex " style="width: 200px">
+                    <div style="border-radius: 12px; width:200px">
+                        <h2 class="item_name" th:text="${wish.goods.title}"></h2>
+                        <h2 class="item_price" data-th-text="${#numbers.formatInteger(wish.goods.price, 3, 'COMMA') + '원'}"></h2>
+                        <h1 class="item_place" th:text="${wish.goods.area}"></h1>
+                        <div class="item_info">
+                            <h1 class="item_sellDate" th:text="${#temporals.format(wish.goods.createDate, 'MM-dd HH:mm')}"></h1>
                         </div>
-                    </a>
+                    </div>
+                    <form class="item_place" th:action="@{/user/wish/delete/{wishId}(wishId=${wish.id})}" method="post">
+                        <input type="hidden" name="_method" value="post">
+                        <button type="submit" class="btn" onclick="return confirm('해당 상품의 찜을 해제하겠습니까?')">찜 삭제</button>
+                    </form>
                 </div>
-                <div class="item">
-                    <a href="">
-                        <img src="https://dnvefa72aowie.cloudfront.net/origin/article/202303/8c895d09679a822fc66fc85d9171a4c93af08f25b69c66b245e6dda3d3334702.webp?q=82&s=300x300&t=crop" style="border-radius: 12px; width:200px">
-                        <div style="border-radius: 12px; width:200px">
-                            <h2 class="item_name">LG 43인치 UHDtv 팝니다.</h2>
-                            <h2 class="item_price">250,000원</h2>
-                            <h1 class="item_place">경기도 안양시 만안구 안양동</h1>
-                        </div>
-                    </a>
-                </div>
-                <div class="item">
-                    <a href="">
-                        <img src="https://dnvefa72aowie.cloudfront.net/origin/article/202303/c2bbbad3e6b2b451aac966c26938a4ef8db909109c61876a2c614d204a888529.webp?q=82&s=300x300&t=crop" style="border-radius: 12px; width:200px">
-                        <div style="border-radius: 12px; width:200px">
-                            <h2 class="item_name">lg 레드로 tv</h2>
-                            <h2 class="item_price">50,000원</h2>
-                            <h1 class="item_place">광주 남구 임암동</h1>
-                        </div>
-                    </a>
 
-                </div>
-                <div class="item">
-                    <a href="">
-                        <img src="https://dnvefa72aowie.cloudfront.net/origin/article/202303/c2bbbad3e6b2b451aac966c26938a4ef8db909109c61876a2c614d204a888529.webp?q=82&s=300x300&t=crop" style="border-radius: 12px; width:200px">
-                        <div style="border-radius: 12px; width:200px">
-                            <h2 class="item_name">lg 레드로 tv</h2>
-                            <h2 class="item_price">50,000원</h2>
-                            <h1 class="item_place">광주 남구 임암동</h1>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="item_row">
-                <div class="item">
-                    <a href="">
-                        <img src="https://dnvefa72aowie.cloudfront.net/origin/article/202303/8c895d09679a822fc66fc85d9171a4c93af08f25b69c66b245e6dda3d3334702.webp?q=82&s=300x300&t=crop" style="border-radius: 12px; width:200px">
-                        <div style="border-radius: 12px; width:200px">
-                            <h2 class="item_name">LG 43인치 UHDtv 팝니다.</h2>
-                            <h2 class="item_price">250,000원</h2>
-                            <h1 class="item_place">경기도 안양시 만안구 안양동</h1>
-                        </div>
-                    </a>
-                </div>
-                <div class="item">
-                    <a href="">
-                        <img src="https://dnvefa72aowie.cloudfront.net/origin/article/202303/d7e2b2bc48a4a3baf62001316228f72a948dcdead02b5a2f665ea188676fe44e.jpg?q=82&s=300x300&t=crop" style="border-radius: 12px; width:200px">
-                        <div style="border-radius: 12px; width:200px">
-                            <h2 class="item_name">발뮤다 더 토스터, 더 오븐레인지...</h2>
-                            <h2 class="item_price">100,000원</h2>
-                            <h1 class="item_place">경기도 성남시 분당구 이매동</h1>
-                        </div>
-                    </a>
-                </div>
-                <div class="item">
-                    <a href="">
-                        <img src="https://dnvefa72aowie.cloudfront.net/origin/article/202303/e7d0c5184c3271677158ba9ddea950c23f1d8d545ad678d2e809a4efef69bef2.webp?q=82&s=300x300&t=crop" style="border-radius: 12px; width:200px">
-                        <div style="border-radius: 12px; width:200px">
-                            <h2 class="item_name">캠핑테이블</h2>
-                            <h2 class="item_price">10,000원</h2>
-                            <h1 class="item_place">경기도 부천시 중동</h1>
-                        </div>
-                    </a>
+            </a>
 
-                </div>
-                <div class="item">
-                    <a href="">
-                        <img src="https://dnvefa72aowie.cloudfront.net/origin/article/202303/c2bbbad3e6b2b451aac966c26938a4ef8db909109c61876a2c614d204a888529.webp?q=82&s=300x300&t=crop" style="border-radius: 12px; width:200px">
-                        <div style="border-radius: 12px; width:200px">
-                            <h2 class="item_name">lg 레드로 tv</h2>
-                            <h2 class="item_price">50,000원</h2>
-                            <h1 class="item_place">광주 남구 임암동</h1>
-                        </div>
-                    </a>
-                </div>
-            </div>
         </div>
-
     </div>
 </div>
 
