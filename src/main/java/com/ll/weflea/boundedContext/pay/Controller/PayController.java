@@ -51,7 +51,7 @@ public class PayController {
             return rq.historyBack("본인이 올린 상품을 안전결제할 수 없습니다.");
         }
 
-        if (goods.getStatus().equals(Status.거래완료) || goods.getStatus().equals(Status.거래중)) {
+        if (goods.getStatus().equals(Status.거래완료) || goods.getStatus().equals(Status.거래중) || goods.getStatus().equals(Status.안전결제중)) {
             return rq.historyBack("이미 거래 중이거나 거래완료된 상품입니다.");
         }
 
@@ -137,7 +137,7 @@ public class PayController {
         messageDTO.setWriter("관리자");
         messageDTO.setRoomId(chatRoomId);
         chatService.createChatMessage(messageDTO);
-        goodsService.updateStatus(goodsId, "거래중");
+        goodsService.updateStatus(goodsId, "안전결제중");
 
 
         return rq.redirectWithMsg("/user/weflea/detail/" + goodsId, "안전결제가 완료되었습니다.");
