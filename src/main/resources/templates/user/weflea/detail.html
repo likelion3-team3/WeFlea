@@ -36,20 +36,15 @@
                             <button type="submit" class="btn btn-light border">안전결제</button>
                         </form>
                         <form th:action="@{/user/weflea/detail/delete/{id}(id=${goods.id})}" method="post" style="margin-left: 300px">
-                            <button type="submit" class="btn btn-light border" th:if="${goods.member.username == @rq.member.username}">게시글 삭제</button>
+                            <button type="submit" class="btn btn-light border" th:if="${goods.member.username == @rq.member.username}"
+                                    onclick="return confirm('해당 게시물을 정말 삭제하시겠습니까?')">게시글 삭제</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
 </div>
-<script>
-    function goToChatRoom() {
-        location.href = '/template/chat/room';
-    }
-</script>
 
 </body>
 </html>
