@@ -9,11 +9,14 @@ import com.ll.weflea.boundedContext.goods.service.GoodsService;
 import com.ll.weflea.boundedContext.member.entity.Member;
 import com.ll.weflea.boundedContext.member.repository.MemberRepository;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -22,8 +25,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -57,15 +60,18 @@ public class GoodsController {
     @Getter
     @Setter
     public static class CreateForm {
+        @NotEmpty(message="제목을 입력해 주세요.")
         private String title;
         private String area;
         private Status status;
+
+        @NotNull(message="가격은 필수 입력값 입니다.")
         private int price;
+        @NotEmpty(message="내용을 입력해 주세요.")
         private String description;
-        private MultipartFile photo;
+        private List<MultipartFile> images;
 
         public CreateForm() {
-            this.title = "제목";
             this.area = "지역";
             this.status = Status.구매가능;
             this.price = 1;
@@ -85,8 +91,7 @@ public class GoodsController {
         String username = user.getUsername();
 
         // username을 기반으로 member 객체 찾기
-        Optional<Member> optionalMember = memberRepository.findByUsername(username);
-        Member member = optionalMember.get();
+        Member member = memberRepository.findByUsername(username).orElse(null);
 
         // 서비스에서 추가 기능 구현
         RsData<Goods> createRsData = goodsService.create(member, createForm);
@@ -125,5 +130,13 @@ public class GoodsController {
         RsData<Goods> rsData = goodsService.updateStatus(id, status);
 
         return rq.redirectWithMsg("/user/weflea/detail/" + id, rsData);
+    }
+
+    @GetMapping("/goodsImage/{id}")
+    public ResponseEntity<byte[]> getGoodsImg (@PathVariable("id") Long id) throws IOException {
+        Goods goods = goodsService.findById(id);
+        ResponseEntity<byte[]> goodsImage = goodsService.getGoodsImg(goods);
+
+        return goodsImage;
     }
 }

@@ -29,11 +29,6 @@ public class Goods extends BaseEntity {
 
     private String description;
 
-    private String filePath;
-
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
-    }
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
@@ -45,5 +40,19 @@ public class Goods extends BaseEntity {
 
         this.status = Status.valueOf(status);
     }
+
+/*
+    // 게시글 수정 메소드
+    public void updateGoods(Goods goods){
+        if(goods.title != null){
+            this.title = goods.title;
+        }
+        if(goods.description != null){
+            this.description = goods.description;
+        }
+    }
+*/
+
+
 
 }
