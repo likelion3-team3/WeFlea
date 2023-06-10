@@ -6,26 +6,23 @@ import com.ll.weflea.boundedContext.goods.entity.Goods;
 import com.ll.weflea.boundedContext.goods.entity.GoodsImage;
 import com.ll.weflea.boundedContext.goods.repository.GoodsRepository;
 import com.ll.weflea.boundedContext.member.entity.Member;
-import com.ll.weflea.boundedContext.member.repository.MemberRepository;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.io.FilenameUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
-import java.util.UUID;
 
 
 @Slf4j
@@ -97,5 +94,20 @@ public class GoodsService {
         byte[] imageByteArray = IOUtils.toByteArray(inputStream);
         inputStream.close();
         return new ResponseEntity<>(imageByteArray, HttpStatus.OK);
+    }
+
+    public ResponseEntity<List<byte[]>> getAllGoodsImages(Goods goods) throws IOException {
+        List<byte[]> imageList = new ArrayList<>();
+
+        List<GoodsImage> goodsImages = goods.getGoodsImages();
+
+        for (GoodsImage goodsImage : goodsImages) {
+            InputStream inputStream = new FileInputStream(goodsImage.getPath());
+            byte[] imageByteArray = IOUtils.toByteArray(inputStream);
+            inputStream.close();
+            imageList.add(imageByteArray);
+        }
+
+        return new ResponseEntity<>(imageList, HttpStatus.OK);
     }
 }

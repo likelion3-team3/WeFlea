@@ -13,6 +13,34 @@
             <div class="col-lg-6">
                 <div class="card-body bg-white mt-0 shadow flex">
                     <div class="text-right">
+                        <div class="goods-img img">
+                            <img class="img-1" id="imgId" th:src="@{|/user/weflea/goodsImage/${goods.id}|}" />
+                            <div class="modal_detail">
+                                <span class="close_detail">&times;</span>
+                                <img class="modal_detail_content" id="img01"/>
+                            </div>
+                            <script>
+                                const modal = document.querySelector(".modal_detail");
+                                const img = document.querySelector(".img-1");
+                                const modal_img = document.querySelector(".modal_detail_content");
+                                const span = document.querySelector(".close_detail");
+
+                                img.addEventListener('click', ()=>{
+                                    modalDisplay("block");
+                                    modal_img.src = img.src;
+                                });
+                                span.addEventListener('click', ()=>{
+                                    modalDisplay("none");
+                                });
+                                modal.addEventListener('click', ()=>{
+                                    modalDisplay("none");
+                                });
+                                function modalDisplay(text){
+                                    modal.style.display = text;
+                                }
+                            </script>
+                        </div>
+
                         <div class="h2 has-text-grey text-left border-bottom">
                             <span th:text="${goods.title}"></span>
                         </div>
@@ -62,7 +90,7 @@
                         <form th:action="@{/pay/{id}(id=${goods.id})}" method="get">
                             <button type="submit" class="btn btn-light border">안전결제</button>
                         </form>
-                        <form th:action="@{/user/weflea/detail/delete/{id}(id=${goods.id})}" method="post" style="margin-left: 300px">
+                        <form th:action="@{/user/weflea/detail/delete/{id}(id=${goods.id})}" method="post" style="margin-left: 200px">
                             <button type="submit" class="btn btn-light border" th:if="${goods.member.username == @rq.member.username}"
                                     onclick="return confirm('해당 게시물을 정말 삭제하시겠습니까?')">게시글 삭제</button>
                         </form>
