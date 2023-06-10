@@ -80,6 +80,13 @@ public class GoodsService {
         goodsRepository.deleteById(id);
     }
 
+    //안전결제완료되면 상품에 대한 buyer 및 거래상태 설정
+    @Transactional
+    public void updateStatusAndBuyer(Long id, String status, Member buyer) {
+        Goods goods = findById(id);
+        goods.updateStatusAndBuyer(status, buyer);
+    }
+
     @Transactional
     public RsData<Goods> updateStatus(Long id, String status) {
         Goods goods = findById(id);
@@ -87,6 +94,7 @@ public class GoodsService {
 
         return RsData.of("S-1", "거래상태가 " + status + "으로 변경되었습니다.");
     }
+
     public ResponseEntity<byte[]> getGoodsImg(Goods goods) throws IOException {
         GoodsImage goodsImage = goods.getGoodsImages().get(0);
 
@@ -110,4 +118,9 @@ public class GoodsService {
 
         return new ResponseEntity<>(imageList, HttpStatus.OK);
     }
+
+    public List<Goods> findByBuyerId(Long buyerId) {
+        return goodsRepository.findByBuyerId(buyerId);
+    }
+
 }

@@ -16,10 +16,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -137,7 +134,7 @@ public class PayController {
         messageDTO.setWriter("관리자");
         messageDTO.setRoomId(chatRoomId);
         chatService.createChatMessage(messageDTO);
-        goodsService.updateStatus(goodsId, "안전결제중");
+        goodsService.updateStatusAndBuyer(goodsId, "안전결제중", sender);
 
 
         return rq.redirectWithMsg("/user/weflea/detail/" + goodsId, "안전결제가 완료되었습니다.");
@@ -155,4 +152,5 @@ public class PayController {
 
         return "user/pay/fail";
     }
+
 }

@@ -33,13 +33,25 @@ public class Goods extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    private Member buyer;
+
     @OneToMany(mappedBy = "goods")
     private List<GoodsImage> goodsImages = new ArrayList<>();
+
+    public void updateStatusAndBuyer(String status, Member buyer) {
+
+        this.status = Status.valueOf(status);
+        this.buyer = buyer;
+    }
 
     public void updateStatus(String status) {
 
         this.status = Status.valueOf(status);
     }
+
+
+
 
 /*
     // 게시글 수정 메소드

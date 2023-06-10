@@ -1,0 +1,62 @@
+<html layout:decorate="~{user/layout/layout.html}" />
+
+<head>
+  <title>구매 현황</title>
+</head>
+<body>
+<div><div class="container container-mt">
+  <div class="row justify-content-center">
+    <div class="col-lg-10">
+      <div class="card-body bg-white mt-0 shadow flex">
+        <div>
+          <div class="h2 has-text-grey text-lg-center pb-2 border-bottom">
+            <span>안전결제 현황</span>
+          </div>
+          <table>
+            <thead>
+            <tr>
+              <th class="text-center" th:width="200px">상품 사진</th>
+              <th class="text-center" th:width="350px">제목</th>
+              <th class="text-center" th:width="130px">지역</th>
+              <th class="text-center" th:width="130px">상태</th>
+              <th class="text-center" th:width="200px">등록일</th>
+              <th class="text-center" th:width="200px">거래 완료 신청</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="goods : ${goodsList}">
+              <td>
+                <div class="goods-img img">
+                  <a th:href="@{|/user/weflea/detail/${goods.id}|}">
+                    <img id="imgId" th:src="@{|/user/weflea/goodsImage/${goods.id}|}"/>
+                  </a>
+                </div>
+              </td>
+              <td class="text-center">
+                <a th:href="@{|/user/weflea/detail/${goods.id}|}" th:text="${goods.title}"></a>
+              </td>
+              <td class="text-center">
+                <a th:href="@{|/user/weflea/detail/${goods.id}|}" th:text="${goods.area}"></a>
+              </td>
+              <td class="text-center">
+                <a th:href="@{|/user/weflea/detail/${goods.id}|}" th:text="${goods.status}"></a>
+              </td>
+              <td class="text-center">
+                <a th:href="@{|/user/weflea/detail/${goods.id}|}" th:text="${#temporals.format(goods.createDate, 'MM-dd HH:mm')}"></a>
+              </td>
+              <td class="text-center">
+                <form th:action="@{/pay/{id}(id=${goods.id})}" method="get">
+                  <button type="submit" class="btn btn-light" onclick="return confirm('상품을 받으셨으면 거래 완료 버튼을 눌러주세요.')">
+                    거래 완료</button>
+                </form>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</body>

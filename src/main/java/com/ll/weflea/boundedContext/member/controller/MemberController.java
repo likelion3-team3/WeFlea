@@ -2,28 +2,24 @@ package com.ll.weflea.boundedContext.member.controller;
 
 import com.ll.weflea.base.rq.Rq;
 import com.ll.weflea.base.rsData.RsData;
+import com.ll.weflea.boundedContext.goods.entity.Goods;
+import com.ll.weflea.boundedContext.goods.service.GoodsService;
 import com.ll.weflea.boundedContext.member.dto.NicknameDto;
 import com.ll.weflea.boundedContext.member.entity.Member;
-import com.ll.weflea.boundedContext.member.entity.ProfileImage;
 import com.ll.weflea.boundedContext.member.service.MemberService;
-import com.ll.weflea.boundedContext.member.service.ProfileImageService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.io.IOUtils;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.util.List;
 
 @Controller
 @RequestMapping("/user/member")
@@ -32,6 +28,7 @@ import java.io.InputStream;
 public class MemberController {
 
     private final MemberService memberService;
+    private final GoodsService goodsService;
     private final Rq rq;
 
     @GetMapping("login")
@@ -67,5 +64,15 @@ public class MemberController {
             return rq.historyBack(memberRsData);
         }
         return rq.redirectWithMsg("/", memberRsData);
+    }
+
+    @GetMapping("/me/status")
+    public String showPurchaseStatus(@AuthenticationPrincipal User user, Model model) {
+        Member member = memberService.findByUsername(user.getUsername()).orElse(null);
+        List<Goods> goodsList = goodsService.findByBuyerId(member.getId());
+
+        model.addAttribute("goodsList", goodsList);
+
+        return "user/weflea/purchaseStatus";
     }
 }
