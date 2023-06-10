@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -74,5 +75,12 @@ public class MemberController {
         model.addAttribute("goodsList", goodsList);
 
         return "user/weflea/purchaseStatus";
+    }
+
+    @PostMapping("/me/status/complete/deal/{goodsId}")
+    public String completeDeal(@PathVariable Long goodsId) {
+        goodsService.updateStatus(goodsId, "거래완료");
+
+        return rq.redirectWithMsg("/user/member/me/status", "거래가 정상적으로 성사되었습니다.");
     }
 }
