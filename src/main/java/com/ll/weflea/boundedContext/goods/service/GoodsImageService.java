@@ -18,6 +18,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Slf4j
@@ -31,26 +33,32 @@ public class GoodsImageService {
     @Value("${spring.servlet.multipart.location}")
     private String storageLocation;
 
-    public RsData<GoodsImage> uploadGoodsImage(Long id, MultipartFile image) throws IOException {
+    public RsData<List<GoodsImage>> uploadGoodsImages(Long id, List<MultipartFile> images) throws IOException {
 
         Goods goods = goodsRepository.findById(id).orElse(null);
+        List<GoodsImage> goodsImages = new ArrayList<>();
 
-        String fileName = generatedUniqueFileName(image.getOriginalFilename());
-        String filePath = storageLocation + fileName;
+        for(MultipartFile image : images) {
 
-        File goodsImg=  new File(filePath);
-        image.transferTo(goodsImg);
+            String fileName = generatedUniqueFileName(image.getOriginalFilename());
+            String filePath = storageLocation + fileName;
 
-        GoodsImage goodsImage = GoodsImage
-                .builder()
-                .goods(goods)
-                .name(fileName)
-                .path(filePath)
-                .build();
+            image.transferTo(new File(filePath));
 
-        goodsImageRepository.save(goodsImage);
+            GoodsImage goodsImage = GoodsImage
+                    .builder()
+                    .goods(goods)
+                    .name(fileName)
+                    .path(filePath)
+                    .build();
 
-        return RsData.of("S-1", "상품 사진이 등록되었습니다.", goodsImage);
+            goodsImages.add(goodsImage);
+
+        }
+
+        goodsImageRepository.saveAll(goodsImages);
+
+        return RsData.of("S-1", "상품 사진이 등록되었습니다.", goodsImages);
     }
 
     private String generatedUniqueFileName(String originalFilename) {

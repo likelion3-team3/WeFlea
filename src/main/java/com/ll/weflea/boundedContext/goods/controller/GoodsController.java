@@ -8,6 +8,9 @@ import com.ll.weflea.boundedContext.goods.service.GoodsService;
 import com.ll.weflea.boundedContext.member.entity.Member;
 import com.ll.weflea.boundedContext.member.repository.MemberRepository;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +26,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -56,19 +58,19 @@ public class GoodsController {
     @Getter
     @Setter
     public static class CreateForm {
+        @NotEmpty(message="제목을 입력해 주세요.")
         private String title;
         private String area;
         private String status;
+        @NotNull(message="가격은 필수 입력값 입니다.")
         private int price;
+        @NotEmpty(message="내용을 입력해 주세요.")
         private String description;
-        private MultipartFile image;
+        private List<MultipartFile> images;
 
         public CreateForm() {
-            this.title = "제목";
             this.area = "지역";
             this.status = "기본 상태";
-            this.price = 1;
-            this.description = "기본 설명";
         }
     }
 

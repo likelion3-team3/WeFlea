@@ -10,7 +10,6 @@ import com.ll.weflea.boundedContext.member.repository.MemberRepository;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +25,6 @@ import java.util.List;
 
 import java.util.NoSuchElementException;
 import java.util.Optional;
-import java.util.UUID;
 
 @Slf4j
 @Service
@@ -35,7 +33,6 @@ import java.util.UUID;
 public class GoodsService {
     private final GoodsRepository goodsRepository;
     private final GoodsImageService goodsImageService;
-    private final MemberRepository memberRepository;
 
     // 위플리 장터 상품 등록 기능
     @Transactional
@@ -53,18 +50,11 @@ public class GoodsService {
 
             goodsRepository.save(goods);
 
-            MultipartFile image = createForm.getImage();
+            List<MultipartFile> images = createForm.getImages();
 
-            if (image != null && !image.isEmpty()) {
-                String originalFilename = StringUtils.cleanPath(image.getOriginalFilename());
+            if (images != null || !images.isEmpty()) {
 
-                // 이미지를 업로드하는 곳으로 변경
-                RsData<GoodsImage> uploadRsData = goodsImageService.uploadGoodsImage(goods.getId(), image);
-
-                GoodsImage uploadedImage = uploadRsData.getData();
-
-                goods.setFilePath(uploadedImage.getPath());
-
+                goodsImageService.uploadGoodsImages(goods.getId(), images);
             }
 
             return RsData.of("S-1", "입력하신 상품이 등록되었습니다.", goods);
@@ -89,8 +79,6 @@ public class GoodsService {
 
     public ResponseEntity<byte[]> getGoodsImg(Goods goods) throws IOException {
         GoodsImage goodsImage = goods.getGoodsImages().get(0);
-
-        log.debug("=======파일 경로 : "+goodsImage.getPath());
 
         InputStream inputStream = new FileInputStream(goodsImage.getPath());
         byte[] imageByteArray = IOUtils.toByteArray(inputStream);
