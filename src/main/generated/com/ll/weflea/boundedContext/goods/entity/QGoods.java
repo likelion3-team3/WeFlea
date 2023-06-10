@@ -31,8 +31,6 @@ public class QGoods extends EntityPathBase<Goods> {
 
     public final StringPath description = createString("description");
 
-    public final StringPath filePath = createString("filePath");
-
     public final ListPath<GoodsImage, QGoodsImage> goodsImages = this.<GoodsImage, QGoodsImage>createList("goodsImages", GoodsImage.class, QGoodsImage.class, PathInits.DIRECT2);
 
     //inherited
