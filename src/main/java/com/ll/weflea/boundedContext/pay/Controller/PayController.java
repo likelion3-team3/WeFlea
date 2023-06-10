@@ -11,7 +11,6 @@ import com.ll.weflea.boundedContext.pay.Service.PayService;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -39,7 +38,6 @@ public class PayController {
     private final MemberService memberService;
     private final PayService payService;
     private final ChatService chatService;
-    private final SimpMessagingTemplate template;
     private final Rq rq;
 
     @GetMapping("/{goodsId}")
@@ -47,6 +45,10 @@ public class PayController {
 
         Member member = memberService.findByUsername(user.getUsername()).orElse(null);
         Goods goods = goodsService.findById(goodsId);
+
+        if (member.getId().equals(goods.getMember().getId())) {
+            return rq.historyBack("본인이 올린 상품을 안전결제할 수 없습니다.");
+        }
 
 
         model.addAttribute("goods", goods);
@@ -130,8 +132,6 @@ public class PayController {
         messageDTO.setWriter("관리자");
         messageDTO.setRoomId(chatRoomId);
         chatService.createChatMessage(messageDTO);
-
-//        template.convertAndSend("/sub/chat/room/" + chatRoomId, message);
 
 
         return rq.redirectWithMsg("/user/weflea/detail/" + goodsId, "안전결제가 완료되었습니다.");
