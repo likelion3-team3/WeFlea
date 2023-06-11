@@ -2,7 +2,7 @@
 <html layout:decorate="~{common/layout.html}" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>상품 목록</title>
+    <title>내 게시글</title>
     <style>
         table {
             width: 100%;
@@ -48,28 +48,28 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="goods : ${goodsList}">
+        <tr th:each="myPost : ${myPostList}">
             <td>
                 <div class="goods-img img">
-                    <a th:href="@{|/user/weflea/detail/${goods.id}|}">
-                        <img id="imgId" th:src="@{|/user/weflea/goodsImage/${goods.id}|}"/>
+                    <a th:href="@{|/user/weflea/detail/${myPost.id}|}">
+                        <img id="imgId" th:src="@{|/user/weflea/goodsImage/${myPost.id}|}"/>
                     </a>
                 </div>
             </td>
             <td>
-                <a th:href="@{|/user/weflea/detail/${goods.id}|}" th:text="${goods.title}"></a>
+                <a th:href="@{|/user/weflea/detail/${myPost.id}|}" th:text="${myPost.title}"></a>
             </td>
             <td>
-                <a th:href="@{|/user/weflea/detail/${goods.id}|}" th:text="${goods.area}"></a>
+                <a th:href="@{|/user/weflea/detail/${myPost.id}|}" th:text="${myPost.area}"></a>
             </td>
             <td>
-                <a th:href="@{|/user/weflea/detail/${goods.id}|}" th:text="${goods.status}"></a>
+                <a th:href="@{|/user/weflea/detail/${myPost.id}|}" th:text="${myPost.status}"></a>
             </td>
             <td>
-                <a th:href="@{|/user/weflea/detail/${goods.id}|}" th:text="${goods.price}+원"></a>
+                <a th:href="@{|/user/weflea/detail/${myPost.id}|}" th:text="${myPost.price}+원"></a>
             </td>
             <td>
-                <a th:href="@{|/user/weflea/detail/${goods.id}|}" th:text="${goods.modifyDate}"></a>
+                <a th:href="@{|/user/weflea/detail/${myPost.id}|}" th:text="${myPost.modifyDate}"></a>
             </td>
 
         </tr>
@@ -78,28 +78,30 @@
     <br><br>
 
     <!-- 페이징 기능 구현 -->
-    <div th:if="${!goodsList.isEmpty()}">
+    <div th:if="${!myPostList.isEmpty()}">
         <ul class="pagination justify-content-center">
-            <li class="page-item" th:classappend="${!goodsList.hasPrevious} ? 'disabled'">
+            <li class="page-item" th:classappend="${!myPostList.hasPrevious} ? 'disabled'">
                 <a class="page-link"
-                   th:href="@{|?page=${goodsList.number-1}|}">
+                   th:href="@{|?page=${myPostList.number-1}|}">
                     <span>이전</span>
                 </a>
             </li>
-            <li th:each="page: ${#numbers.sequence(0, goodsList.totalPages-1)}"
-                th:if="${page >= goodsList.number-5 and page <= goodsList.number+5}"
-                th:classappend="${page == goodsList.number} ? 'active'"
+            <li th:each="page: ${#numbers.sequence(0, myPostList.totalPages-1)}"
+                th:if="${page >= myPostList.number-5 and page <= myPostList.number+5}"
+                th:classappend="${page == myPostList.number} ? 'active'"
                 class="page-item">
                 <a th:text="${page}" class="page-link" th:href="@{|?page=${page}|}"></a>
             </li>
-            <li class="page-item" th:classappend="${!goodsList.hasNext} ? 'disabled'">
-                <a class="page-link" th:href="@{|?page=${goodsList.number+1}|}">
+            <li class="page-item" th:classappend="${!myPostList.hasNext} ? 'disabled'">
+                <a class="page-link" th:href="@{|?page=${myPostList.number+1}|}">
                     <span>다음</span>
                 </a>
             </li>
         </ul>
     </div>
 </div>
+
+
 <script>
     function redirectToUrl(element) {
         var url = $(element).data("url");

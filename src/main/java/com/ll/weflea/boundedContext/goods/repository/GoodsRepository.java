@@ -14,5 +14,6 @@ public interface GoodsRepository extends JpaRepository<Goods, Long> {
     @Query("SELECT g from Goods g inner join g.buyer b where b.id = :buyerId")
     List<Goods> findByBuyerId(@Param("buyerId") Long buyerId);
     Page<Goods> findAll(Pageable pageable);
+    Page<Goods> findMyPostById(Long id, Pageable pageable);
 
 }

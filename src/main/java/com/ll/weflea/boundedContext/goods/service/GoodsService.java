@@ -6,8 +6,6 @@ import com.ll.weflea.boundedContext.goods.entity.Goods;
 import com.ll.weflea.boundedContext.goods.entity.GoodsImage;
 import com.ll.weflea.boundedContext.goods.repository.GoodsRepository;
 import com.ll.weflea.boundedContext.member.entity.Member;
-import com.ll.weflea.boundedContext.member.repository.MemberRepository;
-import groovy.util.ObservableList;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -83,6 +81,15 @@ public class GoodsService {
         if (goods.isPresent() == false) throw new NoSuchElementException("상품이 존재하지 않습니다.");
 
         return goods.get();
+    }
+
+    public Page<Goods> getMyPostList(Long id, int page) {
+        List<Sort.Order> sorts = new ArrayList<>();
+        sorts.add(Sort.Order.desc("createDate"));
+        Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts));
+        Page<Goods> myPostList = goodsRepository.findMyPostById(id, pageable);
+
+        return myPostList;
     }
 
     public void deleteById(Long id) {
