@@ -11,6 +11,9 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -64,8 +67,9 @@ public class GoodsService {
         }
     }
 
-    public List<Goods> getGoodsList() {
-        return goodsRepository.findAll();
+    public Page<Goods> getGoodsList(int page) {
+        Pageable pageable = PageRequest.of(page, 10);
+        return this.goodsRepository.findAll(pageable);
     }
 
     public Goods findById(long id) {

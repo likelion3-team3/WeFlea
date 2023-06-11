@@ -15,6 +15,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
@@ -38,8 +39,9 @@ public class GoodsController {
 
 
     @GetMapping("/list")
-    public String wefleaList(Model model) {
-        List<Goods> goodsList = goodsService.getGoodsList();
+    public String wefleaList(Model model, @RequestParam(value = "page", defaultValue = "0") int page) {
+
+        Page<Goods> goodsList = this.goodsService.getGoodsList(page);
         model.addAttribute("goodsList", goodsList);
 
         return "/user/weflea/list";
