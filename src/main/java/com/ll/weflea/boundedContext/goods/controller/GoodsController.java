@@ -66,6 +66,7 @@ public class GoodsController {
         private String title;
         private String area;
         private Status status;
+        private Boolean securePayment;
 
         @NotNull(message="가격은 필수 입력값 입니다.")
         private int price;
@@ -76,6 +77,7 @@ public class GoodsController {
         public CreateForm() {
             this.area = "지역";
             this.status = Status.구매가능;
+            this.securePayment = false;
             this.price = 1;
             this.description = "기본 설명";
         }

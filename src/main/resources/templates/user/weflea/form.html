@@ -33,6 +33,16 @@
     <label for="status">상태</label>
     <input type="text" class="form-control" style="width: 30%;" id="status" th:field="*{status}"><br><br>
 
+    <label>안전결제</label>
+    <div>
+        <label>
+            <input type="radio" id="secureTrue" name="securePayment" value="on" th:checked="${createForm.securePayment}"> 허용
+        </label>
+        <label>
+            <input type="radio" id="secureFalse" name="securePayment" value="off" th:checked="${!createForm.securePayment}"> 허용 안함
+        </label>
+    </div><br><br>
+
     <label for="images">이미지 업로드</label><br>
     <input type="file" id="images" name="images" multiple><br><br>
 

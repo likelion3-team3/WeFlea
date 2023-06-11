@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
+import org.springframework.data.annotation.Id;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +29,8 @@ public class Goods extends BaseEntity {
     private int price;
 
     private String description;
+
+    private Boolean securePayment;
 
 
     @ManyToOne(fetch = FetchType.LAZY)
