@@ -36,46 +36,69 @@
 <body layout:fragment="content">
 
 <a href="/user/weflea/create" class="btn">상품 등록하기</a><br><br>
+    <table>
+        <thead>
+        <tr>
+            <th th:width="200px">상품 사진</th>
+            <th th:width="350px">제목</th>
+            <th th:width="130px">지역</th>
+            <th th:width="130px">상태</th>
+            <th th:width="150px">가격</th>
+            <th th:width="200px">등록일</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="goods : ${goodsList}">
+            <td>
+                <div class="goods-img img">
+                    <a th:href="@{|/user/weflea/detail/${goods.id}|}">
+                        <img id="imgId" th:src="@{|/user/weflea/goodsImage/${goods.id}|}"/>
+                    </a>
+                </div>
+            </td>
+            <td>
+                <a th:href="@{|/user/weflea/detail/${goods.id}|}" th:text="${goods.title}"></a>
+            </td>
+            <td>
+                <a th:href="@{|/user/weflea/detail/${goods.id}|}" th:text="${goods.area}"></a>
+            </td>
+            <td>
+                <a th:href="@{|/user/weflea/detail/${goods.id}|}" th:text="${goods.status}"></a>
+            </td>
+            <td>
+                <a th:href="@{|/user/weflea/detail/${goods.id}|}" th:text="${goods.price}+원"></a>
+            </td>
+            <td>
+                <a th:href="@{|/user/weflea/detail/${goods.id}|}" th:text="${goods.modifyDate}"></a>
+            </td>
 
-<table>
-    <thead>
-    <tr>
-        <th th:width="200px">상품 사진</th>
-        <th th:width="350px">제목</th>
-        <th th:width="130px">지역</th>
-        <th th:width="130px">상태</th>
-        <th th:width="150px">가격</th>
-        <th th:width="200px">등록일</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="goods : ${goodsList}">
-        <td>
-            <div class="goods-img img">
-                <a th:href="@{|/user/weflea/detail/${goods.id}|}">
-                    <img id="imgId" th:src="@{|/user/weflea/goodsImage/${goods.id}|}"/>
+        </tr>
+        </tbody>
+    </table><br><br>
+
+    <!-- 페이징 기능 구현 -->
+    <div th:if="${!goodsList.isEmpty()}">
+        <ul class="pagination justify-content-center">
+            <li class="page-item" th:classappend="${!goodsList.hasPrevious} ? 'disabled'">
+                <a class="page-link"
+                   th:href="@{|?page=${goodsList.number-1}|}">
+                    <span>이전</span>
                 </a>
-            </div>
-        </td>
-        <td>
-            <a th:href="@{|/user/weflea/detail/${goods.id}|}" th:text="${goods.title}"></a>
-        </td>
-        <td>
-            <a th:href="@{|/user/weflea/detail/${goods.id}|}" th:text="${goods.area}"></a>
-        </td>
-        <td>
-            <a th:href="@{|/user/weflea/detail/${goods.id}|}" th:text="${goods.status}"></a>
-        </td>
-        <td>
-            <a th:href="@{|/user/weflea/detail/${goods.id}|}" th:text="${goods.price}+원"></a>
-        </td>
-        <td>
-            <a th:href="@{|/user/weflea/detail/${goods.id}|}" th:text="${goods.modifyDate}"></a>
-        </td>
+            </li>
+            <li th:each="page: ${#numbers.sequence(0, goodsList.totalPages-1)}"
+                th:if="${page >= goodsList.number-5 and page <= goodsList.number+5}"
+                th:classappend="${page == goodsList.number} ? 'active'"
+                class="page-item">
+                <a th:text="${page}" class="page-link" th:href="@{|?page=${page}|}"></a>
+            </li>
+            <li class="page-item" th:classappend="${!goodsList.hasNext} ? 'disabled'">
+                <a class="page-link" th:href="@{|?page=${goodsList.number+1}|}">
+                    <span>다음</span>
+                </a>
+            </li>
+        </ul>
+    </div>
 
-    </tr>
-    </tbody>
-</table>
 <script>
     function redirectToUrl(element) {
         var url = $(element).data("url");
