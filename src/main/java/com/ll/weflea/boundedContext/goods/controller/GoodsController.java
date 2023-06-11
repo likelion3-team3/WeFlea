@@ -66,7 +66,7 @@ public class GoodsController {
         private String title;
         private String area;
         private Status status;
-        private Boolean securePayment;
+        private boolean securePayment;
 
         @NotNull(message="가격은 필수 입력값 입니다.")
         private int price;

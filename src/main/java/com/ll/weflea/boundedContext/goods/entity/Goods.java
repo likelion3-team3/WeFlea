@@ -30,7 +30,7 @@ public class Goods extends BaseEntity {
 
     private String description;
 
-    private Boolean securePayment;
+    private boolean securePayment;
 
 
     @ManyToOne(fetch = FetchType.LAZY)
