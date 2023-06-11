@@ -106,8 +106,12 @@ public class GoodsController {
     }
 
     @GetMapping("/detail/{id}")
-    public String detail(Model model, @PathVariable("id") Long id) {
+    public String detail(Model model, @PathVariable("id") Long id) throws IOException {
         Goods goods = goodsService.findById(id);
+        ResponseEntity<List<byte[]>> allGoodsImages = goodsService.getAllGoodsImages(goods);
+
+        model.addAttribute("goodsImages", allGoodsImages.getBody());
+
 
         model.addAttribute("goods", goods);
 
@@ -139,4 +143,12 @@ public class GoodsController {
 
         return goodsImage;
     }
+
+    @GetMapping("/detail/goodsImage/{id}")
+    public ResponseEntity<List<byte[]>> getAllGoodsImg (@PathVariable("id") Long id) throws IOException {
+        Goods goods = goodsService.findById(id);
+
+        return goodsService.getAllGoodsImages(goods);
+    }
+
 }
