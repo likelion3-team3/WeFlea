@@ -64,7 +64,8 @@
             <img th:src="${search.imageLink}" style="border-radius: 12px; width:200px">
             <div style="border-radius: 12px; width:200px">
               <h2 class="item_name" th:text="${search.title}"></h2>
-              <h2 class="item_price" data-th-text="${#numbers.formatInteger(search.price, 3, 'COMMA') + '원'}"></h2>
+              <h2 class="item_price" data-th-text="${search.price &lt;= 0 ? '나눔 or 연략요망' : #numbers.formatInteger(search.price, 3, 'COMMA') + '원'}"></h2>
+              <h2 class="item_cost" th:text="${search.id}"></h2>
               <h2 class="item_cost" th:text="${search.id}"></h2>
               <h1 class="item_place" th:text="${search.area}"></h1>
               <div class="item_info">

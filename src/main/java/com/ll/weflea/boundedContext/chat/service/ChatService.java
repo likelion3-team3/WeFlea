@@ -28,17 +28,17 @@ public class ChatService {
 
 
     @Transactional
-    public ChatRoomDetailDTO createChatRoomDetailDTO(String name, Member sender, Member receiver) {
+    public ChatRoomDetailDTO createChatRoomDetailDTO(Member sender, Member receiver) {
 
-        ChatRoom chatRoom = createChatRoom(name, sender, receiver);
+        ChatRoom chatRoom = createChatRoom(sender, receiver);
 
         ChatRoomDetailDTO chatRoomDetailDTO = ChatRoomDetailDTO.toChatRoomDetailDTO(chatRoom);
 
         return chatRoomDetailDTO;
     }
 
-    private ChatRoom createChatRoom(String name, Member sender, Member receiver) {
-        ChatRoom chatRoom = ChatRoom.create(name, sender, receiver);
+    private ChatRoom createChatRoom(Member sender, Member receiver) {
+        ChatRoom chatRoom = ChatRoom.create(sender, receiver);
         chatRoomRepository.save(chatRoom);
         return chatRoom;
     }
@@ -90,6 +90,18 @@ public class ChatService {
         }
 
         return chatRoomDetailDTOS;
+    }
+
+    public ChatRoom findExistChatRoom(Long senderId, Long receiverId) {
+        return chatRoomRepository.findExistChatRoom(senderId, receiverId).orElse(null);
+    }
+
+    public Boolean isExistChatRoom(Long senderId, Long receiverId) {
+        if (findExistChatRoom(senderId, receiverId) == null) {
+            return false;
+        }
+
+        return true;
     }
 
 }

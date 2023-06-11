@@ -20,7 +20,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.FileInputStream;
@@ -28,9 +27,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-
 import java.util.NoSuchElementException;
 import java.util.Optional;
+
 
 @Slf4j
 @Service
@@ -86,6 +85,25 @@ public class GoodsService {
         return goods.get();
     }
 
+    public void deleteById(Long id) {
+        goodsRepository.deleteById(id);
+    }
+
+    //안전결제완료되면 상품에 대한 buyer 및 거래상태 설정
+    @Transactional
+    public void updateStatusAndBuyer(Long id, String status, Member buyer) {
+        Goods goods = findById(id);
+        goods.updateStatusAndBuyer(status, buyer);
+    }
+
+    @Transactional
+    public RsData<Goods> updateStatus(Long id, String status) {
+        Goods goods = findById(id);
+        goods.updateStatus(status);
+
+        return RsData.of("S-1", "거래상태가 " + status + "으로 변경되었습니다.");
+    }
+
     public ResponseEntity<byte[]> getGoodsImg(Goods goods) throws IOException {
         GoodsImage goodsImage = goods.getGoodsImages().get(0);
 
@@ -94,4 +112,24 @@ public class GoodsService {
         inputStream.close();
         return new ResponseEntity<>(imageByteArray, HttpStatus.OK);
     }
+
+    public ResponseEntity<List<byte[]>> getAllGoodsImages(Goods goods) throws IOException {
+        List<byte[]> imageList = new ArrayList<>();
+
+        List<GoodsImage> goodsImages = goods.getGoodsImages();
+
+        for (GoodsImage goodsImage : goodsImages) {
+            InputStream inputStream = new FileInputStream(goodsImage.getPath());
+            byte[] imageByteArray = IOUtils.toByteArray(inputStream);
+            inputStream.close();
+            imageList.add(imageByteArray);
+        }
+
+        return new ResponseEntity<>(imageList, HttpStatus.OK);
+    }
+
+    public List<Goods> findByBuyerId(Long buyerId) {
+        return goodsRepository.findByBuyerId(buyerId);
+    }
+
 }

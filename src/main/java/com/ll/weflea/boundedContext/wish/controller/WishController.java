@@ -42,26 +42,33 @@ public class WishController {
     public String addWish(@PathVariable Long goodsId, @AuthenticationPrincipal User user) {
 
         if (user.getAuthorities() == null) {
-            rq.historyBack("로그인을 먼저 해주세요!");
+            return rq.historyBack("로그인을 먼저 해주세요!");
         }
 
         Member member = memberService.findByUsername(user.getUsername()).orElse(null);
 
+        if (member.getId().equals(goodsId)) {
+            return rq.historyBack("본인 상품을 찜 목록에 등록할 수 없습니다.");
+        }
+
         if (wishService.isGoodsWished(member.getId(), goodsId)) {
-            rq.historyBack("이미 찜한 상품입니다.");
+            return rq.historyBack("이미 찜한 상품입니다.");
         }
 
         RsData<Wish> rsData = wishService.addWish(member, goodsId);
 
-        //상세페이지 구현되면 상세페이지로 historyBack
-        return rq.redirectWithMsg("user/wish/list", rsData);
+        if (rsData.isFail()) {
+            return rq.historyBack(rsData.getMsg());
+        }
+
+        return rq.redirectWithMsg("/user/weflea/detail/" + goodsId, rsData);
     }
 
     @PostMapping("/delete/{wishId}")
-    public String deleteWish(@PathVariable Long id) {
+    public String deleteWish(@PathVariable Long wishId) {
 
-        RsData<Wish> rsData = wishService.deleteWish(id);
+        RsData<Wish> rsData = wishService.deleteWish(wishId);
 
-        return rq.redirectWithMsg("user/wish/list", rsData);
+        return rq.redirectWithMsg("/user/wish/list", rsData);
     }
 }
