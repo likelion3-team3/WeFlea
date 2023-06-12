@@ -23,10 +23,15 @@
       </div>
       <hr style="color:#495057">
     </div>
+    <form class="search-bar mt-3" th:action="@{/user/search/all(keyword=${keyword})}" method="get">
+      <input type="text" name="keyword" class="search-input" placeholder="중고 거래 통합 검색">
+      <button class="search-button">검색</button>
+    </form>
 
     <h1 class="top_title" th:text="|${keyword != null ? keyword : '중고거래 최신'} 검색 결과|"></h1>
+
     <div class="content_4_wrap">
-      <form class="flex flex-row gap-3 flex-nowrap m-auto" style="max-width: 400px">
+      <form class="flex flex-row gap-1 flex-nowrap m-auto justify-content-center" style="max-width: 400px">
         <input type="hidden" name="keyword" th:value="${keyword}">
         <div class="form-control-sm">
           <select name="provider" class="select select-bordered select-small"
