@@ -79,20 +79,20 @@
     <!-- 페이징 기능 구현 -->
     <div th:if="${!goodsList.isEmpty()}">
         <ul class="pagination justify-content-center">
-            <li class="page-item" th:classappend="${!goodsList.hasPrevious} ? 'disabled'">
+            <li class="page-item" th:classappend="${goodsList.number == 0} ? 'disabled'">
                 <a class="page-link"
-                   th:href="@{|?page=${goodsList.number-1}|}">
+                   th:href="@{|?page=${goodsList.number - 1}|}">
                     <span>이전</span>
                 </a>
             </li>
-            <li th:each="page: ${#numbers.sequence(0, goodsList.totalPages-1)}"
-                th:if="${page >= goodsList.number-5 and page <= goodsList.number+5}"
-                th:classappend="${page == goodsList.number} ? 'active'"
+            <li th:each="page: ${#numbers.sequence(1, goodsList.totalPages)}"
+                th:if="${page >= goodsList.number - 5 and page <= goodsList.number + 5}"
+                th:classappend="${page == goodsList.number + 1} ? 'active'"
                 class="page-item">
-                <a th:text="${page}" class="page-link" th:href="@{|?page=${page}|}"></a>
+                <a th:text="${page}" class="page-link" th:href="@{|?page=${page - 1}|}"></a>
             </li>
-            <li class="page-item" th:classappend="${!goodsList.hasNext} ? 'disabled'">
-                <a class="page-link" th:href="@{|?page=${goodsList.number+1}|}">
+            <li class="page-item" th:classappend="${goodsList.number == goodsList.totalPages - 1} ? 'disabled'">
+                <a class="page-link" th:href="@{|?page=${goodsList.number + 1}|}">
                     <span>다음</span>
                 </a>
             </li>

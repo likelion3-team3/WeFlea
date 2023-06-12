@@ -45,6 +45,8 @@ public class QGoods extends EntityPathBase<Goods> {
 
     public final NumberPath<Integer> price = createNumber("price", Integer.class);
 
+    public final BooleanPath securePayment = createBoolean("securePayment");
+
     public final EnumPath<Status> status = createEnum("status", Status.class);
 
     public final StringPath title = createString("title");
