@@ -31,7 +31,10 @@
         <div class="item_row">
             <div th:each="goods : ${goodsList}" class="item">
                 <a th:href="@{|/user/weflea/detail/${goods.id}|}">
-                    <div style="border-radius: 12px; width:200px">
+                    <div th:if="${goods.goodsImages.size()==0}">
+                        <img src="/images/default-profile.jpg" alt="Default Profile Image" style="border-radius: 12px; width:200px">
+                    </div>
+                    <div th:if="${goods.goodsImages.size()>=1}">
                         <img id="goods-image" th:src="@{|/user/weflea/goodsImage/${goods.id}|}" style="border-radius: 12px; width:200px">
                     </div>
                     <div style="border-radius: 12px; width:200px">
