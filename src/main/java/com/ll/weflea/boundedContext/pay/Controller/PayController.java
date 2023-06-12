@@ -105,27 +105,6 @@ public class PayController {
         JSONObject jsonObject = (JSONObject) parser.parse(reader);
         responseStream.close();
 
-//        model.addAttribute("method", (String) jsonObject.get("method"));
-//        model.addAttribute("orderName", (String) jsonObject.get("orderName"));
-//
-//        if (((String) jsonObject.get("method")) != null) {
-//            if (((String) jsonObject.get("method")).equals("카드")) {
-//                model.addAttribute("cardNumber", (String) ((JSONObject) jsonObject.get("card")).get("number"));
-//            } else if (((String) jsonObject.get("method")).equals("가상계좌")) {
-//                model.addAttribute("accountNumber", (String) ((JSONObject) jsonObject.get("virtualAccount")).get("accountNumber"));
-//            } else if (((String) jsonObject.get("method")).equals("계좌이체")) {
-//                model.addAttribute("bank", (String) ((JSONObject) jsonObject.get("transfer")).get("bank"));
-//            } else if (((String) jsonObject.get("method")).equals("휴대폰")) {
-//                model.addAttribute("customerMobilePhone", (String) ((JSONObject) jsonObject.get("mobilePhone")).get("customerMobilePhone"));
-//            }
-//        } else {
-//            model.addAttribute("code", (String) jsonObject.get("code"));
-//            model.addAttribute("message", (String) jsonObject.get("message"));
-//        }
-
-        //판매자에게 포인트 충전
-        payService.chargePoint((long) goods.getPrice(), goods.getMember());
-
         //채팅방에 "안전결제가 완료되었습니다" 메시지 전송
         Member sender = memberService.findByUsername(user.getUsername()).orElse(null);
         String chatRoomId = chatService.findExistChatRoom(sender.getId(), goods.getMember().getId()).getRoomId();
@@ -152,5 +131,4 @@ public class PayController {
 
         return "user/pay/fail";
     }
-
 }
