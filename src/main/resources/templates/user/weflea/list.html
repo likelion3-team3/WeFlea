@@ -2,82 +2,56 @@
 <html layout:decorate="~{common/layout.html}" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>상품 목록</title>
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th, td {
-            padding: 8px;
-            text-align: left;
-            vertical-align: top;
-            border: 1px solid #ddd;
-            word-wrap: break-word;
-        }
-
-        th {
-            background-color: #f2f2f2;
-        }
-
-        img {
-            max-width: 200px;
-            max-height: 200px;
-        }
-
-        .btn {
-            padding: 5px 10px;
-            white-space: nowrap;
-        }
-    </style>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="/starboot/css/searchList.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>위플리 목록</title>
 </head>
 
 <body layout:fragment="content">
 
-<a href="/user/weflea/create" class="btn">상품 등록하기</a><br><br>
-    <table>
-        <thead>
-        <tr>
-            <th th:width="200px">상품 사진</th>
-            <th th:width="350px">제목</th>
-            <th th:width="130px">지역</th>
-            <th th:width="130px">상태</th>
-            <th th:width="150px">가격</th>
-            <th th:width="200px">등록일</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="goods : ${goodsList}">
-            <td>
-                <div class="goods-img img">
-                    <a th:href="@{|/user/weflea/detail/${goods.id}|}">
-                        <img id="imgId" th:src="@{|/user/weflea/goodsImage/${goods.id}|}"/>
-                    </a>
-                </div>
-            </td>
-            <td>
-                <a th:href="@{|/user/weflea/detail/${goods.id}|}" th:text="${goods.title}"></a>
-            </td>
-            <td>
-                <a th:href="@{|/user/weflea/detail/${goods.id}|}" th:text="${goods.area}"></a>
-            </td>
-            <td>
-                <a th:href="@{|/user/weflea/detail/${goods.id}|}" th:text="${goods.status}"></a>
-            </td>
-            <td>
-                <a th:href="@{|/user/weflea/detail/${goods.id}|}" th:text="${goods.price}+원"></a>
-            </td>
-            <td>
-                <a th:href="@{|/user/weflea/detail/${goods.id}|}" th:text="${goods.modifyDate}"></a>
-            </td>
+<div>
+    <div class="content_5">
+        <div class="keyword_wrap">
+            <a href="/user/weflea/create" class="button-1 btn-round" style="background-image: linear-gradient(to right, #a1c4fd 0%, #c2e9fb 51%, #a1c4fd 100%);">상품 등록하기</a>
+        </div>
+        <div class="keyword_wrap">
+        </div>
+        <hr style="color:#495057">
+    </div>
 
-        </tr>
-        </tbody>
-    </table><br><br>
+    <div class="container">
+        <form class="search-bar mt-3" th:action="@{/user/search/all(keyword=${keyword})}" method="get">
+            <input type="text" name="keyword" class="search-input" placeholder="위플리 매물 검색">
+            <button class="search-button">검색</button>
+        </form>
+    </div>
+
+    <div class="content_4_wrap">
+        <div class="item_row">
+            <div th:each="goods : ${goodsList}" class="item">
+                <a th:href="@{|/user/weflea/detail/${goods.id}|}">
+                    <div style="border-radius: 12px; width:200px">
+                        <img id="goods-image" th:src="@{|/user/weflea/goodsImage/${goods.id}|}" style="border-radius: 12px; width:200px">
+                    </div>
+                    <div style="border-radius: 12px; width:200px">
+                        <h2 class="item_name" th:text="${goods.title}"></h2>
+                        <h2 class="item_price" data-th-text="${goods.price &lt;= 0 ? '나눔 or 연략요망' : #numbers.formatInteger(goods.price, 3, 'COMMA') + '원'}"></h2>
+                        <h1 class="item_place" th:text="${goods.area}"></h1>
+                        <div class="item_info">
+                            <h1 class="item_provider" th:text="${goods.status}"></h1>
+                            <h1 class="item_sellDate" th:text="${#temporals.format(goods.createDate, 'MM-dd HH:mm')}"></h1>
+                        </div>
+                    </div>
+
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
 
     <!-- 페이징 기능 구현 -->
-    <div th:if="${!goodsList.isEmpty()}">
+    <div class="mt-5" th:if="${!goodsList.isEmpty()}">
         <ul class="pagination justify-content-center">
             <li class="page-item" th:classappend="${goodsList.number == 0} ? 'disabled'">
                 <a class="page-link"
