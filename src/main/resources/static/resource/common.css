@@ -21,8 +21,9 @@ html > body .label-text {
     justify-content: space-between;
     align-items: center;
     /*background-color: aliceblue;*/
-    background-image: linear-gradient(to right, #ffecd2 0%, #fcb69f 51%, #ffecd2 100%);
-    /*background-image: linear-gradient(to right, #84fab0 0%, #8fd3f4 51%, #84fab0 100%);*/
+    /*background-image: linear-gradient(to right, #fbc2eb 0%, #a6c1ee 51%, #fbc2eb 100%);*/
+    /*background-image: linear-gradient(to right, #ffecd2 0%, #fcb69f 51%, #ffecd2 100%);*/
+    background-image: linear-gradient(to right, #a1c4fd 0%, #c2e9fb 51%, #a1c4fd 100%);
     font-family: GmarketSansMedium;
 }
 
@@ -30,7 +31,8 @@ html > body .label-text {
     font-size: larger;
     font-weight: bold;
     justify-content: center;
-    color: black;
+    /*color: #BC8F8F;*/
+    color: white;
 }
 
 .navbar__menu {
@@ -45,12 +47,18 @@ html > body .label-text {
 }
 
 .navbar__menu li a {
+    /*color: #BC8F8F;*/
     color: white;
     text-decoration: none;
 }
 
 .navbar__logo a:visited {
-    color: black;
+    /*color: #BC8F8F;*/
+    color: white;
+}
+
+.weflea-backColor {
+    background-image: linear-gradient(to right, #a1c4fd 0%, #c2e9fb 51%, #a1c4fd 100%);
 }
 
 .search-bar {
