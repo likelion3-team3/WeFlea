@@ -7,6 +7,7 @@ import com.ll.weflea.boundedContext.goods.service.GoodsService;
 import com.ll.weflea.boundedContext.member.dto.NicknameDto;
 import com.ll.weflea.boundedContext.member.entity.Member;
 import com.ll.weflea.boundedContext.member.service.MemberService;
+import com.ll.weflea.boundedContext.pay.Service.PayService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +30,7 @@ public class MemberController {
     private final MemberService memberService;
     private final GoodsService goodsService;
     private final Rq rq;
+    private final PayService payService;
 
     @GetMapping("login")
     public String showLogin() {
@@ -75,9 +77,14 @@ public class MemberController {
         return "user/weflea/purchaseStatus";
     }
 
+
+    //안전결제가 정상적으로 완료되고 구매자가 물건을 받고 거래 완료 신청을 누르면
+    //판매자에게 상품 금액만큼 포인트 충전
     @PostMapping("/me/status/complete/deal/{goodsId}")
     public String completeDeal(@PathVariable Long goodsId) {
         goodsService.updateStatus(goodsId, "거래완료");
+        Goods goods = goodsService.findById(goodsId);
+        payService.chargePoint((long) goods.getPrice(), goods.getMember());
 
         return rq.redirectWithMsg("/user/member/me/status", "거래가 정상적으로 성사되었습니다.");
     }

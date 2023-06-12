@@ -1,4 +1,4 @@
-package com.ll.weflea.boundedContext.member.controller;
+package com.ll.weflea.boundedContext.goods.controller;
 
 import com.ll.weflea.boundedContext.goods.controller.GoodsController;
 import org.junit.jupiter.api.DisplayName;

@@ -18,7 +18,7 @@
             </div>
             <div id="msgArea" class="chat-history">
                 <div style="list-style: none" th:each="message : ${messages}">
-                    <div th:if="${message.message} == '안전결제가 완료되었습니다.'" class="chat-message admin-message">
+                    <div th:if="${message.sender} == null" class="chat-message admin-message">
                         <div class="message-content alert alert-secondary">
                             <b th:text="관리자 + ' : ' + ${message.message}"></b>
                         </div>

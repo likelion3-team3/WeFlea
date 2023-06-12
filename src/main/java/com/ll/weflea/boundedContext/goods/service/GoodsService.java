@@ -47,6 +47,7 @@ public class GoodsService {
                     .title(createForm.getTitle())
                     .area(createForm.getArea())
                     .status(createForm.getStatus())
+                    .securePayment(createForm.isSecurePayment())
                     .price(createForm.getPrice())
                     .description(createForm.getDescription())
                     .build();
