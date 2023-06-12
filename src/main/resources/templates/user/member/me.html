@@ -4,29 +4,24 @@
     <meta charset="UTF-8">
     <title>마이페이지</title>
 </head>
-<body>
 
-<main layout:fragment="main" class="flex-grow flex items-center justify-center">
-    <div class="container">
-        <div class="header">
-            <h1>마이페이지</h1>
-        </div>
-        <div class="profile justify-center">
-            <div class="card bg-base-120">
-                <div class="card-body">
+<body layout:fragment="content">
+<div class="container">
+    <div class="header">
+        <h1>마이페이지</h1>
+    </div>
+    <div class="profile justify-center">
+        <div class="card bg-base-120">
+            <div class="card-body">
+                <div class="profile">
                     <div class="profile-img img">
                         <div th:if="${@rq.member.profileImage eq null}">
                             <img src="/images/default-profile.jpg" alt="Default Profile Image">
                         </div>
                         <div th:if="${@rq.member.profileImage ne null}">
                             <img id="imgId" th:src="@{/user/member/profile-image}"/>
-                            <!--                        <img th:src="${@rq.member.profileImage.path}" alt="Profile Image">-->
                         </div>
                     </div>
-                    <form method="post" th:action="@{/user/member/upload/profile}" enctype="multipart/form-data">
-                        <input type="file" name="profileImage" accept=".jpg, .png, .jpeg"/>
-                        <input class="btn btn-sm" type="submit" value="저장"/>
-                    </form>
                     <div class="profile-info">
                         <h2 th:utext="${@rq.member.nickname}"></h2>
                     </div>
@@ -34,29 +29,38 @@
                         <a href="/user/member/update/nickname">닉네임 수정</a>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="section">
-            <!--            <p>중고거래는 위플리 !</p>-->
-            <div class="buttons">
-                <a href="/user/member/me/myPost">
-                    <img src="/images/post-icon.png" alt="My-Icon">
-                    <span>내 게시글</span>
-                </a>
-                <a href="/user/wish/list">
-                    <img src="/images/wish-icon.png" alt="Wish Icon">
-                    <span>찜목록</span>
-                </a>
-                <a href="/chat/rooms">
-                    <img src="/images/chat-icon.png" alt="Chat Icon">
-                    <span>채팅목록</span>
-                </a>
+                <form method="post" th:action="@{/user/member/upload/profile}" enctype="multipart/form-data">
+                    <input type="file" name="profileImage" accept=".jpg, .png, .jpeg"/>
+                    <input class="btn btn-sm" type="submit" value="저장"/>
+                </form>
+                <div class="section">
+                    <span>충전 포인트</span>
+                    <h2 th:utext="${@rq.member.point}+원"></h2>
+                </div>
             </div>
         </div>
     </div>
-
-
-</main>
-
+    <!--            <p>중고거래는 위플리 !</p>-->
+    <div>
+    <div class="buttons">
+        <a href="/user/member/me/myPost">
+            <img src="/images/post-icon.png" alt="My-Icon">
+            <span>내 게시글</span>
+        </a>
+        <a href="/user/wish/list">
+            <img src="/images/wish-icon.png" alt="Wish Icon">
+            <span>찜목록</span>
+        </a>
+        <a href="/chat/rooms">
+            <img src="/images/chat-icon.png" alt="Chat Icon">
+            <span>채팅목록</span>
+        </a>
+        <a href="/user/pay/payment">
+            <img src="/images/payImg.png" alt="Pay Icon">
+            <span>안전결제 내역</span>
+        </a>
+    </div>
+    </div>
+</div>
 </body>
 </html>
