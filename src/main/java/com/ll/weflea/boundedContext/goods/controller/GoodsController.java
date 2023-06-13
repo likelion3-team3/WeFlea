@@ -49,6 +49,15 @@ public class GoodsController {
         return "user/weflea/list";
     }
 
+    @GetMapping("/list/search")
+    public String searchGoods(Model model, @RequestParam("keyword") String keyword, @RequestParam(defaultValue = "0") int page) {
+        Page<Goods> goodsList = goodsService.getGoodsListByKeyword(keyword, page);
+        model.addAttribute("goodsList", goodsList);
+        model.addAttribute("keyword", keyword);
+
+        return "user/weflea/list";
+    }
+
 
     @GetMapping("/create")
     public String wefleaCreate(Model model) {

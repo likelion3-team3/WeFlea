@@ -143,4 +143,8 @@ public class GoodsService {
         return goodsRepository.findByBuyerId(buyerId);
     }
 
+    public Page<Goods> getGoodsListByKeyword(String keyword, int page) {
+        Pageable pageable = PageRequest.of(page, 10);
+        return goodsRepository.findByKeyword(keyword, pageable);
+    }
 }

@@ -22,9 +22,9 @@
     </div>
 
     <div class="container">
-        <form class="search-bar mt-3" th:action="@{/user/search/all(keyword=${keyword})}" method="get">
-            <input type="text" name="keyword" class="search-input" placeholder="위플리 매물 검색">
-            <button class="search-button weflea-backColor">검색</button>
+        <form class="search-bar mt-3" th:action="@{/user/weflea/list/search}" method="get">
+            <input type="text" name="keyword" class="search-input" placeholder="위플리 매물 검색" th:value="${keyword}">
+            <button class="search-button">검색</button>
         </form>
     </div>
 
