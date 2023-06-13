@@ -14,8 +14,8 @@ public interface GoodsRepository extends JpaRepository<Goods, Long> {
     @Query("SELECT g from Goods g inner join g.buyer b where b.id = :buyerId")
     List<Goods> findByBuyerId(@Param("buyerId") Long buyerId);
 
-    @Query("SELECT g from Goods g where g.title = :title")
-    Page<Goods> findByKeyword(@Param("title") String keyword, Pageable pageable);
+    @Query("SELECT g FROM Goods g WHERE g.title LIKE %:keyword%")
+    Page<Goods> findByKeyword(@Param("keyword") String keyword, Pageable pageable);
 
     Page<Goods> findAll(Pageable pageable);
 }
