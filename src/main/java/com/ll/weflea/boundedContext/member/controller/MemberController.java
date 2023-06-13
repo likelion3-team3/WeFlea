@@ -89,13 +89,13 @@ public class MemberController {
         return rq.redirectWithMsg("/user/member/me/status", "거래가 정상적으로 성사되었습니다.");
     }
 
-    @GetMapping("/me/myPost")
+    @GetMapping("/me/myGoods")
     public String myPosts(@AuthenticationPrincipal User user, Model model, @RequestParam(value = "page", defaultValue = "0") int page) {
         Member member = memberService.findByUsername(user.getUsername()).orElse(null);
 
-        Page<Goods> myPostList = goodsService.getMyPostList(member.getId(), page);
-        model.addAttribute("myPostList", myPostList);
+        Page<Goods> myGoodsList = goodsService.getMyGoodsList(member, page);
+        model.addAttribute("myGoodsList", myGoodsList);
 
-        return "user/member/myPost";
+        return "user/member/myGoods";
     }
 }

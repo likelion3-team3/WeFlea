@@ -187,8 +187,8 @@ html > body .label-text {
 .section {
     display: flex;
     justify-content: space-between;
-    background-color: #e5e5e5;
-    border: 2px dashed #4D5159;
+    background-color: #C2E9FBFF;
+    border: 2px dashed #C2E9FBFF;
     padding: 15px;
     margin: 20px 0;
     border-radius: 5px;
@@ -209,7 +209,7 @@ html > body .label-text {
 .buttons {
     display: flex;
     justify-content: space-around;
-    border: 2px solid #4D5159;
+    border: 2px solid #C2E9FBFF;
     padding: 15px;
     margin: 20px 0;
     border-radius: 3px;
@@ -303,4 +303,56 @@ html > body .label-text {
     color: #bbb;
     text-decoration: none;
     cursor: pointer;
+}
+
+.title-1{
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin-top: 100px;
+    text-align: center;
+    margin-bottom: 100px;
+}
+
+.border-bottom{
+    border-bottom: 1px solid;
+}
+
+
+.button-1 {
+    width: 200px;
+    height: 80px;
+    margin: 10px;
+    padding: 10px;
+    text-align: center;
+    text-transform: uppercase;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: white;
+    /* text-shadow: 0px 0px 10px rgba(0,0,0,0.2);*/
+    box-shadow: 0 0 20px #eee;
+    border-radius: 10px;
+}
+
+.pb-0 {
+    padding-bottom: 0 !important;
+}
+
+.pb-1 {
+    padding-bottom: 0.25rem !important;
+}
+
+.pb-2 {
+    padding-bottom: 0.5rem !important;
+}
+
+.pb-3 {
+    padding-bottom: 1rem !important;
+}
+
+.pb-4 {
+    padding-bottom: 1.5rem !important;
+}
+
+.pb-5 {
+    padding-bottom: 3rem !important;
 }

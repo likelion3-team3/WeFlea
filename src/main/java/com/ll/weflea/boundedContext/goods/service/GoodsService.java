@@ -56,7 +56,7 @@ public class GoodsService {
 
             List<MultipartFile> images = createForm.getImages();
 
-            if (images != null || !images.isEmpty()) {
+            if (images != null && !images.isEmpty()) {
 
                 goodsImageService.uploadGoodsImages(goods.getId(), images);
             }
@@ -84,13 +84,13 @@ public class GoodsService {
         return goods.get();
     }
 
-    public Page<Goods> getMyPostList(Long id, int page) {
+    public Page<Goods> getMyGoodsList(Member member, int page) {
         List<Sort.Order> sorts = new ArrayList<>();
         sorts.add(Sort.Order.desc("createDate"));
         Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts));
-        Page<Goods> myPostList = goodsRepository.findMyPostById(id, pageable);
+        Page<Goods> myGoodsList = goodsRepository.findByMember(member, pageable);
 
-        return myPostList;
+        return myGoodsList;
     }
 
     public void deleteById(Long id) {
