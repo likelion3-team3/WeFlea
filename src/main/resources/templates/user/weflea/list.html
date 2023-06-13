@@ -13,7 +13,8 @@
 <div>
     <div class="content_5">
         <div class="keyword_wrap">
-            <a href="/user/weflea/create" class="button-1 btn-round weflea-backColor">상품 등록하기</a>
+            <a href="/user/weflea/create" class="button-1 btn-round"
+               style="background-image: linear-gradient(to right, #a1c4fd 0%, #c2e9fb 51%, #a1c4fd 100%);">상품 등록하기</a>
         </div>
         <div class="keyword_wrap">
         </div>
@@ -21,9 +22,9 @@
     </div>
 
     <div class="container">
-        <form class="search-bar mt-3" th:action="@{/user/search/all(keyword=${keyword})}" method="get">
-            <input type="text" name="keyword" class="search-input" placeholder="위플리 매물 검색">
-            <button class="search-button weflea-backColor">검색</button>
+        <form class="search-bar mt-3" th:action="@{/user/weflea/list/search}" method="get">
+            <input type="text" name="keyword" class="search-input" placeholder="위플리 매물 검색" th:value="${keyword}">
+            <button class="search-button">검색</button>
         </form>
     </div>
 
@@ -39,43 +40,44 @@
                     </div>
                     <div style="border-radius: 12px; width:200px">
                         <h2 class="item_name" th:text="${goods.title}"></h2>
-                        <h2 class="item_price" data-th-text="${goods.price &lt;= 0 ? '나눔 or 연략요망' : #numbers.formatInteger(goods.price, 3, 'COMMA') + '원'}"></h2>
+                        <h2 class="item_price"
+                            data-th-text="${goods.price &lt;= 0 ? '나눔 or 연략요망' : #numbers.formatInteger(goods.price, 3, 'COMMA') + '원'}"></h2>
                         <h1 class="item_place" th:text="${goods.area}"></h1>
                         <div class="item_info">
                             <h1 class="item_provider" th:text="${goods.status}"></h1>
-                            <h1 class="item_sellDate" th:text="${#temporals.format(goods.createDate, 'MM-dd HH:mm')}"></h1>
+                            <h1 class="item_sellDate"
+                                th:text="${#temporals.format(goods.createDate, 'MM-dd HH:mm')}"></h1>
                         </div>
                     </div>
-
                 </a>
             </div>
         </div>
     </div>
 </div>
 
-    <!-- 페이징 기능 구현 -->
-    <div class="mt-5" th:if="${!goodsList.isEmpty()}">
-        <ul class="pagination justify-content-center">
-            <li class="page-item" th:classappend="${goodsList.number == 0} ? 'disabled'">
-                <a class="page-link"
-                   th:href="@{|?page=${goodsList.number - 1}|}">
-                    <span>이전</span>
-                </a>
-            </li>
-            <li th:each="page: ${#numbers.sequence(1, goodsList.totalPages)}"
-                th:if="${page >= goodsList.number - 5 and page <= goodsList.number + 5}"
-                th:classappend="${page == goodsList.number + 1} ? 'active'"
-                class="page-item">
-                <a th:text="${page}" class="page-link" th:href="@{|?page=${page - 1}|}"></a>
-            </li>
-            <li class="page-item" th:classappend="${goodsList.number == goodsList.totalPages - 1} ? 'disabled'">
-                <a class="page-link" th:href="@{|?page=${goodsList.number + 1}|}">
-                    <span>다음</span>
-                </a>
-            </li>
-        </ul>
-    </div>
-
+<!-- 페이징 기능 구현 -->
+<div class="mt-5" th:if="${!goodsList.isEmpty()}">
+    <ul class="pagination justify-content-center">
+        <li class="page-item" th:classappend="${goodsList.number == 0} ? 'disabled'">
+            <a class="page-link"
+               th:href="@{|?page=${goodsList.number - 1}|}">
+                <span>이전</span>
+            </a>
+        </li>
+        <li th:each="page: ${#numbers.sequence(1, goodsList.totalPages)}"
+            th:if="${page >= goodsList.number - 5 and page <= goodsList.number + 5}"
+            th:classappend="${page == goodsList.number + 1} ? 'active'"
+            class="page-item">
+            <a th:text="${page}" class="page-link" th:href="@{|?page=${page - 1}|}"></a>
+        </li>
+        <li class="page-item" th:classappend="${goodsList.number == goodsList.totalPages - 1} ? 'disabled'">
+            <a class="page-link" th:href="@{|?page=${goodsList.number + 1}|}">
+                <span>다음</span>
+            </a>
+        </li>
+    </ul>
+</div>
+</div>
 <script>
     function redirectToUrl(element) {
         var url = $(element).data("url");
