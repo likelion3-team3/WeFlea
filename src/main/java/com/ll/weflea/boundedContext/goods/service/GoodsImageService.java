@@ -6,18 +6,15 @@ import com.ll.weflea.boundedContext.goods.entity.GoodsImage;
 import com.ll.weflea.boundedContext.goods.repository.GoodsImageRepository;
 import com.ll.weflea.boundedContext.goods.repository.GoodsRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -42,6 +39,8 @@ public class GoodsImageService {
 
             String fileName = generatedUniqueFileName(image.getOriginalFilename());
             String filePath = storageLocation + fileName;
+
+            log.info("goodsImage 확인 = {}", fileName);
 
             image.transferTo(new File(filePath));
 

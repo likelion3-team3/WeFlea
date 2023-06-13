@@ -13,7 +13,7 @@
 <div>
     <div class="content_5">
         <div class="keyword_wrap">
-            <a href="/user/weflea/create" class="button-1 btn-round" style="background-image: linear-gradient(to right, #a1c4fd 0%, #c2e9fb 51%, #a1c4fd 100%);">상품 등록하기</a>
+            <a href="/user/weflea/create" class="button-1 btn-round weflea-backColor">상품 등록하기</a>
         </div>
         <div class="keyword_wrap">
         </div>
@@ -31,8 +31,11 @@
         <div class="item_row">
             <div th:each="goods : ${goodsList}" class="item">
                 <a th:href="@{|/user/weflea/detail/${goods.id}|}">
-                    <div style="border-radius: 12px; width:200px">
-                        <img id="goods-image" th:src="@{|/user/weflea/goodsImage/${goods.id}|}" style="border-radius: 12px; width:200px">
+                    <div th:if="${goods.goodsImages.size()==0}">
+                        <img src="/images/default-profile.jpg" alt="Default Profile Image" style="border-radius: 12px; width:150px">
+                    </div>
+                    <div th:if="${goods.goodsImages.size()>=1}">
+                        <img th:src="@{|/user/weflea/goodsImage/${goods.id}|}" style="border-radius: 12px; width:200px">
                     </div>
                     <div style="border-radius: 12px; width:200px">
                         <h2 class="item_name" th:text="${goods.title}"></h2>

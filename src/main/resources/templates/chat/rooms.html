@@ -4,9 +4,14 @@
 <th:block th:replace="~{layout/basic :: setContent(~{this :: content})}">
     <th:block th:fragment="content">
 
-        <div class="chat-list">
+        <div class="chat-list weflea-backColor">
             <div class="chat-item" th:each="room : ${list}">
-                <img src="https://via.placeholder.com/50" alt="User" />
+                <div th:if="${room.receiver.profileImage eq null}">
+                    <img src="/images/default-profile.jpg" alt="Default Profile Image">
+                </div>
+                <div th:if="${room.receiver.profileImage ne null}">
+                    <img id="imgId" th:src="@{/user/member/receiver/{receiverId}/profile-image(receiverId=${room.receiver.id})}" />
+                </div>
                 <div class="chat-info">
                     <div class="chat-name" th:text="${#strings.equals(room.sender.nickname, myNickname) ? room.receiver.nickname : room.sender.nickname}"></div>
                     <a class="chat-preview" th:href="@{/chat/room(roomId=${room.roomId})}" th:text="${room.lastMessage}"></a>

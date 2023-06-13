@@ -14,7 +14,12 @@
                 <div class="card-body bg-white mt-0 shadow flex">
                     <div class="text-right">
                         <div class="goods-img img">
-                            <img class="img-1" id="imgId" th:src="@{|/user/weflea/goodsImage/${goods.id}|}" />
+                            <div th:if="${goods.goodsImages.size()==0}">
+                                <img class="img-1" src="/images/default-profile.jpg" alt="Default Profile Image" style="border-radius: 12px; width:200px">
+                            </div>
+                            <div th:if="${goods.goodsImages.size()>=1}">
+                                <img class="img-1" id="imgId" th:src="@{|/user/weflea/goodsImage/${goods.id}|}" style="border-radius: 12px; width:200px">
+                            </div>
                             <div class="modal_detail">
                                 <span class="close_detail">&times;</span>
                                 <img class="modal_detail_content" id="img01"/>
@@ -86,18 +91,22 @@
                     <div class="flex">
                         <form class="mr-3" th:action="@{/chat/room/{id}(id=${goods.id})}" method="post">
                             <button type="submit" class="btn btn-light border"
+                                    style="background-image: linear-gradient(to right, #a1c4fd 0%, #c2e9fb 51%, #a1c4fd 100%);"
                                     th:disabled="${goods.status.toString() == '거래완료'}">채팅하기</button>
                         </form>
                         <form class="mr-3" th:action="@{/user/wish/add/{id}(id=${goods.id})}" method="post">
                             <button type="submit" class="btn btn-light border"
+                                    style="background-image: linear-gradient(to right, #a1c4fd 0%, #c2e9fb 51%, #a1c4fd 100%);"
                                     th:disabled="${goods.status.toString() == '거래완료'}">찜하기</button>
                         </form>
                         <form th:action="@{/pay/{id}(id=${goods.id})}" method="get">
                             <button type="submit" class="btn btn-light border"
+                                    style="background-image: linear-gradient(to right, #a1c4fd 0%, #c2e9fb 51%, #a1c4fd 100%);"
                                     th:disabled="${goods.status.toString() == '거래완료'}">안전결제</button>
                         </form>
                         <form th:action="@{/user/weflea/detail/delete/{id}(id=${goods.id})}" method="post" style="margin-left: 200px">
                             <button type="submit" class="btn btn-light border" th:if="${goods.member.username == @rq.member.username}"
+                                    style="background-image: linear-gradient(to right, #a1c4fd 0%, #c2e9fb 51%, #a1c4fd 100%);"
                                     onclick="return confirm('해당 게시물을 정말 삭제하시겠습니까?')">게시글 삭제</button>
                         </form>
                     </div>
