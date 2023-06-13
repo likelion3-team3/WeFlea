@@ -87,6 +87,15 @@ public class GoodsService {
         return goods.get();
     }
 
+    public Page<Goods> getMyGoodsList(Member member, int page) {
+        List<Sort.Order> sorts = new ArrayList<>();
+        sorts.add(Sort.Order.desc("createDate"));
+        Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts));
+        Page<Goods> myGoodsList = goodsRepository.findByMember(member, pageable);
+
+        return myGoodsList;
+    }
+
     public void deleteById(Long id) {
         goodsRepository.deleteById(id);
     }

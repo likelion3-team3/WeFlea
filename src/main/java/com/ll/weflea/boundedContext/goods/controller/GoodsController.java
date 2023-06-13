@@ -80,14 +80,17 @@ public class GoodsController {
             this.securePayment = false;
             this.price = 1;
             this.description = "기본 설명";
+            this.images = null;
         }
     }
 
     // 위플리 상품 등록 기능 구현
     @PostMapping("/create")
-    public String create(@Valid CreateForm createForm, BindingResult bindingResult, @AuthenticationPrincipal User user) throws Exception {
+    public String create(@Valid CreateForm createForm, BindingResult bindingResult, @AuthenticationPrincipal User user, Model model) throws Exception {
         if (bindingResult.hasErrors()) {
             // 유효성 검사 오류가 있는 경우 폼 페이지로 다시 이동
+            model.addAttribute(createForm);
+
             return "user/weflea/form";
         }
 
