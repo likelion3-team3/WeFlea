@@ -16,7 +16,7 @@
                     </div>
                 </div>
             </div>
-            <div class="chat-history">
+            <div id="msgArea" class="chat-history">
                 <div style="list-style: none" th:each="message : ${messages}">
                     <div th:if="${message.sender} == null" class="chat-message admin-message">
                         <div class="message-content alert alert-secondary">
