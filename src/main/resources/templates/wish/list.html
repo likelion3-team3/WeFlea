@@ -13,8 +13,12 @@
     <div class="item_row">
         <div th:each="wish : ${wishList}" class="item" data-index="${status.index}">
             <a  th:href="|/user/weflea/detail/${wish.goods.id}|">
-<!--                <img th:src="${wish.goods.goodsImages}" style="border-radius: 12px; width:200px">-->
-                <img src="https://img2.joongna.com/media/original/2023/05/23/1684842327279E36_HaZLQ.jpg?impolicy=thumb&size=150" style="border-radius: 12px; width:200px">
+                <div th:if="${wish.goods.goodsImages.size()==0}">
+                    <img src="/images/noimg.png" alt="Default Profile Image" style="border-radius: 12px; width:150px">
+                </div>
+                <div th:if="${wish.goods.goodsImages.size()>=1}">
+                    <img th:src="@{|/user/weflea/goodsImage/${wish.goods.id}|}" style="border-radius: 12px; width:200px">
+                </div>
                 <div class="flex " style="width: 200px">
                     <div style="border-radius: 12px; width:200px">
                         <h2 class="item_name" th:text="${wish.goods.title}"></h2>

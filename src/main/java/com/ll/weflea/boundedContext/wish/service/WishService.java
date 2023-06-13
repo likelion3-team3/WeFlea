@@ -23,7 +23,7 @@ public class WishService {
     private final GoodsRepository goodsRepository;
 
     public List<Wish> findWishList(Member member) {
-        return wishRepository.findAllByMember_Id(member.getId());
+        return wishRepository.findAllByMember_IdAndDOrderByIdDesc(member.getId());
     }
 
     public boolean isGoodsWished(Long memberId, Long goodsId) {
