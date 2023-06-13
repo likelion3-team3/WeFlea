@@ -24,6 +24,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -85,10 +86,10 @@ public class GoodsController {
 
     // 위플리 상품 등록 기능 구현
     @PostMapping("/create")
-    public String create(@Valid CreateForm createForm, BindingResult bindingResult, @AuthenticationPrincipal User user, Model model) throws Exception {
+    public String create(@Validated CreateForm createForm, BindingResult bindingResult, @AuthenticationPrincipal User user, Model model) throws Exception {
         if (bindingResult.hasErrors()) {
             // 유효성 검사 오류가 있는 경우 폼 페이지로 다시 이동
-            model.addAttribute("org.springframework.validation.BindingResult.createForm", bindingResult);
+            model.addAttribute(bindingResult);
 
             return "user/weflea/form";
         }

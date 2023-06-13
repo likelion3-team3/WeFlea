@@ -40,8 +40,6 @@ public class GoodsService {
     // 위플리 장터 상품 등록 기능
     @Transactional
     public RsData<Goods> create(Member member, @Valid GoodsController.CreateForm createForm) throws Exception {
-        log.debug("=====price 타입: "+createForm.getPrice().getClass().getSimpleName());
-
         try {
             Goods goods = Goods
                     .builder()
