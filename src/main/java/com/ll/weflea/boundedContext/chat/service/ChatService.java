@@ -43,17 +43,6 @@ public class ChatService {
         return chatRoom;
     }
 
-    public List<ChatRoomDetailDTO> findAllRooms() {
-        List<ChatRoom> chatRooms = chatRoomRepository.findAll();
-        List<ChatRoomDetailDTO> chatRoomDetailDtoRooms = new ArrayList<>();
-
-        for (ChatRoom chatRoom : chatRooms) {
-            chatRoomDetailDtoRooms.add(ChatRoomDetailDTO.toChatRoomDetailDTO(chatRoom));
-        }
-
-        return chatRoomDetailDtoRooms;
-    }
-
     public ChatRoomDetailDTO findRoomById(String id) {
         ChatRoom chatRoom = chatRoomRepository.findByRoomId(id).orElse(null);
         return ChatRoomDetailDTO.toChatRoomDetailDTO(chatRoom);
