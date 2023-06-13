@@ -15,8 +15,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -75,7 +73,7 @@ class NicknameCheckInterceptorTest {
         //then
         resultActions
                 .andExpect(handler().handlerType(ChatController.class))
-                .andExpect(handler().methodName("rooms"))
+                .andExpect(handler().methodName("myRooms"))
                 .andExpect(status().is2xxSuccessful());
     }
 
