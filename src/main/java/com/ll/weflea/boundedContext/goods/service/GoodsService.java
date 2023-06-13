@@ -6,8 +6,6 @@ import com.ll.weflea.boundedContext.goods.entity.Goods;
 import com.ll.weflea.boundedContext.goods.entity.GoodsImage;
 import com.ll.weflea.boundedContext.goods.repository.GoodsRepository;
 import com.ll.weflea.boundedContext.member.entity.Member;
-import com.ll.weflea.boundedContext.member.repository.MemberRepository;
-import groovy.util.ObservableList;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -58,10 +56,13 @@ public class GoodsService {
 
             List<MultipartFile> images = createForm.getImages();
 
-            if (images != null || !images.isEmpty()) {
-
-                goodsImageService.uploadGoodsImages(goods.getId(), images);
+            for (MultipartFile image : images) {
+                if (image.isEmpty()) {
+                    return RsData.of("S-1", "입력하신 상품이 등록되었습니다.", goods);
+                }
             }
+
+            goodsImageService.uploadGoodsImages(goods.getId(), images);
 
             return RsData.of("S-1", "입력하신 상품이 등록되었습니다.", goods);
         } catch (Exception e) {
