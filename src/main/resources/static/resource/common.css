@@ -216,6 +216,13 @@ html > body .label-text {
     margin: 0;
 }
 
+.section-left{
+    display: flex;
+    justify-content: flex-start;
+    background-color: #C2E9FBFF;
+}
+
+
 .buttons {
     display: flex;
     justify-content: space-around;
