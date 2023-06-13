@@ -32,17 +32,11 @@
         <div class="item_row">
             <div th:each="goods : ${goodsList}" class="item">
                 <a th:href="@{|/user/weflea/detail/${goods.id}|}">
-<<<<<<< HEAD
-                    <div style="border-radius: 12px; width:200px">
-                        <img id="goods-image" th:src="@{|/user/weflea/goodsImage/${goods.id}|}"
-                             style="border-radius: 12px; width:200px">
-=======
                     <div th:if="${goods.goodsImages.size()==0}">
                         <img src="/images/default-profile.jpg" alt="Default Profile Image" style="border-radius: 12px; width:150px">
                     </div>
                     <div th:if="${goods.goodsImages.size()>=1}">
                         <img th:src="@{|/user/weflea/goodsImage/${goods.id}|}" style="border-radius: 12px; width:200px">
->>>>>>> 8e94484c7d093b22b2282324ece9d3d68afe0181
                     </div>
                     <div style="border-radius: 12px; width:200px">
                         <h2 class="item_name" th:text="${goods.title}"></h2>
@@ -55,7 +49,6 @@
                                 th:text="${#temporals.format(goods.createDate, 'MM-dd HH:mm')}"></h1>
                         </div>
                     </div>
-
                 </a>
             </div>
         </div>
