@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html layout:decorate="~{common/layout.html}" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="/starboot/css/searchList.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>내 게시글</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            vertical-align: top;
+            border: 1px solid #ddd;
+            word-wrap: break-word;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        img {
+            max-width: 200px;
+            max-height: 200px;
+        }
+
+        .btn {
+            padding: 5px 10px;
+            white-space: nowrap;
+        }
+    </style>
+</head>
+
+<body layout:fragment="content">
+<div id="body">
+    <h1 class="title-1 pb-4 border-bottom">내 게시글</h1>
+    <div>
+        <a href="/user/weflea/create" class="button-1 btn-round"
+           style="background-image: linear-gradient(to right, #a1c4fd 0%, #c2e9fb 51%, #a1c4fd 100%);">상품
+            등록하기</a>
+    </div><br><br>
+    <div>
+        <table>
+            <thead>
+            <tr>
+                <th th:width="200px">상품 사진</th>
+                <th th:width="350px">제목</th>
+                <th th:width="130px">지역</th>
+                <th th:width="130px">상태</th>
+                <th th:width="150px">가격</th>
+                <th th:width="200px">등록일</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="myGoods : ${myGoodsList.content}">
+                <td>
+                    <div class="goods-img img">
+                        <a th:href="@{|/user/weflea/detail/${myGoods.id}|}">
+                            <img id="imgId" th:src="@{|/user/weflea/goodsImage/${myGoods.id}|}"/>
+                        </a>
+                    </div>
+                </td>
+                <td>
+                    <a th:href="@{|/user/weflea/detail/${myGoods.id}|}" th:text="${myGoods.title}"></a>
+                </td>
+                <td>
+                    <a th:href="@{|/user/weflea/detail/${myGoods.id}|}" th:text="${myGoods.area}"></a>
+                </td>
+                <td>
+                    <a th:href="@{|/user/weflea/detail/${myGoods.id}|}" th:text="${myGoods.status}"></a>
+                </td>
+                <td>
+                    <a th:href="@{|/user/weflea/detail/${myGoods.id}|}" th:text="${myGoods.price}+원"></a>
+                </td>
+                <td>
+                    <a th:href="@{|/user/weflea/detail/${myGoods.id}|}" th:text="${myGoods.modifyDate}"></a>
+                </td>
+
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <br><br>
+
+    <!-- 페이징 기능 구현 -->
+    <div th:if="${!myGoodsList.isEmpty()}">
+        <ul class="pagination justify-content-center">
+            <li class="page-item" th:classappend="${myGoodsList.number==0} ? 'disabled'">
+                <a class="page-link"
+                   th:href="@{|?page=${myGoodsList.number-1}|}">
+                    <span>이전</span>
+                </a>
+            </li>
+            <li th:each="page: ${#numbers.sequence(1, myGoodsList.totalPages)}"
+                th:if="${page >= myGoodsList.number-5 and page <= myGoodsList.number+5}"
+                th:classappend="${page == myGoodsList.number+1} ? 'active'"
+                class="page-item">
+                <a th:text="${page}" class="page-link" th:href="@{|?page=${page-1}|}"></a>
+            </li>
+            <li class="page-item" th:classappend="${myGoodsList.number==myGoodsList.totalPages-1} ? 'disabled'">
+                <a class="page-link" th:href="@{|?page=${myGoodsList.number+1}|}">
+                    <span>다음</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<script>
+    function redirectToUrl(element) {
+        var url = $(element).data("url");
+        window.location.href = url;
+    }
+</script>
+
+</body>
+</html>
+

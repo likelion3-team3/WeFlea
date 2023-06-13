@@ -1,6 +1,7 @@
 package com.ll.weflea.boundedContext.goods.repository;
 
 import com.ll.weflea.boundedContext.goods.entity.Goods;
+import com.ll.weflea.boundedContext.member.entity.Member;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,4 +19,7 @@ public interface GoodsRepository extends JpaRepository<Goods, Long> {
     Page<Goods> findByKeyword(@Param("keyword") String keyword, Pageable pageable);
 
     Page<Goods> findAll(Pageable pageable);
+
+    Page<Goods> findByMember(Member member, Pageable pageable);
+
 }
