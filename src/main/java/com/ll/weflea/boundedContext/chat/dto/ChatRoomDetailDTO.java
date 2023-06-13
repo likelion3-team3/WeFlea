@@ -30,7 +30,6 @@ public class ChatRoomDetailDTO {
         chatRoomDetailDTO.setSender(chatRoom.getSender());
         chatRoomDetailDTO.setReceiver(chatRoom.getReceiver());
         chatRoomDetailDTO.setRoomId(chatRoom.getRoomId());
-        chatRoomDetailDTO.setName(chatRoom.getRoomName());
 
         if (chatList.size() == 0) {
             chatRoomDetailDTO.setLastMessage("입장해서 채팅하세요!");
