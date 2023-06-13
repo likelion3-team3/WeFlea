@@ -46,7 +46,7 @@
                         <div class="item_info">
                             <h1 class="item_provider" th:text="${goods.status}"></h1>
                             <h1 class="item_sellDate"
-                                th:text="${#temporals.format(goods.createDate, 'MM-dd HH:mm')}"></h1>
+                                th:text="${#temporals.format(goods.modifyDate, 'MM-dd HH:mm')}"></h1>
                         </div>
                     </div>
                 </a>

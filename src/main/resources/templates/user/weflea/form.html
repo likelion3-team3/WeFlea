@@ -16,7 +16,7 @@
     </div>
     <div class="mb-3">
         <label for="description">내용</label>
-        <textarea class="form-control" rows="5" id="description" name="description" placeholder="내용 입력해 주세요."
+        <textarea class="form-control" rows="5" id="description" name="description" placeholder="내용을 입력해 주세요."
                   th:class="${#fields.hasErrors('description')}? 'form-control fieldError' : 'form-control'"></textarea>
         <p style="color:red" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>
     </div>
