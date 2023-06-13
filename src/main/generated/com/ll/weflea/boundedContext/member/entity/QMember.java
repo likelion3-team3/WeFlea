@@ -37,6 +37,8 @@ public class QMember extends EntityPathBase<Member> {
 
     public final StringPath nickname = createString("nickname");
 
+    public final NumberPath<Long> point = createNumber("point", Long.class);
+
     public final QProfileImage profileImage;
 
     public final StringPath providerTypeCode = createString("providerTypeCode");

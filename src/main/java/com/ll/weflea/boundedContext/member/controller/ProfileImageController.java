@@ -2,6 +2,7 @@ package com.ll.weflea.boundedContext.member.controller;
 
 import com.ll.weflea.base.rq.Rq;
 import com.ll.weflea.base.rsData.RsData;
+import com.ll.weflea.boundedContext.member.entity.Member;
 import com.ll.weflea.boundedContext.member.entity.ProfileImage;
 import com.ll.weflea.boundedContext.member.service.MemberService;
 import com.ll.weflea.boundedContext.member.service.ProfileImageService;
@@ -43,6 +44,15 @@ public class ProfileImageController {
 
         String username = user.getUsername();
         ResponseEntity<byte[]> profileImage = profileImageService.getProfileImg(username);
+
+        return profileImage;
+    }
+
+    @GetMapping("/receiver/{receiverId}/profile-image")
+    public ResponseEntity<byte[]> getReceiverProfileImg (@PathVariable Long receiverId) throws IOException {
+
+        Member member = memberService.findById(receiverId).orElse(null);
+        ResponseEntity<byte[]> profileImage = profileImageService.getProfileImg(member.getUsername());
 
         return profileImage;
     }

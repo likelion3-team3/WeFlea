@@ -41,10 +41,9 @@ public class ChatRoom extends BaseEntity {
     @JoinColumn(name = "receiver_id")
     private Member receiver;
 
-    public static ChatRoom create(String roomName, Member sender, Member receiver) {
+    public static ChatRoom create(Member sender, Member receiver) {
         return ChatRoom.builder()
                 .roomId(UUID.randomUUID().toString())
-                .roomName(roomName)
                 .sender(sender)
                 .receiver(receiver)
                 .chatList(new ArrayList<>())

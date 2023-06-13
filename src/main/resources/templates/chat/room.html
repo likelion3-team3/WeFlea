@@ -16,16 +16,21 @@
                     </div>
                 </div>
             </div>
-            <div id="msgArea" class="chat-history">
+            <div class="chat-history">
                 <div style="list-style: none" th:each="message : ${messages}">
-                    <div th:if="${message.sender.username} == ${user.username}" class="chat-message my-message">
+                    <div th:if="${message.sender} == null" class="chat-message admin-message">
                         <div class="message-content alert alert-secondary">
-                            <b th:text="${message.sender.nickname} + ' : ' + ${message.message}"></b>
+                            <b th:text="관리자 + ' : ' + ${message.message}"></b>
                         </div>
                     </div>
-                    <div th:if="${message.sender.username} != ${user.username}" class="chat-message other-message">
+                    <div th:if="${message.sender != null and message.sender.username == user.username}" class="chat-message my-message">
+                        <div class="message-content alert alert-secondary">
+                            <b th:text="${message.sender.nickname} + ' : ' + ${message.message}" style="word-break: break-all;"></b>
+                        </div>
+                    </div>
+                    <div th:if="${message.sender != null and message.sender.username != user.username}" class="chat-message other-message">
                         <div class="message-content alert alert-warning">
-                            <b th:text="${message.sender.nickname} + ' : ' + ${message.message}"></b>
+                            <b th:text="${message.sender.nickname} + ' : ' + ${message.message}" style="word-break: break-all;"></b>
                         </div>
                     </div>
                 </div>

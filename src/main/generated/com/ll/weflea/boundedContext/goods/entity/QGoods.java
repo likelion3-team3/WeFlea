@@ -26,12 +26,12 @@ public class QGoods extends EntityPathBase<Goods> {
 
     public final StringPath area = createString("area");
 
+    public final com.ll.weflea.boundedContext.member.entity.QMember buyer;
+
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createDate = _super.createDate;
 
     public final StringPath description = createString("description");
-
-    public final StringPath filePath = createString("filePath");
 
     public final ListPath<GoodsImage, QGoodsImage> goodsImages = this.<GoodsImage, QGoodsImage>createList("goodsImages", GoodsImage.class, QGoodsImage.class, PathInits.DIRECT2);
 
@@ -45,7 +45,9 @@ public class QGoods extends EntityPathBase<Goods> {
 
     public final NumberPath<Integer> price = createNumber("price", Integer.class);
 
-    public final StringPath status = createString("status");
+    public final BooleanPath securePayment = createBoolean("securePayment");
+
+    public final EnumPath<Status> status = createEnum("status", Status.class);
 
     public final StringPath title = createString("title");
 
@@ -67,6 +69,7 @@ public class QGoods extends EntityPathBase<Goods> {
 
     public QGoods(Class<? extends Goods> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
+        this.buyer = inits.isInitialized("buyer") ? new com.ll.weflea.boundedContext.member.entity.QMember(forProperty("buyer"), inits.get("buyer")) : null;
         this.member = inits.isInitialized("member") ? new com.ll.weflea.boundedContext.member.entity.QMember(forProperty("member"), inits.get("member")) : null;
     }
 

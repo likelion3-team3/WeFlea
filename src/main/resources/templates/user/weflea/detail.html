@@ -1,0 +1,120 @@
+<html layout:decorate="~{user/layout/layout.html}" />
+
+<head>
+    <title>상품 상세 페이지</title>
+    <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+</head>
+
+<body>
+
+<div>
+    <div class="container container-mt">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="card-body bg-white mt-0 shadow flex">
+                    <div class="text-right">
+                        <div class="goods-img img">
+                            <div th:if="${goods.goodsImages.size()==0}">
+                                <img class="img-1" src="/images/default-profile.jpg" alt="Default Profile Image" style="border-radius: 12px; width:200px">
+                            </div>
+                            <div th:if="${goods.goodsImages.size()>=1}">
+                                <img class="img-1" id="imgId" th:src="@{|/user/weflea/goodsImage/${goods.id}|}" style="border-radius: 12px; width:200px">
+                            </div>
+                            <div class="modal_detail">
+                                <span class="close_detail">&times;</span>
+                                <img class="modal_detail_content" id="img01"/>
+                            </div>
+                            <script>
+                                const modal = document.querySelector(".modal_detail");
+                                const img = document.querySelector(".img-1");
+                                const modal_img = document.querySelector(".modal_detail_content");
+                                const span = document.querySelector(".close_detail");
+
+                                img.addEventListener('click', ()=>{
+                                    modalDisplay("block");
+                                    modal_img.src = img.src;
+                                });
+                                span.addEventListener('click', ()=>{
+                                    modalDisplay("none");
+                                });
+                                modal.addEventListener('click', ()=>{
+                                    modalDisplay("none");
+                                });
+                                function modalDisplay(text){
+                                    modal.style.display = text;
+                                }
+                            </script>
+                        </div>
+
+                        <div class="h2 has-text-grey text-left border-bottom">
+                            <span th:text="${goods.title}"></span>
+                        </div>
+                        <div class="h3 has-text-black text-left border-bottom">
+                            <span th:text="${goods.description}"></span>
+                        </div>
+                        <div class="h4 text-primary text-left border-bottom">
+                            <input type="hidden" th:value="${goods.price}" id="price" name="price">
+                            <span th:text="${goods.price}"></span>원
+                        </div>
+                        <div class="h4 has-text-warning text-left border-bottom">
+                            <span th:text="${goods.status.toString()}"></span>
+                        </div>
+                    </div>
+
+                    <form style="max-width: 400px" method="post" id="statusForm" th:action="@{'/user/weflea/detail/update/' + ${goods.id}}">
+                        <div class="form-group pb-3 border-bottom" th:if="${goods.member.username == @rq.member.username}">
+                            <label for="status">거래 상태</label>
+                            <select class="select select-bordered select-small form-control" id="status" name="status" onchange="submitForm()">
+                                <option value="구매가능" th:selected="${goods.status.toString() == '구매가능'}">구매가능</option>
+                                <option value="거래중" th:selected="${goods.status.toString() == '거래중'}">거래중</option>
+                                <option value="거래완료" th:selected="${goods.status.toString() == '거래완료'}">거래완료</option>
+                            </select>
+                        </div>
+                    </form>
+
+                    <script th:inline="javascript">
+                        function submitForm() {
+                            var form = document.getElementById("statusForm");
+                            form.submit();
+                        }
+                        var statusSelect = document.getElementById("status");
+                        var currentStatus = [[${goods.status}]];  // 서버에서 전달되는 현재 상태 값
+                        for (var i = 0; i < statusSelect.options.length; i++) {
+                            if (statusSelect.options[i].value === currentStatus) {
+                                statusSelect.selectedIndex = i;
+                                break;
+                            }
+                        }
+                    </script>
+
+
+                    <div class="flex">
+                        <form class="mr-3" th:action="@{/chat/room/{id}(id=${goods.id})}" method="post">
+                            <button type="submit" class="btn btn-light border"
+                                    style="background-image: linear-gradient(to right, #a1c4fd 0%, #c2e9fb 51%, #a1c4fd 100%);"
+                                    th:disabled="${goods.status.toString() == '거래완료'}">채팅하기</button>
+                        </form>
+                        <form class="mr-3" th:action="@{/user/wish/add/{id}(id=${goods.id})}" method="post">
+                            <button type="submit" class="btn btn-light border"
+                                    style="background-image: linear-gradient(to right, #a1c4fd 0%, #c2e9fb 51%, #a1c4fd 100%);"
+                                    th:disabled="${goods.status.toString() == '거래완료'}">찜하기</button>
+                        </form>
+                        <form th:action="@{/pay/{id}(id=${goods.id})}" method="get">
+                            <button type="submit" class="btn btn-light border"
+                                    style="background-image: linear-gradient(to right, #a1c4fd 0%, #c2e9fb 51%, #a1c4fd 100%);"
+                                    th:disabled="${goods.status.toString() == '거래완료'}">안전결제</button>
+                        </form>
+                        <form th:action="@{/user/weflea/detail/delete/{id}(id=${goods.id})}" method="post" style="margin-left: 200px">
+                            <button type="submit" class="btn btn-light border" th:if="${goods.member.username == @rq.member.username}"
+                                    style="background-image: linear-gradient(to right, #a1c4fd 0%, #c2e9fb 51%, #a1c4fd 100%);"
+                                    onclick="return confirm('해당 게시물을 정말 삭제하시겠습니까?')">게시글 삭제</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

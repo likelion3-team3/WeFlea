@@ -3,11 +3,11 @@ package com.ll.weflea.boundedContext.wish.service;
 import com.ll.weflea.base.rsData.RsData;
 import com.ll.weflea.boundedContext.goods.entity.Goods;
 import com.ll.weflea.boundedContext.goods.repository.GoodsRepository;
-import com.ll.weflea.boundedContext.goods.service.GoodsService;
 import com.ll.weflea.boundedContext.member.entity.Member;
 import com.ll.weflea.boundedContext.wish.entity.Wish;
 import com.ll.weflea.boundedContext.wish.repository.WishRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,6 +16,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
+@Slf4j
 public class WishService {
 
     private final WishRepository wishRepository;
@@ -40,9 +41,14 @@ public class WishService {
     public RsData<Wish> addWish(Member member, Long goodsId) {
         Goods goods = goodsRepository.findById(goodsId).orElse(null);
 
-        Wish wish = Wish.create(member, goods);
+        if (member.getId().equals(goods.getMember().getId())) {
+            return RsData.of("F-1", "본인이 올린 상품을 찜 목록에 등록할 수 없습니다.");
+        }
 
-        return RsData.of("S-1", "해당 상품이 찜 목록에 등록되었습니다.", wish);
+        Wish wish = Wish.create(member, goods);
+        wishRepository.save(wish);
+
+        return RsData.of("S-1", "해당 상품이 찜 목록에 등록되었습니다.");
     }
 
     @Transactional

@@ -23,11 +23,10 @@
     <link rel="stylesheet" href="/resource/common.css">
 
     <!-- 채팅방 CSS -->
-    <link href="/starboot/css/chatStyle.css" rel="stylesheet" />
     <link href="/starboot/css/style.css" rel="stylesheet">
     <link href="/starboot/css/styles.css" rel="stylesheet">
 
-  
+
     <!-- Bootstrap core JavaScript -->
     <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -48,14 +47,14 @@
 <!-- 테일윈드 불러오기 -->
 <script src="https://cdn.tailwindcss.com"></script>
 
-<div class="d-flex">
+<div class="d-flex flex-column">
     <header class="navbar" layout:fragment="header">
         <div class="navbar__logo">
             <a href="/">WeFlea</a>
         </div>
 
         <form class="search-form" th:action="@{/user/search/all(keyword=${keyword})}" method="get">
-            <input type="text" placeholder="중고장터통합검색" name="keyword">
+            <input  type="text" placeholder="중고장터 통합검색" name="keyword">
             <button type="submit"><i class="fas fa-search"></i></button>
         </form>
 
@@ -75,7 +74,7 @@
         </ul>
     </header><br>
 
-    <body layout:fragment="content"></body>
+    <div layout:fragment="content"></div>
 </div>
 
 <script th:inline="javascript">
