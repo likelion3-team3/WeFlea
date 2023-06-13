@@ -96,6 +96,7 @@ public class GoodsService {
         return myGoodsList;
     }
 
+    @Transactional
     public void deleteById(Long id) {
         goodsRepository.deleteById(id);
     }

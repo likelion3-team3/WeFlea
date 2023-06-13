@@ -127,7 +127,9 @@ public class GoodsController {
 
     @PostMapping("/detail/delete/{id}")
     public String delete(@PathVariable("id") Long id) {
+        Goods goods = goodsService.findById(id);
 
+        goodsImageService.deleteByGoods(goods);
         goodsService.deleteById(id);
 
         return rq.redirectWithMsg("/user/weflea/list", "게시물이 삭제되었습니다.");
