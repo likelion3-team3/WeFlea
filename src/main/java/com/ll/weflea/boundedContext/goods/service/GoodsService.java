@@ -23,10 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
 
 
 @Slf4j
@@ -147,4 +144,36 @@ public class GoodsService {
         Pageable pageable = PageRequest.of(page, 10);
         return goodsRepository.findByKeyword(keyword, pageable);
     }
+
+    @Transactional
+    public RsData<Goods> modify(Goods goods, Member member,
+                                @Valid GoodsController.CreateForm createForm) {
+        try {
+            goods.setMember(member);
+            goods.setTitle(createForm.getTitle());
+            goods.setArea(createForm.getArea());
+            goods.setStatus(createForm.getStatus());
+            goods.setSecurePayment(createForm.isSecurePayment());
+            goods.setPrice(createForm.getPrice());
+            goods.setDescription(createForm.getDescription());
+
+            goodsRepository.save(goods);
+
+            List<MultipartFile> images = createForm.getImages();
+
+            for (MultipartFile image : images) {
+                if (!image.isEmpty()) {
+                    goodsImageService.deleteGoodsImage(goods.getId());
+                    goodsImageService.uploadGoodsImages(goods.getId(), images);
+                    break;
+                }
+            }
+
+            return RsData.of("S-1", "상품이 수정되었습니다.", goods);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return RsData.of("F-1", "상품 수정 중 오류가 발생했습니다.");
+        }
+    }
+
 }
