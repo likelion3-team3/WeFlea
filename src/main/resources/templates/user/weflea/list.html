@@ -30,13 +30,17 @@
 
     <div class="content_4_wrap">
         <div class="item_row">
-            <div th:each="goods : ${goodsList}" class="item">
+            <div th:each="goods : ${goodsList}" class="weflea-item">
                 <a th:href="@{|/user/weflea/detail/${goods.id}|}">
-                    <div th:if="${goods.goodsImages.size()==0}">
-                        <img src="/images/default-profile.jpg" alt="Default Profile Image" style="border-radius: 12px; width:150px">
-                    </div>
-                    <div th:if="${goods.goodsImages.size()>=1}">
-                        <img th:src="@{|/user/weflea/goodsImage/${goods.id}|}" style="border-radius: 12px; width:200px">
+                    <div class="weflea-item_img">
+                        <div th:if="${goods.goodsImages.size()==0}">
+                            <img src="/images/default-profile.jpg" alt="Default Profile Image"
+                                 style="border-radius: 12px; width:150px">
+                        </div>
+                        <div th:if="${goods.goodsImages.size()>=1}">
+                            <img th:src="@{|/user/weflea/goodsImage/${goods.id}|}"
+                                 style="border-radius: 12px; width:200px">
+                        </div>
                     </div>
                     <div style="border-radius: 12px; width:200px">
                         <h2 class="item_name" th:text="${goods.title}"></h2>
@@ -54,6 +58,7 @@
         </div>
     </div>
 </div>
+<br><br>
 
 <!-- 페이징 기능 구현 -->
 <div class="mt-5" th:if="${!goodsList.isEmpty()}">
