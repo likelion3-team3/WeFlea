@@ -1,64 +1,73 @@
-<html layout:decorate="~{user/layout/layout.html}" xmlns="http://www.w3.org/1999/html"/>
+<html layout:decorate="~{user/layout/layout.html}"/>
 
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="/starboot/css/searchList.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>마이페이지</title>
 </head>
-<body>
 
-<main layout:fragment="main" class="flex-grow flex items-center justify-center">
-    <div class="container">
-        <div class="header">
-            <h1>마이 페이지</h1>
-        </div>
-        <div class="profile justify-center">
-            <div class="card bg-base-120">
+<body layout:fragment="content">
+<div id="body">
+    <h1 class="title-1 pb-4 border-bottom">마이페이지</h1>
+    <div class="profile justify-center">
+        <div class="card bg-base-120">
             <div class="card-body">
-                <div class="profile-img img">
-                    <div th:if="${@rq.member.profileImage eq null}">
-                        <img src="/images/default-profile.jpg" alt="Default Profile Image">
+                <div class="profile">
+                    <div class="profile-img img">
+                        <div th:if="${@rq.member.profileImage eq null}">
+                            <img src="/images/default-profile.jpg" alt="Default Profile Image">
+                        </div>
+                        <div th:if="${@rq.member.profileImage ne null}">
+                            <img id="imgId" th:src="@{/user/member/profile-image}"/>
+                        </div>
                     </div>
-                    <div th:if="${@rq.member.profileImage ne null}">
-                        <img id="imgId" th:src="@{/user/member/profile-image}" />
-<!--                        <img th:src="${@rq.member.profileImage.path}" alt="Profile Image">-->
+                    <div class="profile-info">
+                        <h2 th:utext="${@rq.member.nickname}"></h2>
+                    </div>
+                    <div class="btn btn-info btn-sm">
+                        <a href="/user/member/update/nickname">닉네임 수정</a>
                     </div>
                 </div>
                 <form method="post" th:action="@{/user/member/upload/profile}" enctype="multipart/form-data">
                     <input type="file" name="profileImage" accept=".jpg, .png, .jpeg"/>
-                    <input class = "btn btn-sm" type="submit" value="저장"/>
+                    <input class="btn btn-info btn-sm" type="submit" value="저장"/>
                 </form>
-                <div class="profile-info">
-                    <h2 th:utext="${@rq.member.nickname}"></h2>
+                <div class="section">
+                    <div class="section-left">
+                        <span>충전 포인트 : </span>
+                        <h2 th:utext="${@rq.member.point}+원"></h2>
+                    </div>
+                    <div class="btn btn-info btn-sm">
+                        <a href="#">충전하기</a>
+                    </div>
                 </div>
-                <div class="btn btn-sm w-25" >
-                    <a href="/user/member/update/nickname">닉네임 수정</a>
-                </div>
-            </div>
-            </div>
 
-        </div>
-        <div class="section">
-            <!--            <p>중고거래는 위플리 !</p>-->
-
-            <div class="buttons">
-                <a href="#">
-                    <img src="/images/post-icon.png" alt="Sell Icon">
-                    <span>내 게시글</span>
-                </a>
-                <a href="#">
-                    <img src="/images/wish-icon.png" alt="Buy Icon">
-                    <span>관심목록</span>
-                </a>
-                <a href="/chat/rooms">
-                    <img src="/images/chat-icon.png" alt="Like Icon">
-                    <span>채팅목록</span>
-                </a>
             </div>
         </div>
     </div>
-
-
-</main>
-
+    <!--            <p>중고거래는 위플리 !</p>-->
+    <div>
+        <div class="buttons">
+            <a href="/user/member/me/myGoods">
+                <img src="/images/post-icon.png" alt="My-Icon">
+                <span>내 게시글</span>
+            </a>
+            <a href="/user/wish/list">
+                <img src="/images/wish-icon.png" alt="Wish Icon">
+                <span>찜목록</span>
+            </a>
+            <a href="/chat/rooms">
+                <img src="/images/chat-icon.png" alt="Chat Icon">
+                <span>채팅목록</span>
+            </a>
+            <a href="/user/member/me/status">
+                <img src="/images/payImg.png" alt="Pay Icon">
+                <span>안전결제 현황</span>
+            </a>
+        </div>
+    </div>
+</div>
 </body>
 </html>
