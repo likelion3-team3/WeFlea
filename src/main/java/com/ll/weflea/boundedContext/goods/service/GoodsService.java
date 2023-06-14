@@ -73,7 +73,7 @@ public class GoodsService {
     public Page<Goods> getGoodsList(int page) {
         List<Sort.Order> sorts = new ArrayList<>();
         sorts.add(Sort.Order.desc("createDate"));
-        Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts));
+        Pageable pageable = PageRequest.of(page, 20, Sort.by(sorts));
         return this.goodsRepository.findAll(pageable);
     }
 
@@ -89,7 +89,7 @@ public class GoodsService {
     public Page<Goods> getMyGoodsList(Member member, int page) {
         List<Sort.Order> sorts = new ArrayList<>();
         sorts.add(Sort.Order.desc("createDate"));
-        Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts));
+        Pageable pageable = PageRequest.of(page, 20, Sort.by(sorts));
         Page<Goods> myGoodsList = goodsRepository.findByMember(member, pageable);
 
         return myGoodsList;
@@ -124,27 +124,12 @@ public class GoodsService {
         return new ResponseEntity<>(imageByteArray, HttpStatus.OK);
     }
 
-    public ResponseEntity<List<byte[]>> getAllGoodsImages(Goods goods) throws IOException {
-        List<byte[]> imageList = new ArrayList<>();
-
-        List<GoodsImage> goodsImages = goods.getGoodsImages();
-
-        for (GoodsImage goodsImage : goodsImages) {
-            InputStream inputStream = new FileInputStream(goodsImage.getPath());
-            byte[] imageByteArray = IOUtils.toByteArray(inputStream);
-            inputStream.close();
-            imageList.add(imageByteArray);
-        }
-
-        return new ResponseEntity<>(imageList, HttpStatus.OK);
-    }
-
     public List<Goods> findByBuyerId(Long buyerId) {
         return goodsRepository.findByBuyerId(buyerId);
     }
 
     public Page<Goods> getGoodsListByKeyword(String keyword, int page) {
-        Pageable pageable = PageRequest.of(page, 10);
+        Pageable pageable = PageRequest.of(page, 20);
         return goodsRepository.findByKeyword(keyword, pageable);
     }
 

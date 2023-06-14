@@ -246,7 +246,7 @@ img{
 .item{
     text-overflow: ellipsis;
     width: 200px;
-    height: 300px;
+    height: 400px;
     flex-grow: 0;
     flex-basis: 25%;
     margin-top: 50px;
@@ -370,6 +370,7 @@ img{
 .keyword_wrap{
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 
 .keyword_title{
@@ -395,4 +396,10 @@ img{
     font-size: medium;
     margin-bottom: 50px;
     margin-left: 20px;
+}
+
+.weflea_image{
+    border-radius: 12px;
+    width:200px;
+    height: 220px;
 }

@@ -26,13 +26,13 @@
                     <div class="profile-info">
                         <h2 th:utext="${@rq.member.nickname}"></h2>
                     </div>
-                    <div class="btn btn-info btn-sm">
+                    <div class="search-button weflea-backColor">
                         <a href="/user/member/update/nickname">닉네임 수정</a>
                     </div>
                 </div>
                 <form method="post" th:action="@{/user/member/upload/profile}" enctype="multipart/form-data">
                     <input type="file" name="profileImage" accept=".jpg, .png, .jpeg"/>
-                    <input class="btn btn-info btn-sm" type="submit" value="저장"/>
+                    <input class="btn weflea-backColor" type="submit" value="저장"/>
                 </form>
                 <div class="section section-font">
                     <span>포인트</span>

@@ -1,8 +1,36 @@
-<html layout:decorate="~{user/layout/layout.html}" />
+<html layout:decorate="~{user/layout/layout.html}"/>
 
 <head>
     <title>상품 상세 페이지</title>
     <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+    <style>
+        .slider {
+            width: 400px;
+            height: 400px;
+            overflow: hidden;
+            margin: 0 auto;
+        }
+
+        .slides {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            transition: transform 0.3s ease;
+        }
+
+        .slides li {
+            flex: 0 0 100%;
+        }
+
+        .slides img {
+            min-height: 300px;
+            min-width: 300px;
+            width: auto;
+            height: auto;
+            object-fit: cover;
+            margin: 0 auto;
+        }
+    </style>
 </head>
 
 <body>
@@ -12,59 +40,101 @@
         <div class="row justify-content-center">
             <div class="col-lg-6">
                 <div class="card-body bg-white mt-0 shadow flex">
+                    <form class="d-flex flex-row-reverse" th:action="@{/user/weflea/list}" method="get">
+                        <button type="submit" class="btn btn-light border weflea-backColor">목록으로
+                        </button>
+                    </form>
+                    <div class="fs-1 has-text-grey text-center">
+                        <span th:text="${goods.title}"></span>
+                    </div>
                     <div class="text-right">
-                        <div class="goods-img img">
-                            <div th:if="${goods.goodsImages.size()==0}">
-                                <img class="img-1" src="/images/default-profile.jpg" alt="Default Profile Image" style="border-radius: 12px; width:200px">
+                        <div class="card-img-top align-items-center">
+                            <div class="slider w-full h-64 relative">
+                                <ul class="slides" th:if="${goods.goodsImages.size()>=1}">
+                                    <li th:each="goodsImage : ${goodsImages}" style="width: 100%;">
+                                        <img class="w-full h-full object-cover" th:id="${goodsImage.id}"
+                                             th:src="@{|/user/weflea/detail/goodsImage/${goodsImage.id}|}">
+                                    </li>
+                                </ul>
+                                <div th:if="${goods.goodsImages.size()==0}">
+                                    <img class="img-thumbnail w-full h-full object-cover" src="/images/default-profile.jpg" alt="Default Profile Image">
+                                </div>
+                                <button class="prev-button absolute top-1/2 left-2 transform -translate-y-1/2 bg-transparent text-black text-xl z-10">
+                                    &lt;
+                                </button>
+                                <button class="next-button absolute top-1/2 right-2 transform -translate-y-1/2 bg-transparent text-black text-xl z-10">
+                                    &gt;
+                                </button>
                             </div>
-                            <div th:if="${goods.goodsImages.size()>=1}">
-                                <img class="img-1" id="imgId" th:src="@{|/user/weflea/goodsImage/${goods.id}|}" style="border-radius: 12px; width:200px">
-                            </div>
-                            <div class="modal_detail">
-                                <span class="close_detail">&times;</span>
-                                <img class="modal_detail_content" id="img01"/>
-                            </div>
-                            <script>
-                                const modal = document.querySelector(".modal_detail");
-                                const img = document.querySelector(".img-1");
-                                const modal_img = document.querySelector(".modal_detail_content");
-                                const span = document.querySelector(".close_detail");
+                        </div>
 
-                                img.addEventListener('click', ()=>{
-                                    modalDisplay("block");
-                                    modal_img.src = img.src;
-                                });
-                                span.addEventListener('click', ()=>{
-                                    modalDisplay("none");
-                                });
-                                modal.addEventListener('click', ()=>{
-                                    modalDisplay("none");
-                                });
-                                function modalDisplay(text){
-                                    modal.style.display = text;
+                        <script>
+                            const modal = document.querySelector(".modal_detail");
+                            const img = document.querySelector(".img-thumbnail");
+                            const modal_img = document.querySelector(".modal_detail_content");
+                            const span = document.querySelector(".close_detail");
+
+                            img.addEventListener('click', () => {
+                                modalDisplay("block");
+                                modal_img.src = img.src;
+                            });
+                            span.addEventListener('click', () => {
+                                modalDisplay("none");
+                            });
+                            modal.addEventListener('click', () => {
+                                modalDisplay("none");
+                            });
+
+                            function modalDisplay(text) {
+                                modal.style.display = text;
+                            }
+                        </script>
+
+                        <script>
+                            const slides = document.querySelector('.slides');
+                            const prevButton = document.querySelector('.prev-button');
+                            const nextButton = document.querySelector('.next-button');
+                            const slideWidth = slides.clientWidth;
+                            let currentPosition = 0;
+
+                            prevButton.addEventListener('click', () => {
+                                if (currentPosition < 0) {
+                                    currentPosition += slideWidth;
+                                    slides.style.transform = `translateX(${currentPosition}px)`;
                                 }
-                            </script>
-                        </div>
+                            });
 
-                        <div class="h2 has-text-grey text-left border-bottom">
-                            <span th:text="${goods.title}"></span>
-                        </div>
-                        <div class="h3 has-text-black text-left border-bottom">
+                            nextButton.addEventListener('click', () => {
+                                const maxPosition = -(slides.childElementCount - 1) * slideWidth;
+                                if (currentPosition > maxPosition) {
+                                    currentPosition -= slideWidth;
+                                    slides.style.transform = `translateX(${currentPosition}px)`;
+                                }
+                            });
+                        </script>
+
+                        <br>
+
+                        <div class="fs-5 has-text-black text-left">
                             <span th:text="${goods.description}"></span>
                         </div>
-                        <div class="h4 text-primary text-left border-bottom">
+                        <br>
+                        <div class="fs-3 text-primary text-left">
                             <input type="hidden" th:value="${goods.price}" id="price" name="price">
                             <span th:text="${goods.price}"></span>원
                         </div>
-                        <div class="h4 has-text-warning text-left border-bottom">
+                        <div class="fs-6 has-text-warning text-left">
                             <span th:text="${goods.status.toString()}"></span>
                         </div>
                     </div>
-
-                    <form style="max-width: 400px" method="post" id="statusForm" th:action="@{'/user/weflea/detail/update/' + ${goods.id}}">
-                        <div class="form-group pb-3 border-bottom" th:if="${goods.member.username == @rq.member.username}">
+                    <br>
+                    <form style="max-width: 400px" method="post" id="statusForm"
+                          th:action="@{'/user/weflea/detail/update/' + ${goods.id}}">
+                        <div class="form-group pb-3 border-bottom"
+                             th:if="${goods.member.username == @rq.member.username}">
                             <label for="status">거래 상태</label>
-                            <select class="select select-bordered select-small form-control" id="status" name="status" onchange="submitForm()">
+                            <select class="select select-bordered select-small form-control" id="status" name="status"
+                                    onchange="submitForm()">
                                 <option value="구매가능" th:selected="${goods.status.toString() == '구매가능'}">구매가능</option>
                                 <option value="거래중" th:selected="${goods.status.toString() == '거래중'}">거래중</option>
                                 <option value="거래완료" th:selected="${goods.status.toString() == '거래완료'}">거래완료</option>
@@ -77,6 +147,7 @@
                             var form = document.getElementById("statusForm");
                             form.submit();
                         }
+
                         var statusSelect = document.getElementById("status");
                         var currentStatus = [[${goods.status}]];  // 서버에서 전달되는 현재 상태 값
                         for (var i = 0; i < statusSelect.options.length; i++) {
@@ -88,33 +159,40 @@
                     </script>
 
 
-                    <div class="flex">
+                    <div class="d-flex flex-row">
                         <form class="mr-3" th:action="@{/chat/room/{id}(id=${goods.id})}" method="post">
-                            <button type="submit" class="btn btn-light border"
-                                    style="background-image: linear-gradient(to right, #a1c4fd 0%, #c2e9fb 51%, #a1c4fd 100%);"
-                                    th:disabled="${goods.status.toString() == '거래완료'}">채팅하기</button>
+                            <button type="submit" class="btn btn-light border weflea-backColor"
+                                    th:disabled="${goods.status.toString() == '거래완료'}">채팅하기
+                            </button>
                         </form>
                         <form class="mr-3" th:action="@{/user/wish/add/{id}(id=${goods.id})}" method="post">
-                            <button type="submit" class="btn btn-light border"
-                                    style="background-image: linear-gradient(to right, #a1c4fd 0%, #c2e9fb 51%, #a1c4fd 100%);"
-                                    th:disabled="${goods.status.toString() == '거래완료'}">찜하기</button>
+                            <button type="submit" class="btn btn-light border weflea-backColor"
+                                    th:disabled="${goods.status.toString() == '거래완료'}">찜하기
+                            </button>
                         </form>
                         <form th:action="@{/pay/{id}(id=${goods.id})}" method="get">
-                            <button type="submit" class="btn btn-light border"
-                                    style="background-image: linear-gradient(to right, #a1c4fd 0%, #c2e9fb 51%, #a1c4fd 100%);"
-                                    th:disabled="${goods.status.toString() == '거래완료'}">안전결제</button>
-                        </form>
-                        <form th:action="@{/user/weflea/modify/{id}(id=${goods.id})}" method="post" style="margin-left: 200px">
-                            <button type="submit" class="btn btn-light border" th:if="${goods.member.username == @rq.member.username}"
-                                    style="background-image: linear-gradient(to right, #a1c4fd 0%, #c2e9fb 51%, #a1c4fd 100%);"
-                                    onclick="return confirm('해당 게시물을 정말 수정하시겠습니까?')">게시글 수정</button>
-                        </form>
-                        <form th:action="@{/user/weflea/detail/delete/{id}(id=${goods.id})}" method="post" style="margin-left: 20px">
-                            <button type="submit" class="btn btn-light border" th:if="${goods.member.username == @rq.member.username}"
-                                    style="background-image: linear-gradient(to right, #a1c4fd 0%, #c2e9fb 51%, #a1c4fd 100%);"
-                                    onclick="return confirm('해당 게시물을 정말 삭제하시겠습니까?')">게시글 삭제</button>
+                            <button type="submit" class="btn btn-light border weflea-backColor"
+                                    th:disabled="${goods.status.toString() == '거래완료' or goods.isSecurePayment() == false}">
+                                안전결제
+                            </button>
                         </form>
                     </div>
+                    <div class="d-flex flex-row-reverse">
+                        <form th:action="@{/user/weflea/detail/delete/{id}(id=${goods.id})}" method="post">
+                            <button type="submit" class="btn btn-light border weflea-backColor"
+                                    th:if="${goods.member.username == @rq.member.username}"
+                                    onclick="return confirm('해당 게시물을 정말 삭제하시겠습니까?')">삭제
+                            </button>
+                        </form>
+                        <form th:action="@{/user/weflea/modify/{id}(id=${goods.id})}" method="post"
+                              style="margin-right: 20px">
+                            <button type="submit" class="btn btn-light border weflea-backColor"
+                                    th:if="${goods.member.username == @rq.member.username}"
+                                    onclick="return confirm('해당 게시물을 수정하시겠습니까?')">수정
+                            </button>
+                        </form>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -123,3 +201,4 @@
 
 </body>
 </html>
+

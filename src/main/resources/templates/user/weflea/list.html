@@ -11,10 +11,9 @@
 <body layout:fragment="content">
 
 <div>
-    <div class="content_5">
+    <div class="content_5" style="text-align: center">
         <div class="keyword_wrap">
-            <a href="/user/weflea/create" class="button-1 btn-round"
-               style="background-image: linear-gradient(to right, #a1c4fd 0%, #c2e9fb 51%, #a1c4fd 100%);">상품 등록하기</a>
+            <a href="/user/weflea/create" class="button-1 btn-round weflea-backColor">상품 등록하기</a>
         </div>
         <div class="keyword_wrap">
         </div>
@@ -24,7 +23,7 @@
     <div class="container">
         <form class="search-bar mt-3" th:action="@{/user/weflea/list/search}" method="get">
             <input type="text" name="keyword" class="search-input" placeholder="위플리 매물 검색" th:value="${keyword}">
-            <button class="search-button">검색</button>
+            <button class="search-button weflea-backColor">검색</button>
         </form>
     </div>
 
@@ -32,15 +31,11 @@
         <div class="item_row">
             <div th:each="goods : ${goodsList}" class="weflea-item">
                 <a th:href="@{|/user/weflea/detail/${goods.id}|}">
-                    <div class="weflea-item_img">
-                        <div th:if="${goods.goodsImages.size()==0}">
-                            <img src="/images/default-profile.jpg" alt="Default Profile Image"
-                                 style="border-radius: 12px; width:150px">
-                        </div>
-                        <div th:if="${goods.goodsImages.size()>=1}">
-                            <img th:src="@{|/user/weflea/goodsImage/${goods.id}|}"
-                                 style="border-radius: 12px; width:200px">
-                        </div>
+                    <div th:if="${goods.goodsImages.size()==0}">
+                        <img class="weflea_image" src="/images/default-profile.jpg" alt="Default Profile Image">
+                    </div>
+                    <div th:if="${goods.goodsImages.size()>=1}">
+                        <img class="weflea_image" th:src="@{|/user/weflea/goodsImage/${goods.id}|}">
                     </div>
                     <div style="border-radius: 12px; width:200px">
                         <h2 class="item_name" th:text="${goods.title}"></h2>
