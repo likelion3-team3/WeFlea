@@ -345,6 +345,7 @@ img{
 .keyword_wrap{
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 
 .keyword_title{

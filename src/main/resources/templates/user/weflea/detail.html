@@ -41,9 +41,7 @@
             <div class="col-lg-6">
                 <div class="card-body bg-white mt-0 shadow flex">
                     <form class="d-flex flex-row-reverse" th:action="@{/user/weflea/list}" method="get">
-                        <button type="submit" class="btn btn-light border"
-                                style="background-image: linear-gradient(to right, #a1c4fd 0%, #c2e9fb 51%, #a1c4fd 100%);"
-                        >목록으로
+                        <button type="submit" class="btn btn-light border weflea-backColor">목록으로
                         </button>
                     </form>
                     <div class="fs-1 has-text-grey text-center">
@@ -163,20 +161,17 @@
 
                     <div class="d-flex flex-row">
                         <form class="mr-3" th:action="@{/chat/room/{id}(id=${goods.id})}" method="post">
-                            <button type="submit" class="btn btn-light border"
-                                    style="background-image: linear-gradient(to right, #a1c4fd 0%, #c2e9fb 51%, #a1c4fd 100%);"
+                            <button type="submit" class="btn btn-light border weflea-backColor"
                                     th:disabled="${goods.status.toString() == '거래완료'}">채팅하기
                             </button>
                         </form>
                         <form class="mr-3" th:action="@{/user/wish/add/{id}(id=${goods.id})}" method="post">
-                            <button type="submit" class="btn btn-light border"
-                                    style="background-image: linear-gradient(to right, #a1c4fd 0%, #c2e9fb 51%, #a1c4fd 100%);"
+                            <button type="submit" class="btn btn-light border weflea-backColor"
                                     th:disabled="${goods.status.toString() == '거래완료'}">찜하기
                             </button>
                         </form>
                         <form th:action="@{/pay/{id}(id=${goods.id})}" method="get">
-                            <button type="submit" class="btn btn-light border"
-                                    style="background-image: linear-gradient(to right, #a1c4fd 0%, #c2e9fb 51%, #a1c4fd 100%);"
+                            <button type="submit" class="btn btn-light border weflea-backColor"
                                     th:disabled="${goods.status.toString() == '거래완료' or goods.isSecurePayment() == false}">
                                 안전결제
                             </button>
@@ -184,17 +179,15 @@
                     </div>
                     <div class="d-flex flex-row-reverse">
                         <form th:action="@{/user/weflea/detail/delete/{id}(id=${goods.id})}" method="post">
-                            <button type="submit" class="btn btn-light border"
+                            <button type="submit" class="btn btn-light border weflea-backColor"
                                     th:if="${goods.member.username == @rq.member.username}"
-                                    style="background-image: linear-gradient(to right, #a1c4fd 0%, #c2e9fb 51%, #a1c4fd 100%);"
                                     onclick="return confirm('해당 게시물을 정말 삭제하시겠습니까?')">삭제
                             </button>
                         </form>
                         <form th:action="@{/user/weflea/detail/update/{id}(id=${goods.id})}" method="post"
                               style="margin-right: 20px">
-                            <button type="submit" class="btn btn-light border"
+                            <button type="submit" class="btn btn-light border weflea-backColor"
                                     th:if="${goods.member.username == @rq.member.username}"
-                                    style="background-image: linear-gradient(to right, #a1c4fd 0%, #c2e9fb 51%, #a1c4fd 100%);"
                                     onclick="return confirm('해당 게시물을 수정하시겠습니까?')">수정
                             </button>
                         </form>
