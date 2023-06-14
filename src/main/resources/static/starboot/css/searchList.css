@@ -255,6 +255,31 @@ img{
     /*flex-direction: column;*/
 }
 
+.weflea-item{
+    text-overflow: ellipsis;
+    width: 250px;
+    height: 350px;
+    flex-grow: 0;
+    flex-basis: 25%;
+    margin-top: 50px;
+    display: flex;
+    justify-content: space-around;
+    /*flex-direction: column;*/
+}
+
+.weflea-item_img{
+    width: 250px;
+    height: 200px;
+    overflow: hidden;
+}
+
+.weflea-item_img img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+
+}
+
 .item_row{
     display: flex;
     flex-wrap: wrap;

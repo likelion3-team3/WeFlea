@@ -34,14 +34,9 @@
                     <input type="file" name="profileImage" accept=".jpg, .png, .jpeg"/>
                     <input class="btn btn-info btn-sm" type="submit" value="저장"/>
                 </form>
-                <div class="section">
-                    <div class="section-left">
-                        <span>충전 포인트 : </span>
-                        <h2 th:utext="${@rq.member.point}+원"></h2>
-                    </div>
-                    <div class="btn btn-info btn-sm">
-                        <a href="#">충전하기</a>
-                    </div>
+                <div class="section section-font">
+                    <span>포인트</span>
+                    <h2 th:utext="${@rq.member.point}+원"></h2>
                 </div>
 
             </div>

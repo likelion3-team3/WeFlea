@@ -67,4 +67,9 @@ public class GoodsImageService {
         return uniqueFileName;
     }
 
+    @Transactional
+    public void deleteByGoods(Goods goods){
+        goodsImageRepository.deleteByGoods(goods);
+    }
+
 }

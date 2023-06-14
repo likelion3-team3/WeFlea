@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -52,6 +51,7 @@ public class ChatRoom extends BaseEntity {
 
     public void addMessage(ChatMessage chatMessage) {
         chatList.add(chatMessage);
+
 //        chatMessage.getChatRoom().addMessage(chatMessage);
     }
 }
