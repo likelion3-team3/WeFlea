@@ -104,7 +104,12 @@
                                     style="background-image: linear-gradient(to right, #a1c4fd 0%, #c2e9fb 51%, #a1c4fd 100%);"
                                     th:disabled="${goods.status.toString() == '거래완료'}">안전결제</button>
                         </form>
-                        <form th:action="@{/user/weflea/detail/delete/{id}(id=${goods.id})}" method="post" style="margin-left: 200px">
+                        <form th:action="@{/user/weflea/modify/{id}(id=${goods.id})}" method="post" style="margin-left: 200px">
+                            <button type="submit" class="btn btn-light border" th:if="${goods.member.username == @rq.member.username}"
+                                    style="background-image: linear-gradient(to right, #a1c4fd 0%, #c2e9fb 51%, #a1c4fd 100%);"
+                                    onclick="return confirm('해당 게시물을 정말 수정하시겠습니까?')">게시글 수정</button>
+                        </form>
+                        <form th:action="@{/user/weflea/detail/delete/{id}(id=${goods.id})}" method="post" style="margin-left: 20px">
                             <button type="submit" class="btn btn-light border" th:if="${goods.member.username == @rq.member.username}"
                                     style="background-image: linear-gradient(to right, #a1c4fd 0%, #c2e9fb 51%, #a1c4fd 100%);"
                                     onclick="return confirm('해당 게시물을 정말 삭제하시겠습니까?')">게시글 삭제</button>

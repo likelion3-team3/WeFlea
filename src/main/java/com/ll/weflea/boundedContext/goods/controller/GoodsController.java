@@ -12,10 +12,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.domain.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -172,6 +169,43 @@ public class GoodsController {
         Goods goods = goodsService.findById(id);
 
         return goodsService.getAllGoodsImages(goods);
+    }
+
+    @GetMapping("/modify/{id}")
+    public String wefleaModify(@PathVariable("id") Long id, Model model) {
+        Goods goods = goodsService.findById(id);
+
+        if (goods == null) {
+            return "/user/weflea/detail";
+        }
+
+        model.addAttribute("goods", goods);
+
+        return "user/weflea/modify";
+    }
+
+    @PostMapping("/modify/{id}")
+    public String modify(@PathVariable("id") Long id, @Valid CreateForm createForm,
+                         BindingResult bindingResult, @AuthenticationPrincipal User user,
+                         Model model) throws Exception {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("goods", goodsService.findById(id));
+            return "user/weflea/modify";
+        }
+
+        String username = user.getUsername();
+
+        Member member = memberRepository.findByUsername(username).orElse(null);
+
+        Goods goods = goodsService.findById(id);
+
+        RsData<Goods> modifyRsData = goodsService.modify(goods, member, createForm);
+
+        if (modifyRsData.isFail()) {
+            return rq.historyBack(modifyRsData);
+        }
+
+        return "redirect:/user/weflea/detail/" + modifyRsData.getData().getId();
     }
 
 }

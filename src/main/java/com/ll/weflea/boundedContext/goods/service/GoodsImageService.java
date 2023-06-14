@@ -71,4 +71,5 @@ public class GoodsImageService {
     public void deleteByGoods(Goods goods){
         goodsImageRepository.deleteByGoods(goods);
     }
+
 }
