@@ -135,8 +135,13 @@ public class GoodsController {
     }
 
     @PostMapping("/detail/delete/{id}")
-    public String delete(@PathVariable("id") Long id) {
+    public String delete(@PathVariable("id") Long id, @AuthenticationPrincipal User user) {
+
         Goods goods = goodsService.findById(id);
+
+        if (!goods.getMember().getUsername().equals(user.getUsername())) {
+            return rq.historyBack("삭제할 수 있는 권한이 없습니다.");
+        }
 
         goodsImageService.deleteByGoods(goods);
         goodsService.deleteById(id);

@@ -15,9 +15,10 @@
                 <div class="chat-info">
                     <div class="chat-name" th:text="${#strings.equals(room.sender.nickname, myNickname) ? room.receiver.nickname : room.sender.nickname}"></div>
                     <a class="chat-preview" th:href="@{/chat/room(roomId=${room.roomId})}" th:text="${room.lastMessage}"></a>
-                    <div class="chat-time">2 hours ago</div>
                 </div>
-                <div class="chat-unread">2</div>
+                <div class="chat-unread">
+                    <div class="chat-time" th:text="${#temporals.format(room.lastMessageTime, 'MM-dd HH:mm')}"></div>
+                </div>
             </div>
         </div>
     </th:block>
