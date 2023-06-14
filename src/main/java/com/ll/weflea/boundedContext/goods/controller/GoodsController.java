@@ -168,9 +168,9 @@ public class GoodsController {
     public String wefleaModify(@PathVariable("id") Long id, Model model) {
         Goods goods = goodsService.findById(id);
 
-//        if (goods == null) {
-//            return "/user/weflea/detail";
-//        }
+        if (goods == null) {
+            return "/user/weflea/detail";
+        }
 
         model.addAttribute("goods", goods);
 

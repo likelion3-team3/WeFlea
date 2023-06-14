@@ -67,21 +67,4 @@ public class GoodsImageService {
         return uniqueFileName;
     }
 
-    public void deleteGoodsImage(Long id) {
-        // 이미지 ID로 상품 이미지를 조회
-        GoodsImage goodsImage = goodsImageRepository.findById(id).orElse(null);
-
-        if (goodsImage == null) {
-            throw new IllegalArgumentException("해당 상품의 이미지를 찾을 수 없습니다.");
-        }
-
-        String filePath = goodsImage.getPath();
-        File imageFile = new File(filePath);
-        if (imageFile.exists()) {
-            imageFile.delete();
-        }
-
-        goodsImageRepository.delete(goodsImage);
-    }
-
 }

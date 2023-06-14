@@ -4,6 +4,7 @@ import com.ll.weflea.base.rsData.RsData;
 import com.ll.weflea.boundedContext.goods.controller.GoodsController;
 import com.ll.weflea.boundedContext.goods.entity.Goods;
 import com.ll.weflea.boundedContext.goods.entity.GoodsImage;
+import com.ll.weflea.boundedContext.goods.repository.GoodsImageRepository;
 import com.ll.weflea.boundedContext.goods.repository.GoodsRepository;
 import com.ll.weflea.boundedContext.member.entity.Member;
 import jakarta.validation.Valid;
@@ -33,6 +34,7 @@ import java.util.*;
 public class GoodsService {
     private final GoodsRepository goodsRepository;
     private final GoodsImageService goodsImageService;
+    private final GoodsImageRepository goodsImageRepository;
 
     // 위플리 장터 상품 등록 기능
     @Transactional
@@ -163,7 +165,8 @@ public class GoodsService {
 
             for (MultipartFile image : images) {
                 if (!image.isEmpty()) {
-                    goodsImageService.deleteGoodsImage(goods.getId());
+                    goodsImageRepository.deleteByGoods(goods);
+                    goodsImageRepository.flush();
                     goodsImageService.uploadGoodsImages(goods.getId(), images);
                     break;
                 }

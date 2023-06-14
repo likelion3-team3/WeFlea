@@ -8,4 +8,6 @@ import java.util.Optional;
 
 public interface GoodsImageRepository extends JpaRepository<GoodsImage, Long> {
     Optional<GoodsImage> findByGoods(Goods goods);
+
+    void deleteByGoods(Goods goods);
 }
