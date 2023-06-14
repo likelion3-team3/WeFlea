@@ -30,7 +30,7 @@ public class Member extends BaseEntity {
 
     private String providerTypeCode;
 
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     private ProfileImage profileImage;
 
     @Builder.Default

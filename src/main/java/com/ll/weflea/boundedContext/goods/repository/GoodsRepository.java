@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface GoodsRepository extends JpaRepository<Goods, Long> {
 
@@ -22,5 +23,8 @@ public interface GoodsRepository extends JpaRepository<Goods, Long> {
     Page<Goods> findAll(Pageable pageable);
 
     Page<Goods> findByMember(Member member, Pageable pageable);
+
+    @Query("SELECT g from Goods g left join fetch g.goodsImages where g.id = :id")
+    Optional<Goods> findById(@Param("id") Long id);
 
 }
