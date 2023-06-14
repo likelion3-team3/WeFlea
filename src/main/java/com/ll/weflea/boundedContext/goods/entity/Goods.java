@@ -52,27 +52,6 @@ public class Goods extends BaseEntity {
         this.status = Status.valueOf(status);
     }
 
-//    public Goods() {
-//        // 기본 값 설정
-//        this.area = "지역";
-//        this.status = Status.구매가능;
-//        this.securePayment = false;
-//        this.price = 1;
-//        this.description = "기본 설명";
-//    }
-//
-//    public Goods(Member member, String title, String area, Status status,
-//                 boolean securePayment, int price, String description) {
-//        this.member = member;
-//        this.title = title;
-//        this.area = area;
-//        this.status = status;
-//        this.securePayment = securePayment;
-//        this.price = price;
-//        this.description = description;
-//    }
-
-
     public void setMember(Member member) {
         this.member = member;
     }
@@ -102,19 +81,6 @@ public class Goods extends BaseEntity {
     }
 
 
-
-
-/*
-    // 게시글 수정 메소드
-    public void updateGoods(Goods goods){
-        if(goods.title != null){
-            this.title = goods.title;
-        }
-        if(goods.description != null){
-            this.description = goods.description;
-        }
-    }
-*/
 
 
 

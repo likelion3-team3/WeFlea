@@ -18,6 +18,7 @@ public interface GoodsRepository extends JpaRepository<Goods, Long> {
     @Query("SELECT g FROM Goods g WHERE g.title LIKE %:keyword%")
     Page<Goods> findByKeyword(@Param("keyword") String keyword, Pageable pageable);
 
+    @Query("SELECT g FROM Goods g LEFT JOIN FETCH g.goodsImages gi")
     Page<Goods> findAll(Pageable pageable);
 
     Page<Goods> findByMember(Member member, Pageable pageable);
