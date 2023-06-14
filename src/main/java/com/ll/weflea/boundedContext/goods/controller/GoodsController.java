@@ -9,6 +9,7 @@ import com.ll.weflea.boundedContext.goods.service.GoodsService;
 import com.ll.weflea.boundedContext.member.entity.Member;
 import com.ll.weflea.boundedContext.member.repository.MemberRepository;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -23,6 +24,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -76,9 +78,9 @@ public class GoodsController {
         private String area;
         private Status status;
         private boolean securePayment;
-
-        @NotNull(message="가격은 필수 입력값 입니다.")
-        private int price;
+        @NotNull(message="가격은 필수항목 입니다.")
+        @Min(value = 0, message = "가격은 0보다 크거나 같아야 합니다.")
+        private Integer price;
         @NotEmpty(message="내용을 입력해 주세요.")
         private String description;
         private List<MultipartFile> images;
@@ -87,18 +89,16 @@ public class GoodsController {
             this.area = "지역";
             this.status = Status.구매가능;
             this.securePayment = false;
-            this.price = 1;
-            this.description = "기본 설명";
             this.images = null;
         }
     }
 
     // 위플리 상품 등록 기능 구현
     @PostMapping("/create")
-    public String create(@Valid CreateForm createForm, BindingResult bindingResult, @AuthenticationPrincipal User user, Model model) throws Exception {
+    public String create(@Validated CreateForm createForm, BindingResult bindingResult, @AuthenticationPrincipal User user, Model model) throws Exception {
         if (bindingResult.hasErrors()) {
             // 유효성 검사 오류가 있는 경우 폼 페이지로 다시 이동
-            model.addAttribute(createForm);
+            model.addAttribute(bindingResult);
 
             return "user/weflea/form";
         }
@@ -136,7 +136,9 @@ public class GoodsController {
 
     @PostMapping("/detail/delete/{id}")
     public String delete(@PathVariable("id") Long id) {
+        Goods goods = goodsService.findById(id);
 
+        goodsImageService.deleteByGoods(goods);
         goodsService.deleteById(id);
 
         return rq.redirectWithMsg("/user/weflea/list", "게시물이 삭제되었습니다.");
