@@ -3,6 +3,7 @@ package com.ll.weflea.boundedContext.goods.controller;
 import com.ll.weflea.base.rq.Rq;
 import com.ll.weflea.base.rsData.RsData;
 import com.ll.weflea.boundedContext.goods.entity.Goods;
+import com.ll.weflea.boundedContext.goods.entity.GoodsImage;
 import com.ll.weflea.boundedContext.goods.entity.Status;
 import com.ll.weflea.boundedContext.goods.service.GoodsImageService;
 import com.ll.weflea.boundedContext.goods.service.GoodsService;
@@ -71,15 +72,15 @@ public class GoodsController {
     @Getter
     @Setter
     public static class CreateForm {
-        @NotEmpty(message="제목을 입력해 주세요.")
+        @NotEmpty(message = "제목을 입력해 주세요.")
         private String title;
         private String area;
         private Status status;
         private boolean securePayment;
 
-        @NotNull(message="가격은 필수 입력값 입니다.")
+        @NotNull(message = "가격은 필수 입력값 입니다.")
         private int price;
-        @NotEmpty(message="내용을 입력해 주세요.")
+        @NotEmpty(message = "내용을 입력해 주세요.")
         private String description;
         private List<MultipartFile> images;
 
@@ -124,10 +125,9 @@ public class GoodsController {
     @GetMapping("/detail/{id}")
     public String detail(Model model, @PathVariable("id") Long id) throws IOException {
         Goods goods = goodsService.findById(id);
-        ResponseEntity<List<byte[]>> allGoodsImages = goodsService.getAllGoodsImages(goods);
+        List<GoodsImage> goodsImageList = goods.getGoodsImages();
 
-        model.addAttribute("goodsImages", allGoodsImages.getBody());
-
+        model.addAttribute("goodsImages", goodsImageList);
 
         model.addAttribute("goods", goods);
 
@@ -153,7 +153,7 @@ public class GoodsController {
     }
 
     @GetMapping("/goodsImage/{id}")
-    public ResponseEntity<byte[]> getGoodsImg (@PathVariable("id") Long id) throws IOException {
+    public ResponseEntity<byte[]> getGoodsImg(@PathVariable("id") Long id) throws IOException {
         Goods goods = goodsService.findById(id);
         ResponseEntity<byte[]> goodsImage = goodsService.getGoodsImg(goods);
 
@@ -161,10 +161,10 @@ public class GoodsController {
     }
 
     @GetMapping("/detail/goodsImage/{id}")
-    public ResponseEntity<List<byte[]>> getAllGoodsImg (@PathVariable("id") Long id) throws IOException {
-        Goods goods = goodsService.findById(id);
+    public ResponseEntity<byte[]> getGoodsImgs(@PathVariable("id") Long id) throws IOException {
+        GoodsImage goodsImage = goodsImageService.findById(id);
+        ResponseEntity<byte[]> goodsImg = goodsImageService.getGoodsImg(goodsImage);
 
-        return goodsService.getAllGoodsImages(goods);
+        return goodsImg;
     }
-
 }
