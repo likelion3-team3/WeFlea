@@ -184,7 +184,7 @@
                                     onclick="return confirm('해당 게시물을 정말 삭제하시겠습니까?')">삭제
                             </button>
                         </form>
-                        <form th:action="@{/user/weflea/detail/update/{id}(id=${goods.id})}" method="post"
+                        <form th:action="@{/user/weflea/modify/{id}(id=${goods.id})}" method="post"
                               style="margin-right: 20px">
                             <button type="submit" class="btn btn-light border weflea-backColor"
                                     th:if="${goods.member.username == @rq.member.username}"

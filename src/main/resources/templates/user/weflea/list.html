@@ -29,7 +29,7 @@
 
     <div class="content_4_wrap">
         <div class="item_row">
-            <div th:each="goods : ${goodsList}" class="item">
+            <div th:each="goods : ${goodsList}" class="weflea-item">
                 <a th:href="@{|/user/weflea/detail/${goods.id}|}">
                     <div th:if="${goods.goodsImages.size()==0}">
                         <img class="weflea_image" src="/images/default-profile.jpg" alt="Default Profile Image">
@@ -45,7 +45,7 @@
                         <div class="item_info">
                             <h1 class="item_provider" th:text="${goods.status}"></h1>
                             <h1 class="item_sellDate"
-                                th:text="${#temporals.format(goods.createDate, 'MM-dd HH:mm')}"></h1>
+                                th:text="${#temporals.format(goods.modifyDate, 'MM-dd HH:mm')}"></h1>
                         </div>
                     </div>
                 </a>
@@ -53,6 +53,7 @@
         </div>
     </div>
 </div>
+<br><br>
 
 <!-- 페이징 기능 구현 -->
 <div class="mt-5" th:if="${!goodsList.isEmpty()}">

@@ -77,7 +77,7 @@
                     <a th:href="@{|/user/weflea/detail/${myGoods.id}|}" th:text="${myGoods.price}+원"></a>
                 </td>
                 <td>
-                    <a th:href="@{|/user/weflea/detail/${myGoods.id}|}" th:text="${myGoods.modifyDate}"></a>
+                    <a th:href="@{|/user/weflea/detail/${myGoods.id}|}" th:text="${#temporals.format(myGoods.modifyDate, 'MM-dd HH:mm')}">"></a>
                 </td>
 
             </tr>

@@ -23,7 +23,7 @@ public class WishService {
     private final GoodsRepository goodsRepository;
 
     public List<Wish> findWishList(Member member) {
-        return wishRepository.findAllByMember_Id(member.getId());
+        return wishRepository.findAllByMember_IdAndDOrderByIdDesc(member.getId());
     }
 
     public boolean isGoodsWished(Long memberId, Long goodsId) {
@@ -52,7 +52,13 @@ public class WishService {
     }
 
     @Transactional
-    public RsData<Wish> deleteWish(Long id) {
+    public RsData<Wish> deleteWish(Long id, String username) {
+
+        Wish wish = wishRepository.findById(id).orElse(null);
+
+        if (!wish.getMember().getUsername().equals(username)) {
+            return RsData.of("F-1", "삭제할 수 있는 권한이 없습니다.");
+        }
 
         wishRepository.deleteById(id);
 

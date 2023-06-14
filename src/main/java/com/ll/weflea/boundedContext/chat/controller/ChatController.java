@@ -33,7 +33,7 @@ public class ChatController {
     private final GoodsService goodsService;
     private final Rq rq;
 
-//    나의 채팅방 목록 조회
+    //나의 채팅방 목록 조회
     @GetMapping("/rooms")
     @PreAuthorize("hasRole('member')")
     public String myRooms(@AuthenticationPrincipal User user, Model model) {
@@ -43,19 +43,6 @@ public class ChatController {
         model.addAttribute("list", chatRooms);
         return "chat/rooms";
     }
-
-
-////    모든 채팅방 목록 조회 (임시)
-//    @GetMapping("/rooms")
-//    public String rooms(Model model){
-//
-//        List<ChatRoomDetailDTO> rooms = chatService.findAllRooms();
-//
-//        log.info("# All Chat Rooms");
-//        model.addAttribute("list", rooms);
-//
-//        return "chat/rooms";
-//    }
 
     //채팅방 개설
     @PostMapping("/room/{id}")
@@ -77,7 +64,7 @@ public class ChatController {
 
         model.addAttribute("roomName", chatService.createChatRoomDetailDTO(member1, member2).getName());
 
-        return "redirect:/chat/rooms";
+        return rq.redirectWithMsg("/chat/rooms", "채팅방이 개설되었습니다.");
     }
 
     //채팅방 상세
@@ -85,14 +72,17 @@ public class ChatController {
     @PreAuthorize("hasRole('member')")
     public String getRoom(String roomId, Model model, @AuthenticationPrincipal User user){
 
-        log.info("# get Chat Room, roomID : " + roomId);
         List<ChatMessage> messages = chatService.findByRoomId(roomId);
         Member member = memberService.findByUsername(user.getUsername()).orElse(null);
+
+        if (member == null) {
+            return rq.redirectWithMsg("/user/member/login", "다시 로그인해주세요!");
+        }
+
 
         model.addAttribute("room", chatService.findRoomById(roomId));
         model.addAttribute("messages", messages);
         model.addAttribute("member", member);
-        model.addAttribute("user", user);
         model.addAttribute("admin", "관리자");
 
         return "chat/room";

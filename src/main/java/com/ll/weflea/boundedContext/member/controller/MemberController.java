@@ -81,9 +81,15 @@ public class MemberController {
     //안전결제가 정상적으로 완료되고 구매자가 물건을 받고 거래 완료 신청을 누르면
     //판매자에게 상품 금액만큼 포인트 충전
     @PostMapping("/me/status/complete/deal/{goodsId}")
-    public String completeDeal(@PathVariable Long goodsId) {
-        goodsService.updateStatus(goodsId, "거래완료");
+    public String completeDeal(@PathVariable Long goodsId, @AuthenticationPrincipal User user) {
+
         Goods goods = goodsService.findById(goodsId);
+
+        if (!goods.getBuyer().getUsername().equals(user.getUsername())) {
+            return rq.historyBack("안전결제를 완료할 수 있는 권한이 없습니다.");
+        }
+
+        goodsService.updateStatus(goodsId, "거래완료");
         payService.chargePoint((long) goods.getPrice(), goods.getMember());
 
         return rq.redirectWithMsg("/user/member/me/status", "거래가 정상적으로 성사되었습니다.");

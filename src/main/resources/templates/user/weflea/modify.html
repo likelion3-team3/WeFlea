@@ -1,34 +1,37 @@
 <html layout:decorate="~{common/layout.html}" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>위플리 등록</title>
+    <title>위플리 수정</title>
 </head>
 <body layout:fragment="content">
 <!--<h1>상품 등록</h1>-->
-<form th:object="${createForm}" th:action="@{/user/weflea/create}" method="POST" enctype="multipart/form-data"
+<form th:object="${createForm}" th:action="@{'/user/weflea/modify/' + ${goods.id}}" method="POST" enctype="multipart/form-data"
       style="margin: 10px 40px;">
     <div class="form-group">
         <label for="title">제목</label>
-        <input type="text" th:field="*{title}" value="${createForm.title}" class="form-control" id="title" name="title" placeholder="제목을 입력해 주세요."
-               th:class="${#fields.hasErrors('title')}? 'form-control fieldError' : 'form-control'">
+        <input type="text" class="form-control" id="title" name="title" placeholder="제목을 입력해 주세요."
+               th:class="${#fields.hasErrors('title')}? 'form-control fieldError' : 'form-control'"
+                th:value="${goods.title}">
         <p style="color:red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></p>
 
     </div>
     <div class="mb-3">
         <label for="description">내용</label>
-        <textarea th:field="*{description}" value="${createForm.description}" class="form-control" rows="5" id="description" name="description" placeholder="내용을 입력해 주세요."
-                  th:class="${#fields.hasErrors('description')}? 'form-control fieldError' : 'form-control'"></textarea>
+        <textarea class="form-control" rows="5" id="description" name="description" placeholder="내용 입력해 주세요."
+                  th:class="${#fields.hasErrors('description')}? 'form-control fieldError' : 'form-control'"
+                    th:text="${goods.description}"></textarea>
         <p style="color:red" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>
     </div>
 
     <label for="price">상품 가격</label>
-    <input type="number" th:field="*{price}" value="${createForm.price}" class="form-control" style="width: 30%;" id="price" name="price" placeholder="\ 가격"
-           th:class="${#fields.hasErrors('price')}? 'form-control fieldError' : 'form-control'">
+    <input type="number" class="form-control" style="width: 30%;" id="price" name="price" placeholder="\ 가격"
+           th:class="${#fields.hasErrors('price')}? 'form-control fieldError' : 'form-control'"
+            th:value="${goods.price}">
     <p style="color:red" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></p>
     <br><br>
 
     <label for="area">지역</label>
-    <input type="text" value="${createForm.area}" class="form-control" style="width: 30%;" id="area" th:field="*{area}"><br><br>
+    <input type="text" class="form-control" style="width: 30%;" id="area" th:value="${goods.area}"><br><br>
 
     <label for="status">상태</label>
     <input type="text" class="form-control" style="width: 30%;" id="status" th:field="*{status}" readonly><br><br>
@@ -44,10 +47,10 @@
     </div><br><br>
 
     <label for="images">이미지 업로드</label><br>
-    <input class="weflea-backColor" type="file" id="images" name="images" multiple><br><br>
+    <input type="file" id="images" name="images" multiple><br><br>
 
-    <button type="submit" onclick="showSuccessMessage()"
-            class="weflea-backColor btn ">저장
+    <button type="submit" onclick="submitFormAndRedirect()"
+            style="background-image: linear-gradient(to right, #a1c4fd 0%, #c2e9fb 51%, #a1c4fd 100%); font-size: 1.2em; padding: 10px 20px; border-radius: 10px;">수정
     </button>
 
 </form>
@@ -58,6 +61,11 @@
 <script>
     function showSuccessMessage() {
         toastNotice("입력하신 상품이 등록되었습니다.")
+    }
+
+    function submitFormAndRedirect() {
+        showSuccessMessage();
+        document.querySelector('form').submit();
     }
 </script>
 
