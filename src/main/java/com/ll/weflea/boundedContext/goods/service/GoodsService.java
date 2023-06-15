@@ -129,7 +129,7 @@ public class GoodsService {
     @Transactional
     public void updateStatusAndBuyer(Long id, String status, Member buyer) {
         Goods goods = findById(id);
-        goods.updateStatusAndBuyer(status, buyer);
+        goods.updateStatusAndBuyer(status,buyer);
     }
 
     @Transactional
