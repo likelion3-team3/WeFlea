@@ -44,6 +44,18 @@
       <td align="center"><a href="https://github.com/Hypersand" target="_blank">@Hypersand</a></td>
       <td align="center"><a href="https://github.com/wooqqq" target="_blank">@wooqqq</a></td>
     </tr>
+    <tr>
+      <td align="center">Backend Developer</td>
+      <td align="center">Backend Developer</td>
+      <td align="center">Backend Developer</td>
+      <td align="center">Backend Developer</td>
+    </tr>
+    <tr>
+      <td align="center">소셜로그인, 마이페이지</td>
+      <td align="center">통합검색 웹크롤링</td>
+      <td align="center">채팅, 안전결제, 통합검색</td>
+      <td align="center">위플리 장터 페이지</td>
+    </tr>
   </table>
 <br>
 
@@ -104,7 +116,7 @@
       <td align="center">마이 페이지</td>
     </tr>
     <tr>
-      <td align="center"><a href="https://ibb.co/5hcGBgt"><img src="https://i.ibb.co/HTgBnf1/weflea.png" alt="weflea" border="0"></a></td>
+      <td align="center"><a href="https://ibb.co/2NytWx6"><img src="https://i.ibb.co/6BmPrzZ/weflea.png" alt="weflea" border="0"></a></td>
       <td align="center"><a href="https://ibb.co/mc9X9TV"><img src="https://i.ibb.co/Jsvyvtw/weflea.png" alt="weflea" border="0"></a></td>
     </tr>
  </table>
