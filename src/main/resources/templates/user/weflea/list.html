@@ -20,18 +20,20 @@
         <hr style="color:#495057">
     </div>
 
-    <div class="container">
-        <form class="search-bar mt-3" style="margin-left: 10px; width: 100%;" th:action="@{/user/weflea/list/search}" method="get">
-            <input type="text" name="keyword" class="search-input" style="flex-grow: 1;" placeholder="위플리 매물 검색" th:value="${keyword}">
-            <button class="search-button weflea-backColor">검색</button>
-        </form>
-        <div class="form-control-sm" style="margin-top: 15px;">
-            <select id="sortCode" name="sortCode" class="select select-bordered select-small"
-                    onchange="handleSortOptionChange(this)">
-                <option value="1">최신순</option>
-                <option value="2">가격 높은 순</option>
-                <option value="3">가격 낮은 순</option>
-            </select>
+    <div class="container" style="margin: 0 auto;">
+        <div class="flex" style="margin: 0 auto;">
+            <form class="search-bar mt-3" style="width: 100%;" th:action="@{/user/weflea/list/search}" method="get">
+                <input type="text" name="keyword" class="search-input" style="flex-grow: 1;" placeholder="위플리 매물 검색" th:value="${keyword}">
+                <button class="search-button weflea-backColor">검색</button>
+            </form>
+            <div class="form-control-sm" style="margin-top: 15px;">
+                <select id="sortCode" name="sortCode" class="select select-bordered select-small"
+                        onchange="handleSortOptionChange(this)">
+                    <option value="1">최신순</option>
+                    <option value="2">가격 높은 순</option>
+                    <option value="3">가격 낮은 순</option>
+                </select>
+            </div>
         </div>
     </div>
 
