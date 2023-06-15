@@ -12,7 +12,6 @@
         <input type="text" class="form-control" id="title" name="title" placeholder="제목을 입력해 주세요."
                th:class="${#fields.hasErrors('title')}? 'form-control fieldError' : 'form-control'"
                 th:value="${goods.title}">
-        <p style="color:red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></p>
 
     </div>
     <div class="mb-3">
@@ -20,14 +19,12 @@
         <textarea class="form-control" rows="5" id="description" name="description" placeholder="내용 입력해 주세요."
                   th:class="${#fields.hasErrors('description')}? 'form-control fieldError' : 'form-control'"
                     th:text="${goods.description}"></textarea>
-        <p style="color:red" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>
     </div>
 
     <label for="price">상품 가격</label>
     <input type="number" class="form-control" style="width: 30%;" id="price" name="price" placeholder="\ 가격"
            th:class="${#fields.hasErrors('price')}? 'form-control fieldError' : 'form-control'"
             th:value="${goods.price}">
-    <p style="color:red" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></p>
     <br><br>
 
     <label for="area">지역</label>
