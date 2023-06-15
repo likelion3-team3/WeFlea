@@ -41,10 +41,11 @@ public class GoodsController {
 
 
     @GetMapping("/list")
-    public String wefleaList(Model model, @RequestParam(value = "page", defaultValue = "0") int page) {
+    public String wefleaList(Model model, @RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(defaultValue = "1") Integer sortCode) {
 
-        Page<Goods> goodsList = this.goodsService.getGoodsList(page);
+        Page<Goods> goodsList = this.goodsService.getGoodsList(page, sortCode);
         model.addAttribute("goodsList", goodsList);
+        model.addAttribute("sortCode", sortCode);
 
         return "user/weflea/list";
     }

@@ -7,6 +7,8 @@ import com.ll.weflea.boundedContext.goods.entity.GoodsImage;
 import com.ll.weflea.boundedContext.goods.repository.GoodsImageRepository;
 import com.ll.weflea.boundedContext.goods.repository.GoodsRepository;
 import com.ll.weflea.boundedContext.member.entity.Member;
+import com.querydsl.core.types.Order;
+import com.querydsl.core.types.OrderSpecifier;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +27,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
+
+import static com.ll.weflea.boundedContext.search.entity.QSearch.search;
 
 
 @Slf4j
@@ -70,10 +74,18 @@ public class GoodsService {
         }
     }
 
-    public Page<Goods> getGoodsList(int page) {
+    public Page<Goods> getGoodsList(int page, Integer sortCode) {
         List<Sort.Order> sorts = new ArrayList<>();
-        sorts.add(Sort.Order.desc("createDate"));
-        Pageable pageable = PageRequest.of(page, 20, Sort.by(sorts));
+        if (sortCode.equals(1)) {
+            sorts.add(Sort.Order.desc("modifyDate"));
+        }
+        else if(sortCode.equals(2)){
+            sorts.add(Sort.Order.desc("price"));
+        }
+        else{
+            sorts.add(Sort.Order.asc("price"));
+        }
+        Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts));
         return this.goodsRepository.findAll(pageable);
     }
 
@@ -163,6 +175,30 @@ public class GoodsService {
             e.printStackTrace();
             return RsData.of("F-1", "상품 수정 중 오류가 발생했습니다.");
         }
+    }
+
+    private OrderSpecifier[] sortGoodsList(Integer sortCode) {
+
+        List<OrderSpecifier> orderSpecifiers = new ArrayList<>();
+
+
+        switch (sortCode != null ? sortCode : 1) {
+            //최신순
+            case 1:
+                orderSpecifiers.add(new OrderSpecifier<>(Order.DESC, search.sellDate));
+                break;
+
+            //가격 높은 순
+            case 2:
+                orderSpecifiers.add(new OrderSpecifier<>(Order.DESC, search.price));
+                break;
+            //가격 낮은 순
+            case 3:
+                orderSpecifiers.add(new OrderSpecifier<>(Order.ASC, search.price));
+                break;
+        }
+
+        return orderSpecifiers.toArray(new OrderSpecifier[orderSpecifiers.size()]);
     }
 
 }
