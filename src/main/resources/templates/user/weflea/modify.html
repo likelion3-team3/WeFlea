@@ -49,14 +49,15 @@
     <label for="images">이미지 업로드</label><br>
     <input type="file" id="images" name="images" multiple><br><br>
 
-    <button type="submit" onclick="submitFormAndRedirect()"
-            style="background-image: linear-gradient(to right, #a1c4fd 0%, #c2e9fb 51%, #a1c4fd 100%); font-size: 1.2em; padding: 10px 20px; border-radius: 10px;">수정
+    <button type="submit" onclick="submitFormAndRedirect()" class="btn btn-light border"
+            style="background-image: linear-gradient(to right, #a1c4fd 0%, #a1c4fd 51%, #a1c4fd 100%);">수정
     </button>
+    <form class="d-flex flex-row-reverse" th:action="@{/user/weflea/detail/goods.id}" method="get">
+        <button type="submit" class="btn btn-light border" style="background-image: linear-gradient(to right, #a1c4fd 0%, #a1c4fd 51%, #a1c4fd 100%);">취소
+        </button>
+    </form>
 
 </form>
-<!--<button onclick="location.href='/user/weflea/list'"
-        style="background-color: aliceblue; font-size: 1.2em; padding: 10px 20px; border-radius: 10px">목록
-</button>-->
 
 <script>
     function showSuccessMessage() {
