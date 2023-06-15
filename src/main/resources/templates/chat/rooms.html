@@ -4,6 +4,7 @@
 <th:block th:replace="~{layout/basic :: setContent(~{this :: content})}">
     <th:block th:fragment="content">
 
+        <h1 class="title-1 pb-4 border-bottom">나의 채팅 목록</h1>
         <div class="chat-list weflea-backColor">
             <div class="chat-item" th:each="room : ${list}">
                 <div th:if="${room.receiver.profileImage eq null}">
