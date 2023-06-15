@@ -36,8 +36,8 @@
 
 <div>
     <div class="container container-mt">
-        <div class="row justify-content-center">
-            <div class="col-lg-6">
+        <div class="row justify-content-center" style="margin: 0 auto; ">
+            <div class="col-lg-6" style="width: 700px">
                 <div class="card-body bg-white mt-0 shadow flex">
                     <form class="d-flex flex-row-reverse" th:action="@{/user/weflea/list}" method="get">
                         <button type="submit" class="btn btn-light border" style="background-image: linear-gradient(to right, #a1c4fd 0%, #a1c4fd 51%, #a1c4fd 100%);">목록으로
@@ -56,13 +56,13 @@
                                     </li>
                                 </ul>
                                 <div th:if="${goods.goodsImages.size()==0}">
-                                    <img class="img-thumbnail w-full h-full object-cover" src="/images/default-profile.jpg" alt="Default Profile Image">
+                                    <img class="img-thumbnail w-full h-full object-cover" src="/images/noImg.png">
                                 </div>
-                                <button class="prev-button absolute top-1/2 left-2 transform -translate-y-1/2 bg-transparent text-black text-xl z-10">
-                                    &lt;
+                                <button class="prev-button absolute top-1/2 left-2 transform -translate-y-1/2 text-white text-xl z-10" style="background-color: #a1c4fd;">
+                                    &nbsp;&lt;&nbsp;
                                 </button>
-                                <button class="next-button absolute top-1/2 right-2 transform -translate-y-1/2 bg-transparent text-black text-xl z-10">
-                                    &gt;
+                                <button class="next-button absolute top-1/2 right-2 transform -translate-y-1/2 text-white text-xl z-10" style="background-color: #a1c4fd;">
+                                    &nbsp;&gt;&nbsp;
                                 </button>
                             </div>
                         </div>

@@ -41,20 +41,30 @@ public class GoodsController {
 
 
     @GetMapping("/list")
-    public String wefleaList(Model model, @RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(defaultValue = "1") Integer sortCode) {
+    public String wefleaList(Model model,
+                             @RequestParam(value = "page", defaultValue = "0") int page,
+                             @RequestParam(defaultValue = "1") Integer sortCode) {
+
+        log.info("현재 페이지 = {}", page);
 
         Page<Goods> goodsList = this.goodsService.getGoodsList(page, sortCode);
         model.addAttribute("goodsList", goodsList);
         model.addAttribute("sortCode", sortCode);
         model.addAttribute("currentPage", page);
+        model.addAttribute("keyword", null);
 
         return "user/weflea/list";
     }
 
     @GetMapping("/list/search")
-    public String searchGoods(Model model, @RequestParam("keyword") String keyword, @RequestParam(defaultValue = "0") int page) {
+    public String searchGoods(Model model, @RequestParam("keyword") String keyword,
+                              @RequestParam(defaultValue = "0") int page,
+                              @RequestParam(defaultValue = "1") Integer sortCode) {
+        log.info("현재 페이지 = {}", page);
         Page<Goods> goodsList = goodsService.getGoodsListByKeyword(keyword, page);
+
         model.addAttribute("goodsList", goodsList);
+        model.addAttribute("currentPage", page);
         model.addAttribute("keyword", keyword);
 
         return "user/weflea/list";
