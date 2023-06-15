@@ -202,6 +202,10 @@ public class GoodsController {
 
         Goods goods = goodsService.findById(id);
 
+        if (!goods.getMember().getUsername().equals(user.getUsername())) {
+            return rq.historyBack("수정할 수 있는 권한이 없습니다.");
+        }
+
         RsData<Goods> modifyRsData = goodsService.modify(goods, member, createForm);
 
         if (modifyRsData.isFail()) {
