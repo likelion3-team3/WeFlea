@@ -46,6 +46,7 @@ public class GoodsController {
         Page<Goods> goodsList = this.goodsService.getGoodsList(page, sortCode);
         model.addAttribute("goodsList", goodsList);
         model.addAttribute("sortCode", sortCode);
+        model.addAttribute("currentPage", page);
 
         return "user/weflea/list";
     }

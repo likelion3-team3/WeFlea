@@ -32,11 +32,10 @@
                 <option value="2">가격 높은 순</option>
                 <option value="3">가격 낮은 순</option>
             </select>
-
         </div>
     </div>
 
-    <div class="content_4_wrap">
+    <div class="content_4_wrap" style="margin-top: -20px;">
         <div class="item_row">
             <div th:each="goods : ${goodsList}" class="weflea-item">
                 <a th:href="@{|/user/weflea/detail/${goods.id}|}">
@@ -64,41 +63,36 @@
 </div>
 <br><br>
 
-
 <!-- 페이징 기능 구현 -->
 <div class="mt-5" th:if="${!goodsList.isEmpty()}">
     <ul class="pagination justify-content-center">
-        <li class="page-item" th:classappend="${goodsList.number == 0} ? 'disabled'">
-            <a class="page-link"
-               th:href="@{|?page=${goodsList.number - 1}|}">
+        <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
+            <a class="page-link" th:href="@{|/user/weflea/list?page=${currentPage - 1}&amp;sortCode=${sortCode}|}">
                 <span>이전</span>
             </a>
         </li>
-        <li th:each="page: ${#numbers.sequence(1, goodsList.totalPages)}"
-            th:if="${page >= goodsList.number - 5 and page <= goodsList.number + 5}"
-            th:classappend="${page == goodsList.number + 1} ? 'active'"
+        <li th:each="pageNum : ${#numbers.sequence(1, goodsList.totalPages)}"
+            th:if="${pageNum >= currentPage - 5 and pageNum <= currentPage + 5}"
+            th:classappend="${pageNum == currentPage + 1} ? 'active'"
             class="page-item">
-            <a th:text="${page}" class="page-link" th:href="@{|?page=${page - 1}|}"></a>
+            <a th:text="${pageNum}" class="page-link" th:href="@{|/user/weflea/list?page=${pageNum - 1}&amp;sortCode=${sortCode}|}"></a>
         </li>
-        <li class="page-item" th:classappend="${goodsList.number == goodsList.totalPages - 1} ? 'disabled'">
-            <a class="page-link" th:href="@{|?page=${goodsList.number + 1}|}">
+        <li class="page-item" th:classappend="${currentPage == goodsList.totalPages - 1} ? 'disabled'">
+            <a class="page-link" th:href="@{|/user/weflea/list?page=${currentPage + 1}&amp;sortCode=${sortCode}|}">
                 <span>다음</span>
             </a>
         </li>
     </ul>
 </div>
-</div>
+
 <script>
-    // Get the select element
+
     var selectElement = document.getElementById('sortCode');
 
-    // Add event listener for option change
     selectElement.addEventListener('change', function() {
-        // Get the selected option and its text
         var selectedOption = this.options[this.selectedIndex];
         var selectedText = selectedOption.text;
 
-        // Update the URL with the selected sortCode
         var selectedValue = selectedOption.value;
         var urlParams = new URLSearchParams(window.location.search);
         urlParams.set('sortCode', selectedValue);
@@ -106,11 +100,9 @@
         window.location.href = newUrl;
     });
 
-    // Get the current sortCode from URL parameters
     var urlParams = new URLSearchParams(window.location.search);
     var sortCode = urlParams.get('sortCode');
 
-    // Set the selected option's text on page load
     if (sortCode) {
         var selectedOption = selectElement.querySelector('option[value="' + sortCode + '"]');
         if (selectedOption) {

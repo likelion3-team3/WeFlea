@@ -85,7 +85,7 @@ public class GoodsService {
         else{
             sorts.add(Sort.Order.asc("price"));
         }
-        Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts));
+        Pageable pageable = PageRequest.of(page, 12, Sort.by(sorts));
         return this.goodsRepository.findAll(pageable);
     }
 
