@@ -162,8 +162,7 @@ public class GoodsController {
 
     @GetMapping("/goodsImage/{id}")
     public ResponseEntity<byte[]> getGoodsImg(@PathVariable("id") Long id) throws IOException {
-        Goods goods = goodsService.findById(id);
-        ResponseEntity<byte[]> goodsImage = goodsService.getGoodsImg(goods);
+        ResponseEntity<byte[]> goodsImage = goodsService.getGoodsImg(id);
 
         return goodsImage;
     }
@@ -203,6 +202,10 @@ public class GoodsController {
         Member member = memberRepository.findByUsername(username).orElse(null);
 
         Goods goods = goodsService.findById(id);
+
+        if (!goods.getMember().getUsername().equals(user.getUsername())) {
+            return rq.historyBack("수정할 수 있는 권한이 없습니다.");
+        }
 
         RsData<Goods> modifyRsData = goodsService.modify(goods, member, createForm);
 

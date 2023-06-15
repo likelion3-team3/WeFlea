@@ -93,8 +93,6 @@ img{
     border: none;
 }
 
-
-
 .chat_button{
     border: 0.5px solid #b8bcc3;
     border-radius: 0.3rem;
@@ -350,7 +348,6 @@ img{
 
 .chat{
     font-size: smaller;
-
 }
 
 .more_item_wrap{
