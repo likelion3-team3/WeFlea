@@ -63,7 +63,7 @@
           </script>
         </div>
       </form>
-      <div class="item_row">
+      <div class="item_row" style="margin-top: -10px;">
         <div th:each="search, status : ${searchList}" class="item" data-index="${status.index}">
           <a th:href="${search.link}">
             <img th:src="${search.imageLink}" style="border-radius: 12px; width:200px">

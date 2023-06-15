@@ -39,10 +39,13 @@
 <body layout:fragment="content">
 <div id="body">
     <h1 class="title-1 pb-4 border-bottom">내 게시글</h1>
-    <div>
+    <div class="keyword_wrap">
+        <a href="/user/weflea/create" class="button-1 btn-round weflea-backColor">상품
+    <div class="keyword_wrap">
         <a href="/user/weflea/create" class="button-1 weflea-backColor">상품
             등록하기</a>
-    </div><br><br>
+    </div>
+    <br><br>
     <div>
         <table>
             <thead>
@@ -57,10 +60,12 @@
             </thead>
             <tbody>
             <tr th:each="myGoods : ${myGoodsList.content}">
+
                 <td>
                     <div class="goods-img img">
                         <a th:href="@{|/user/weflea/detail/${myGoods.id}|}">
-                            <img id="imgId" th:src="@{|/user/weflea/goodsImage/${myGoods.id}|}"/>
+                            <img th:if="${myGoods.goodsImages.size()==0}" src="/images/noImg.png"/>
+                            <img th:if="${myGoods.goodsImages.size()>=1}" th:src="@{|/user/weflea/goodsImage/${myGoods.id}|}"/>
                         </a>
                     </div>
                 </td>
@@ -79,7 +84,6 @@
                 <td>
                     <a th:href="@{|/user/weflea/detail/${myGoods.id}|}" th:text="${#temporals.format(myGoods.modifyDate, 'MM-dd HH:mm')}">"></a>
                 </td>
-
             </tr>
             </tbody>
         </table>
