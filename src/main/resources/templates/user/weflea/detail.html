@@ -175,7 +175,11 @@
         </div>
     </div>
 </div>
-
+<script>
+    var description = document.querySelector('.fs-5.has-text-black.text-left span').textContent;
+    var formattedDescription = description.replace(/\n/g, '<br>');
+    document.querySelector('.fs-5.has-text-black.text-left span').innerHTML = formattedDescription;
+</script>
 </body>
 </html>
 
