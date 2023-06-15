@@ -61,11 +61,13 @@ public class GoodsController {
                               @RequestParam(defaultValue = "0") int page,
                               @RequestParam(defaultValue = "1") Integer sortCode) {
         log.info("현재 페이지 = {}", page);
-        Page<Goods> goodsList = goodsService.getGoodsListByKeyword(keyword, page);
+        Page<Goods> goodsList = goodsService.getGoodsListByKeyword(keyword, page, sortCode);
 
         model.addAttribute("goodsList", goodsList);
         model.addAttribute("currentPage", page);
         model.addAttribute("keyword", keyword);
+        model.addAttribute("sortCode", sortCode);
+
 
         return "user/weflea/list";
     }

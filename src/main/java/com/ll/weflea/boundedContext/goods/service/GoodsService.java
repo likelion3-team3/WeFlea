@@ -75,6 +75,19 @@ public class GoodsService {
     }
 
     public Page<Goods> getGoodsList(int page, Integer sortCode) {
+        List<Sort.Order> sorts = getSorts(sortCode);
+        Pageable pageable = PageRequest.of(page, 12, Sort.by(sorts));
+        return this.goodsRepository.findAll(pageable);
+    }
+
+    public Page<Goods> getGoodsListByKeyword(String keyword, int page, Integer sortCode) {
+        List<Sort.Order> sorts = getSorts(sortCode);
+
+        Pageable pageable = PageRequest.of(page, 12, Sort.by(sorts));
+        return goodsRepository.findByKeyword(keyword, pageable);
+    }
+
+    private List<Sort.Order> getSorts(Integer sortCode){
         List<Sort.Order> sorts = new ArrayList<>();
         if (sortCode.equals(1)) {
             sorts.add(Sort.Order.desc("modifyDate"));
@@ -85,8 +98,8 @@ public class GoodsService {
         else{
             sorts.add(Sort.Order.asc("price"));
         }
-        Pageable pageable = PageRequest.of(page, 12, Sort.by(sorts));
-        return this.goodsRepository.findAll(pageable);
+
+        return sorts;
     }
 
     public Goods findById(long id) {
@@ -138,11 +151,6 @@ public class GoodsService {
 
     public List<Goods> findByBuyerId(Long buyerId) {
         return goodsRepository.findByBuyerId(buyerId);
-    }
-
-    public Page<Goods> getGoodsListByKeyword(String keyword, int page) {
-        Pageable pageable = PageRequest.of(page, 20);
-        return goodsRepository.findByKeyword(keyword, pageable);
     }
 
     @Transactional
