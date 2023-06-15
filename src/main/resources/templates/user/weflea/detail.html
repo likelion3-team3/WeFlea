@@ -100,8 +100,11 @@
                             <input type="hidden" th:value="${goods.price}" id="price" name="price">
                             <span th:text="${goods.price}"></span>원
                         </div>
-                        <div class="fs-6 has-text-warning text-left">
+                        <div class="fs-5 has-text-warning text-left">
                             <span th:text="${goods.status.toString()}"></span>
+                        </div>
+                        <div class="fs-6 has-text-warning text-left">
+                            <span th:text="${goods.area}"></span>
                         </div>
                     </div>
                     <br>

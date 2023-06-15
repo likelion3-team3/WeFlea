@@ -36,6 +36,9 @@ public class Member extends BaseEntity {
     @Builder.Default
     private Long point = 0L;
 
+//    @OneToMany(mappedBy = "buyer")
+//    private List<Goods> payedGoods = new ArrayList<>();
+
     public List<? extends GrantedAuthority> getGrantedAuthorities() {
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
 

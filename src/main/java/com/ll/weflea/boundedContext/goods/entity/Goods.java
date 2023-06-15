@@ -35,16 +35,17 @@ public class Goods extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    private Member buyer;
-
     @OneToMany(mappedBy = "goods")
     private List<GoodsImage> goodsImages = new ArrayList<>();
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Member buyer;
+
+
     public void updateStatusAndBuyer(String status, Member buyer) {
 
-        this.status = Status.valueOf(status);
         this.buyer = buyer;
+        this.status = Status.valueOf(status);
     }
 
     public void updateStatus(String status) {
@@ -78,6 +79,10 @@ public class Goods extends BaseEntity {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public void setBuyer(Member buyer) {
+        this.buyer = buyer;
     }
 
 
