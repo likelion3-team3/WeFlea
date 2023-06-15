@@ -93,8 +93,6 @@ img{
     border: none;
 }
 
-
-
 .chat_button{
     border: 0.5px solid #b8bcc3;
     border-radius: 0.3rem;
@@ -246,13 +244,38 @@ img{
 .item{
     text-overflow: ellipsis;
     width: 200px;
-    height: 300px;
+    height: 400px;
     flex-grow: 0;
     flex-basis: 25%;
     margin-top: 50px;
     display: flex;
     justify-content: space-around;
     /*flex-direction: column;*/
+}
+
+.weflea-item{
+    text-overflow: ellipsis;
+    width: 250px;
+    height: 350px;
+    flex-grow: 0;
+    flex-basis: 25%;
+    margin-top: 50px;
+    display: flex;
+    justify-content: space-around;
+    /*flex-direction: column;*/
+}
+
+.weflea-item_img{
+    width: 250px;
+    height: 200px;
+    overflow: hidden;
+}
+
+.weflea-item_img img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+
 }
 
 .item_row{
@@ -325,7 +348,6 @@ img{
 
 .chat{
     font-size: smaller;
-
 }
 
 .more_item_wrap{
@@ -345,6 +367,7 @@ img{
 .keyword_wrap{
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 
 .keyword_title{
@@ -370,4 +393,10 @@ img{
     font-size: medium;
     margin-bottom: 50px;
     margin-left: 20px;
+}
+
+.weflea_image{
+    border-radius: 12px;
+    width:200px;
+    height: 200px;
 }

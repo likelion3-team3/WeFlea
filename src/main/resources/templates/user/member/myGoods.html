@@ -39,11 +39,11 @@
 <body layout:fragment="content">
 <div id="body">
     <h1 class="title-1 pb-4 border-bottom">내 게시글</h1>
-    <div>
-        <a href="/user/weflea/create" class="button-1 btn-round"
-           style="background-image: linear-gradient(to right, #a1c4fd 0%, #c2e9fb 51%, #a1c4fd 100%);">상품
+    <div class="keyword_wrap">
+        <a href="/user/weflea/create" class="button-1 weflea-backColor">상품
             등록하기</a>
-    </div><br><br>
+    </div>
+    <br><br>
     <div>
         <table>
             <thead>
@@ -58,10 +58,12 @@
             </thead>
             <tbody>
             <tr th:each="myGoods : ${myGoodsList.content}">
+
                 <td>
                     <div class="goods-img img">
                         <a th:href="@{|/user/weflea/detail/${myGoods.id}|}">
-                            <img id="imgId" th:src="@{|/user/weflea/goodsImage/${myGoods.id}|}"/>
+                            <img th:if="${myGoods.goodsImages.size()==0}" src="/images/noImg.png"/>
+                            <img th:if="${myGoods.goodsImages.size()>=1}" th:src="@{|/user/weflea/goodsImage/${myGoods.id}|}"/>
                         </a>
                     </div>
                 </td>
@@ -78,9 +80,8 @@
                     <a th:href="@{|/user/weflea/detail/${myGoods.id}|}" th:text="${myGoods.price}+원"></a>
                 </td>
                 <td>
-                    <a th:href="@{|/user/weflea/detail/${myGoods.id}|}" th:text="${myGoods.modifyDate}"></a>
+                    <a th:href="@{|/user/weflea/detail/${myGoods.id}|}" th:text="${#temporals.format(myGoods.modifyDate, 'MM-dd HH:mm')}">"></a>
                 </td>
-
             </tr>
             </tbody>
         </table>

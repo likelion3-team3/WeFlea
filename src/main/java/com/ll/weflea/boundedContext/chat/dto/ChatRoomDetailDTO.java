@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -20,6 +21,7 @@ public class ChatRoomDetailDTO {
     private String roomId;
     private String name;
     private String lastMessage;
+    private LocalDateTime lastMessageTime;
 
     public static ChatRoomDetailDTO toChatRoomDetailDTO(ChatRoom chatRoom){
         ChatRoomDetailDTO chatRoomDetailDTO = new ChatRoomDetailDTO();
@@ -31,12 +33,16 @@ public class ChatRoomDetailDTO {
         chatRoomDetailDTO.setReceiver(chatRoom.getReceiver());
         chatRoomDetailDTO.setRoomId(chatRoom.getRoomId());
 
+
+
         if (chatList.size() == 0) {
             chatRoomDetailDTO.setLastMessage("입장해서 채팅하세요!");
+            chatRoomDetailDTO.setLastMessageTime(LocalDateTime.now());
         }
 
         else {
             chatRoomDetailDTO.setLastMessage(chatList.get(chatList.size() - 1).getMessage());
+            chatRoomDetailDTO.setLastMessageTime(chatList.get(chatList.size()-1).getCreateDate());
         }
 
 

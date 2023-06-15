@@ -7,7 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
-import org.springframework.data.annotation.Id;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,20 +52,35 @@ public class Goods extends BaseEntity {
         this.status = Status.valueOf(status);
     }
 
-
-
-
-/*
-    // 게시글 수정 메소드
-    public void updateGoods(Goods goods){
-        if(goods.title != null){
-            this.title = goods.title;
-        }
-        if(goods.description != null){
-            this.description = goods.description;
-        }
+    public void setMember(Member member) {
+        this.member = member;
     }
-*/
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public void setSecurePayment(boolean securePayment) {
+        this.securePayment = securePayment;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+
 
 
 

@@ -3,6 +3,7 @@ package com.ll.weflea.boundedContext.pay.Controller;
 import com.ll.weflea.base.rq.Rq;
 import com.ll.weflea.boundedContext.chat.dto.ChatMessageDTO;
 import com.ll.weflea.boundedContext.chat.dto.ChatRoomDetailDTO;
+import com.ll.weflea.boundedContext.chat.entity.ChatRoom;
 import com.ll.weflea.boundedContext.chat.service.ChatService;
 import com.ll.weflea.boundedContext.goods.entity.Goods;
 import com.ll.weflea.boundedContext.goods.entity.Status;
@@ -111,13 +112,22 @@ public class PayController {
         //채팅방에 "안전결제가 완료되었습니다" 메시지 전송
         Member sender = memberService.findByUsername(user.getUsername()).orElse(null);
         goodsService.updateStatusAndBuyer(goodsId, "안전결제중", sender);
-        ChatRoomDetailDTO chatRoomDetailDTO = chatService.createChatRoomDetailDTO(sender, goods.getMember());
+
         ChatMessageDTO messageDTO = new ChatMessageDTO();
         messageDTO.setMessage(sender.getNickname() + "님이 안전결제를 완료하셨습니다.");
         messageDTO.setWriter("관리자");
-        messageDTO.setRoomId(chatRoomDetailDTO.getRoomId());
+
+        ChatRoom chatRoom = chatService.findExistChatRoom(sender.getId(), goods.getMember().getId());
+
+        if (chatRoom != null) {
+            messageDTO.setRoomId(chatRoom.getRoomId());
+        } else {
+            ChatRoomDetailDTO chatRoomDetailDTO = chatService.createChatRoomDetailDTO(sender, goods.getMember());
+            messageDTO.setRoomId(chatRoomDetailDTO.getRoomId());
+        }
+
         chatService.createChatMessage(messageDTO);
-        template.convertAndSend("/sub/chat/room/" + chatRoomDetailDTO.getRoomId(), messageDTO);
+        template.convertAndSend("/sub/chat/room/" + messageDTO.getRoomId(), messageDTO);
         return rq.redirectWithMsg("/user/weflea/detail/" + goodsId, "안전결제가 완료되었습니다.");
     }
 

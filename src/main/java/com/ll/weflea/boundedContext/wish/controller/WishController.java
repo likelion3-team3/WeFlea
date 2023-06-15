@@ -65,9 +65,13 @@ public class WishController {
     }
 
     @PostMapping("/delete/{wishId}")
-    public String deleteWish(@PathVariable Long wishId) {
+    public String deleteWish(@PathVariable Long wishId, @AuthenticationPrincipal User user) {
 
-        RsData<Wish> rsData = wishService.deleteWish(wishId);
+        RsData<Wish> rsData = wishService.deleteWish(wishId, user.getUsername());
+
+        if (rsData.isFail()) {
+            return rq.historyBack(rsData);
+        }
 
         return rq.redirectWithMsg("/user/wish/list", rsData);
     }

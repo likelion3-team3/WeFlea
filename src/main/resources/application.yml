@@ -45,7 +45,7 @@ spring:
         show_sql: true
         format_sql: true
         use_sql_comments: true
-#        default_batch_fetch_size: 1000
+        default_batch_fetch_size: 200
   servlet:
     multipart:
       maxFileSize: 10MB
@@ -59,8 +59,7 @@ logging:
     root: INFO
     com.ll.weflea: DEBUG
     org.hibernate.orm.jdbc.bind: TRACE
-    org.hibernate.orm.jdbc.extract: TRACE
-
+#    org.hibernate.orm.jdbc.extract: TRACE
 custom:
   site:
     baseUrl: https://localhost

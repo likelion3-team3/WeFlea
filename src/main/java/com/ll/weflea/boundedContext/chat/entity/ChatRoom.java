@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -23,7 +22,7 @@ public class ChatRoom extends BaseEntity {
 
     private String roomId;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "chatRoom", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "chatRoom", cascade = CascadeType.ALL)
     @Builder.Default
     private List<ChatMessage> chatList = new ArrayList<>();
 //
@@ -33,11 +32,11 @@ public class ChatRoom extends BaseEntity {
 
     private String roomName;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sender_id")
     private Member sender;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "receiver_id")
     private Member receiver;
 
@@ -52,6 +51,7 @@ public class ChatRoom extends BaseEntity {
 
     public void addMessage(ChatMessage chatMessage) {
         chatList.add(chatMessage);
+
 //        chatMessage.getChatRoom().addMessage(chatMessage);
     }
 }

@@ -11,10 +11,9 @@
 <body layout:fragment="content">
 
 <div>
-    <div class="content_5">
+    <div class="content_5" style="text-align: center">
         <div class="keyword_wrap">
-            <a href="/user/weflea/create" class="button-1 btn-round"
-               style="background-image: linear-gradient(to right, #a1c4fd 0%, #c2e9fb 51%, #a1c4fd 100%);">상품 등록하기</a>
+            <a href="/user/weflea/create" class="button-1 weflea-backColor">상품 등록하기</a>
         </div>
         <div class="keyword_wrap">
         </div>
@@ -22,31 +21,42 @@
     </div>
 
     <div class="container">
-        <form class="search-bar mt-3" th:action="@{/user/weflea/list/search}" method="get">
-            <input type="text" name="keyword" class="search-input" placeholder="위플리 매물 검색" th:value="${keyword}">
-            <button class="search-button">검색</button>
+        <form class="search-bar mt-3" style="margin-left: 10px; width: 100%;" th:action="@{/user/weflea/list/search}" method="get">
+            <input type="text" name="keyword" class="search-input" style="flex-grow: 1;" placeholder="위플리 매물 검색" th:value="${keyword}">
+            <button class="search-button weflea-backColor">검색</button>
         </form>
+        <div class="form-control-sm" style="margin-top: 15px;">
+            <select id="sortCode" name="sortCode" class="select select-bordered select-small"
+                    onchange="handleSortOptionChange(this)">
+                <option value="1">최신순</option>
+                <option value="2">가격 높은 순</option>
+                <option value="3">가격 낮은 순</option>
+            </select>
+        </div>
     </div>
 
-    <div class="content_4_wrap">
+    <div class="content_4_wrap" style="margin-top: -20px;">
         <div class="item_row">
-            <div th:each="goods : ${goodsList}" class="item">
+            <div th:each="goods : ${goodsList}" class="weflea-item">
                 <a th:href="@{|/user/weflea/detail/${goods.id}|}">
                     <div th:if="${goods.goodsImages.size()==0}">
-                        <img src="/images/default-profile.jpg" alt="Default Profile Image" style="border-radius: 12px; width:150px">
+                        <img class="weflea_image" src="/images/noImg.png" alt="Default Profile Image">
                     </div>
                     <div th:if="${goods.goodsImages.size()>=1}">
-                        <img th:src="@{|/user/weflea/goodsImage/${goods.id}|}" style="border-radius: 12px; width:200px">
+                        <img class="weflea_image" th:src="@{|/user/weflea/goodsImage/${goods.id}|}">
                     </div>
                     <div style="border-radius: 12px; width:200px">
                         <h2 class="item_name" th:text="${goods.title}"></h2>
-                        <h2 class="item_price"
+
+                        <h2 class="item_price" th:if="${goods.price}>=1000"
                             data-th-text="${goods.price &lt;= 0 ? '나눔 or 연략요망' : #numbers.formatInteger(goods.price, 3, 'COMMA') + '원'}"></h2>
+                        <h2 class="item_price" th:if="${goods.price}<1000"
+                            data-th-text="${goods.price &lt;= 0 ? '나눔 or 연략요망' : goods.price + '원'}"></h2>
                         <h1 class="item_place" th:text="${goods.area}"></h1>
                         <div class="item_info">
                             <h1 class="item_provider" th:text="${goods.status}"></h1>
                             <h1 class="item_sellDate"
-                                th:text="${#temporals.format(goods.createDate, 'MM-dd HH:mm')}"></h1>
+                                th:text="${#temporals.format(goods.modifyDate, 'MM-dd HH:mm')}"></h1>
                         </div>
                     </div>
                 </a>
@@ -54,35 +64,79 @@
         </div>
     </div>
 </div>
+<br><br>
 
 <!-- 페이징 기능 구현 -->
 <div class="mt-5" th:if="${!goodsList.isEmpty()}">
     <ul class="pagination justify-content-center">
-        <li class="page-item" th:classappend="${goodsList.number == 0} ? 'disabled'">
-            <a class="page-link"
-               th:href="@{|?page=${goodsList.number - 1}|}">
+        <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
+            <a class="page-link" th:if="${keyword}==null" th:href="@{|/user/weflea/list?page=${currentPage - 1}&sortCode=${sortCode}|}">
+                <span>이전</span>
+            </a>
+            <a class="page-link" th:if="${keyword}!=null" th:href="@{|/user/weflea/list/search?keyword=${keyword}&page=${currentPage - 1}&sortCode=${sortCode}|}">
                 <span>이전</span>
             </a>
         </li>
-        <li th:each="page: ${#numbers.sequence(1, goodsList.totalPages)}"
-            th:if="${page >= goodsList.number - 5 and page <= goodsList.number + 5}"
-            th:classappend="${page == goodsList.number + 1} ? 'active'"
+        <li th:each="pageNum : ${#numbers.sequence(1, goodsList.totalPages)}"
+            th:if="${pageNum >= currentPage - 5 and pageNum <= currentPage + 5}"
+            th:classappend="${pageNum == currentPage + 1} ? 'active'"
             class="page-item">
-            <a th:text="${page}" class="page-link" th:href="@{|?page=${page - 1}|}"></a>
+            <a th:if="${keyword} == null" th:text="${pageNum}" class="page-link" th:href="@{|/user/weflea/list?page=${pageNum - 1}&amp;sortCode=${sortCode}|}"></a>
+            <a th:if="${keyword} != null" th:text="${pageNum}" class="page-link" th:href="@{|/user/weflea/list/search?keyword=${keyword}&page=${pageNum - 1}&amp;sortCode=${sortCode}|}"></a>
         </li>
-        <li class="page-item" th:classappend="${goodsList.number == goodsList.totalPages - 1} ? 'disabled'">
-            <a class="page-link" th:href="@{|?page=${goodsList.number + 1}|}">
+        <li class="page-item" th:classappend="${currentPage == goodsList.totalPages - 1} ? 'disabled'">
+            <a class="page-link" th:if="${keyword} == null" th:href="@{|/user/weflea/list?page=${currentPage + 1}&amp;sortCode=${sortCode}|}">
+                <span>다음</span>
+            </a>
+            <a class="page-link" th:if="${keyword} != null" th:href="@{|/user/weflea/list/search?keyword=${keyword}&page=${currentPage + 1}&amp;sortCode=${sortCode}|}">
                 <span>다음</span>
             </a>
         </li>
     </ul>
 </div>
-</div>
+
 <script>
-    function redirectToUrl(element) {
-        var url = $(element).data("url");
-        window.location.href = url;
+
+    var selectElement = document.getElementById('sortCode');
+
+    selectElement.addEventListener('change', function() {
+        var selectedOption = this.options[this.selectedIndex];
+        var selectedText = selectedOption.text;
+
+        var selectedValue = selectedOption.value;
+        var urlParams = new URLSearchParams(window.location.search);
+        urlParams.set('sortCode', selectedValue);
+        var newUrl = window.location.pathname + '?' + urlParams.toString();
+        window.location.href = newUrl;
+    });
+
+    var urlParams = new URLSearchParams(window.location.search);
+    var sortCode = urlParams.get('sortCode');
+
+    if (sortCode) {
+        var selectedOption = selectElement.querySelector('option[value="' + sortCode + '"]');
+        if (selectedOption) {
+            var selectedText = selectedOption.text;
+            selectElement.value = sortCode;
+        }
     }
+
+    function saveSortOption(sortCode) {
+        localStorage.setItem('selectedSortOption', sortCode);
+    }
+
+    function restoreSortOption() {
+        const sortCode = localStorage.getItem('selectedSortOption');
+        if (sortCode) {
+            const selectElement = document.getElementById('sortCode');
+            selectElement.value = sortCode;
+            handleSortOptionChange(selectElement);
+        }
+    }
+
+    window.addEventListener('DOMContentLoaded', restoreSortOption);
+
+
 </script>
 
 </body>
