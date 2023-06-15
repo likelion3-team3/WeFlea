@@ -39,8 +39,10 @@
                     </div>
                     <div style="border-radius: 12px; width:200px">
                         <h2 class="item_name" th:text="${goods.title}"></h2>
-                        <h2 class="item_price"
+                        <h2 class="item_price" th:if="${goods.price}>=1000"
                             data-th-text="${goods.price &lt;= 0 ? '나눔 or 연략요망' : #numbers.formatInteger(goods.price, 3, 'COMMA') + '원'}"></h2>
+                        <h2 class="item_price" th:if="${goods.price}<1000"
+                            data-th-text="${goods.price &lt;= 0 ? '나눔 or 연략요망' : goods.price + '원'}"></h2>
                         <h1 class="item_place" th:text="${goods.area}"></h1>
                         <div class="item_info">
                             <h1 class="item_provider" th:text="${goods.status}"></h1>

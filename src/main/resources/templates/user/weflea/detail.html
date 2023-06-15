@@ -2,7 +2,6 @@
 
 <head>
     <title>상품 상세 페이지</title>
-    <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
     <style>
         .slider {
             width: 400px;
@@ -67,28 +66,6 @@
                                 </button>
                             </div>
                         </div>
-
-                        <script>
-                            const modal = document.querySelector(".modal_detail");
-                            const img = document.querySelector(".img-thumbnail");
-                            const modal_img = document.querySelector(".modal_detail_content");
-                            const span = document.querySelector(".close_detail");
-
-                            img.addEventListener('click', () => {
-                                modalDisplay("block");
-                                modal_img.src = img.src;
-                            });
-                            span.addEventListener('click', () => {
-                                modalDisplay("none");
-                            });
-                            modal.addEventListener('click', () => {
-                                modalDisplay("none");
-                            });
-
-                            function modalDisplay(text) {
-                                modal.style.display = text;
-                            }
-                        </script>
 
                         <script>
                             const slides = document.querySelector('.slides');

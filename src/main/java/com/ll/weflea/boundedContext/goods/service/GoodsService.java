@@ -115,8 +115,8 @@ public class GoodsService {
         return RsData.of("S-1", "거래상태가 " + status + "으로 변경되었습니다.");
     }
 
-    public ResponseEntity<byte[]> getGoodsImg(Goods goods) throws IOException {
-        GoodsImage goodsImage = goods.getGoodsImages().get(0);
+    public ResponseEntity<byte[]> getGoodsImg(Long goodsId) throws IOException {
+        GoodsImage goodsImage = goodsImageRepository.findTopByGoodsId(goodsId).orElse(null);
 
         InputStream inputStream = new FileInputStream(goodsImage.getPath());
         byte[] imageByteArray = IOUtils.toByteArray(inputStream);

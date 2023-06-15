@@ -160,8 +160,7 @@ public class GoodsController {
 
     @GetMapping("/goodsImage/{id}")
     public ResponseEntity<byte[]> getGoodsImg(@PathVariable("id") Long id) throws IOException {
-        Goods goods = goodsService.findById(id);
-        ResponseEntity<byte[]> goodsImage = goodsService.getGoodsImg(goods);
+        ResponseEntity<byte[]> goodsImage = goodsService.getGoodsImg(id);
 
         return goodsImage;
     }
