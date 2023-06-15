@@ -1,5 +1,9 @@
 package com.ll.weflea.base.initData;
 
+import com.ll.weflea.boundedContext.goods.controller.GoodsController;
+import com.ll.weflea.boundedContext.goods.entity.Status;
+import com.ll.weflea.boundedContext.goods.service.GoodsService;
+import com.ll.weflea.boundedContext.member.entity.Member;
 import com.ll.weflea.boundedContext.member.service.MemberService;
 import com.ll.weflea.boundedContext.search.service.SearchService;
 import org.springframework.boot.CommandLineRunner;
@@ -8,13 +12,14 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 
 @Configuration
 @Profile({"dev", "test"})
 public class NotProd {
 
     @Bean
-    CommandLineRunner initData(MemberService memberService, SearchService searchService) {
+    CommandLineRunner initData(MemberService memberService, SearchService searchService, GoodsService goodsService) {
         return new CommandLineRunner() {
             @Override
             public void run(String... args) throws Exception {
@@ -38,6 +43,14 @@ public class NotProd {
                 searchService.createSearchKeyword("아이패드");
                 searchService.createSearchKeyword("스타벅스");
                 searchService.createSearchKeyword("책상");
+
+
+                // 위플리 장터 게시글 생성
+                GoodsController.CreateForm createForm = new GoodsController.CreateForm("ㅇㅇ", "지역", Status.구매가능, false, 300, "설명", Collections.emptyList());
+                Member member =  memberService.join("USER", "bigsand").getData();
+                for(int i = 0; i < 50; i++){
+                    goodsService.create(member, createForm);
+                }
             }
         };
     }
