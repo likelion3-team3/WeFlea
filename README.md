@@ -12,7 +12,7 @@
     <a href="https://www.youtube.com/watch?v=eHD5_KmfH8E" target="_blank">시연영상</a>
     <br /><br />
     <br /><br />
-    <img src="https://img.shields.io/badge/java-17.0.2-339933?logo=java">
+<!--     <img src="https://img.shields.io/badge/java-17.0.2-339933?logo=java">
     <img src="https://img.shields.io/badge/SpringBoot-3.1.0-E0234E?logo=SpringBoot">
     <img src="https://img.shields.io/badge/TypeScript-4.8.4-3178C6?logo=typescript">
     <img src="https://img.shields.io/badge/MongoDB-6.0.3-339933?logo=MongoDB"> 
@@ -25,7 +25,7 @@
     <br />
     <img src="https://img.shields.io/badge/Docker-20.10.21-2496ED?logo=Docker"> 
     <img src="https://img.shields.io/badge/Nginx-1.10.3-009639?logo=Nginx">  
-    <img src="https://img.shields.io/badge/Naver Cloud Platform-F9F9F9?logo=Naver"> 
+    <img src="https://img.shields.io/badge/Naver Cloud Platform-F9F9F9?logo=Naver">  -->
 
 </div>
 <br /><br />
