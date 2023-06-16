@@ -8,7 +8,8 @@
     <p>
         <a href="https://weflea.shop" target="_blank">지금 바로 검색하기</a>
     </p>
-    <a href="https://www.notion.so/likelion3-team3/f063a3082610412892be3ba240fbdcb4?v=e7a02753556d4dfdb482c919567b5d18&pvs=4" target="_blank">팀노션</a> &nbsp; &nbsp; |&nbsp; &nbsp;  
+    <a href="https://www.notion.so/likelion3-team3/f063a3082610412892be3ba240fbdcb4?v=e7a02753556d4dfdb482c919567b5d18&pvs=4" target="_blank">팀노션</a> &nbsp; &nbsp; |&nbsp; &nbsp;
+    <a href="https://www.notion.so/likelion3-team3/7905355ce44d452cb60d59f737c37596?pvs=4" target="_blank">해커톤 발표자료</a> &nbsp; &nbsp; |&nbsp; &nbsp;
     <a href="https://youtu.be/E8waXqLqG2U" target="_blank">시연영상</a>
     <br /><br />
     <br /><br />
