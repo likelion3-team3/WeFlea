@@ -9,28 +9,33 @@
         <a href="https://weflea.shop" target="_blank">지금 바로 검색하기</a>
     </p>
     <a href="https://www.notion.so/likelion3-team3/f063a3082610412892be3ba240fbdcb4?v=e7a02753556d4dfdb482c919567b5d18&pvs=4" target="_blank">팀노션</a> &nbsp; &nbsp; |&nbsp; &nbsp;  
-    <a href="https://www.youtube.com/watch?v=eHD5_KmfH8E" target="_blank">시연영상</a>
+    <a href="https://youtu.be/E8waXqLqG2U" target="_blank">시연영상</a>
     <br /><br />
     <br /><br />
-<!--     <img src="https://img.shields.io/badge/java-17.0.2-339933?logo=java">
-    <img src="https://img.shields.io/badge/SpringBoot-3.1.0-E0234E?logo=SpringBoot">
-    <img src="https://img.shields.io/badge/TypeScript-4.8.4-3178C6?logo=typescript">
-    <img src="https://img.shields.io/badge/MongoDB-6.0.3-339933?logo=MongoDB"> 
-    <img src="https://img.shields.io/badge/Redis-7.0.5-DC382D?logo=Redis"> 
+    <img src="https://img.shields.io/badge/java-007396?logo=java&logoColor=white">
+    <img src="https://img.shields.io/badge/SpringBoot-6DB33F?logo=SpringBoot&logoColor=white">
+    <img src="https://img.shields.io/badge/MySQL-4479A1?logo=MySQL&logoColor=white">
+    <img src="https://img.shields.io/badge/JPA-FF7800?logo=hibernate&logoColor=white"> 
+    <img src="https://img.shields.io/badge/Selenium-339933?logo=Selenium&logoColor=white">
+    <img src="https://img.shields.io/badge/Websocket-003545?logo=WebSocket&logoColor=white">
+    <img src="https://img.shields.io/badge/Stomp-000000?logo=Stomp&logoColor=white">
     <br />
-    <img src="https://img.shields.io/badge/React-18.2.0-61DAFB?logo=React">
-    <img src="https://img.shields.io/badge/styled components-5.3.6-DB7093?logo=styled-components"> 
-    <img src="https://img.shields.io/badge/Socket.io-4.5.3-010101?logo=Socket.io"> 
-    <img src="https://img.shields.io/badge/WebRTC-1.14.1-333333?logo=WebRTC">
+    <img src="https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white">
+    <img src="https://img.shields.io/badge/CSS-1572B6?logo=css3&logoColor=white"> 
+    <img src="https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=white"> 
+    <img src="https://img.shields.io/badge/Thymeleaf-005F0F?logo=thymeleaf&logoColor=white">
+    <img src="https://img.shields.io/badge/jQuery-0769AD?logo=jQuery&logoColor=white"> 
     <br />
-    <img src="https://img.shields.io/badge/Docker-20.10.21-2496ED?logo=Docker"> 
-    <img src="https://img.shields.io/badge/Nginx-1.10.3-009639?logo=Nginx">  
-    <img src="https://img.shields.io/badge/Naver Cloud Platform-F9F9F9?logo=Naver">  -->
+    <img src="https://img.shields.io/badge/Docker-2496ED?logo=Docker&logoColor=white"> 
+    <img src="https://img.shields.io/badge/Nginx-009639?logo=Nginx&logoColor=white">
+    <img src="https://img.shields.io/badge/Jenkins-D24939?logo=Jenkins&logoColor=white">
+    <img src="https://img.shields.io/badge/Naver Cloud Platform-F9F9F9?logo=Naver"> 
 
 </div>
 <br /><br />
 
 <h2>🧑‍💻 팀원 소개</h2>
+<div align="center">
   <table>
     <tr>
       <td align="center">김원희</td>
@@ -57,6 +62,7 @@
       <td align="center">위플리 장터 페이지</td>
     </tr>
   </table>
+</div>
 <br>
 
 
@@ -68,13 +74,17 @@
 <a href="https://ibb.co/tsjLGsp"><img src="https://i.ibb.co/SnYfjnw/weflea.png" alt="weflea" border="0"></a>
 </div>
 
-- <b>기능 설명 (이거 필요한가?)</b>
-> 1. **위플리 중고거래**  
-     위플리의 자체적인 중고거래 기능. 안전결제가 가능합니다.
+- <b>위플리 기능 설명</b>
+> 1. **위플리 장터**  
+     위플리의 자체적인 중고거래 기능. 안전결제가 가능해요.
 > 2. **통합검색**  
      여러 중고거래 사이트의 상품들을 한눈에 볼 수 있어요.
 > 3. **채팅**  
-     다른 유저가 무엇을 그렸는지 맞추어봐요.
+     구매하고자 하는 상품의 판매자와 채팅을 할 수 있어요.
+> 4. **찜 목록**  
+     원하는 상품에 찜 버튼을 누를 수 있어요.
+> 5. **마이 페이지**  
+     마이 페이지에서 닉네임 수정, 프로필 사진 설정 및 위플리 장터와 연관된 여러 기능을 사용할 수 있어요.
 
 <br />
 
@@ -96,7 +106,7 @@
       <td align="center"><a href="https://ibb.co/WPkk9NT"><img src="https://i.ibb.co/s6KKSpB/weflea.png" alt="weflea" border="0"></a></td>
     </tr>
     <tr>
-      <td align="center">상품 등록 및 상세 페이지</td>
+      <td align="center">상품 등록 및 수정 페이지</td>
       <td align="center">상품 상세 페이지</td>
     </tr>
     <tr>
@@ -121,8 +131,9 @@
     </tr>
  </table>
 
-### 소셜 로그인
+****
 
+### 소셜 로그인
 
 - 네이버, 카카오 계정을 통한 소셜 로그인
 -  최초 로그인시 닉네임 입력폼으로 이동, 멤버 정보 db에 저장
@@ -148,7 +159,10 @@
 
 - 상세 페이지에서는 판매자가 등록한 상품 사진 여러 장을 조회할 수 있습니다.
 - 상세 페이지를 통해 찜 하기, 채팅하기, 안전결제 기능을 사용할 수 있습니다.
-
+- 상품 등록 / 수정 폼 작성 시 '안전결제 허용' 선택에 따라 상세 페이지 내 안전결제 버튼에 차이가 있습니다.
+  - 안전결제 허용 시 구매자는 상세 페이지 내 '안전결제' 버튼을 통해 안전결제를 할 수 있습니다.
+  - 안전결제 비허용 시 상세 페이지 내 '안전결제' 버튼은 클릭할 수 없는 형태입니다.
+- 판매자는 상세 페이지 내의 수정, 삭제 버튼을 통해 본인의 게시물을 수정, 삭제할 수 있습니다.
 
 ****
 
@@ -178,33 +192,32 @@
 
 **프로필 사진**
 
-- 프로필 사진 업로드
-- 마이 페이지에 프로필 사진 썸네일
+- 프로필 사진 업로드가 가능합니다.
+- 마이 페이지에 프로필 사진 썸네일이 보여집니다.
 
 **포인트 조회 가능**
 
-- 판매자의 경우, 본인의 상품이 안전결제를 통해 거래, 완료 처리 시 포인트가 들어온다.
+- 판매자의 경우, 본인의 상품이 안전결제를 통해 거래, 완료 처리 시 포인트가 들어옵니다.
 
 **내 게시글 페이지 연결**
 
-
-- 내 게시글에서는 본인이 작성한 글 목록 확인 가능
+- 내 게시글에서는 본인이 작성한 글 목록이 확인 가능합니다.
 
 **찜 목록 연결**
 
-- 찜 목록에서 본인이 찜한 상품 목록 확인 가능
+- 찜 목록에서 본인이 찜한 상품 목록 확인이 가능합니다.
+- 찜 목록에서 찜 삭제가 가능합니다.
 
 **채팅 목록 연결**
 
-- 회원의 모든 채팅 목록 확인 가능
+- 회원의 모든 채팅 목록이 확인 가능합니다.
 
 **안전결제 기능 연결**
 
-- 안전결제 내역 확인 가능
-- 구매자가 상품 수령 후 거래 완료 버튼을 누를 수 있음
+- 안전결제 내역 확인이 가능합니다.
+- 구매자가 상품 수령 후 거래 완료 버튼을 누를 수 있습니다.
 
 
-****
 
 
 
