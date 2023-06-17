@@ -30,7 +30,16 @@ public class SearchController {
     @GetMapping("/all")
     public String searchAll(Model model, @ModelAttribute SearchDto searchDto) {
 
-        List<Search> searchList = searchService.findSearchesById(searchDto, PageRequest.of(0, DEFAULT_SIZE));
+        List<Search> searchList;
+
+        if (searchDto.getSortCode() == 1) {
+            searchList = searchService.findSearchesBySellDate(searchDto, PageRequest.of(0, DEFAULT_SIZE));
+        }
+
+        else {
+            searchList = searchService.findSearchesByPrice(searchDto, PageRequest.of(0, DEFAULT_SIZE));
+        }
+
         List<SearchKeyword> keywords = searchService.findAllSearchKeyword();
 
         model.addAttribute("keywords", keywords);
@@ -43,7 +52,17 @@ public class SearchController {
     @ResponseBody
     public ResponseEntity<Map<String, Object>> searchByPageNumber(@PathVariable int pageNumber, @ModelAttribute SearchDto searchDto) {
 
-        List<Search> searchList = searchService.findSearchesById(searchDto, PageRequest.of(pageNumber, DEFAULT_SIZE));
+        List<Search> searchList;
+
+        if (searchDto.getSortCode() == 1) {
+            searchList = searchService.findSearchesBySellDate(searchDto, PageRequest.of(pageNumber, DEFAULT_SIZE));
+        }
+
+        else {
+            searchList = searchService.findSearchesByPrice(searchDto, PageRequest.of(pageNumber, DEFAULT_SIZE));
+        }
+
+        log.info("sellDate ={}", searchDto.getSellDate());
 
         Map<String, Object> map = new HashMap<>();
 
