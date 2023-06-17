@@ -22,7 +22,7 @@ public class ChatRoom extends BaseEntity {
 
     private String roomId;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "chatRoom", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "chatRoom", cascade = CascadeType.ALL)
     @Builder.Default
     private List<ChatMessage> chatList = new ArrayList<>();
 //
@@ -32,11 +32,11 @@ public class ChatRoom extends BaseEntity {
 
     private String roomName;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sender_id")
     private Member sender;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "receiver_id")
     private Member receiver;
 

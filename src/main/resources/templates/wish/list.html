@@ -14,10 +14,10 @@
         <div th:each="wish : ${wishList}" class="item" data-index="${status.index}">
             <a  th:href="|/user/weflea/detail/${wish.goods.id}|">
                 <div th:if="${wish.goods.goodsImages.size()==0}">
-                    <img src="/images/noimg.png" alt="Default Profile Image" style="border-radius: 12px; width:150px">
+                    <img class="weflea_image" src="/images/noImg.png" alt="Default Profile Image"/>
                 </div>
                 <div th:if="${wish.goods.goodsImages.size()>=1}">
-                    <img th:src="@{|/user/weflea/goodsImage/${wish.goods.id}|}" style="border-radius: 12px; width:200px">
+                    <img class="weflea_image" th:src="@{|/user/weflea/goodsImage/${wish.goods.id}|}"/>
                 </div>
                 <div class="flex " style="width: 200px">
                     <div style="border-radius: 12px; width:200px">
@@ -28,11 +28,11 @@
                             <h1 class="item_sellDate" th:text="${#temporals.format(wish.goods.createDate, 'MM-dd HH:mm')}"></h1>
                         </div>
                     </div>
-                    <form class="item_place" th:action="@{/user/wish/delete/{wishId}(wishId=${wish.id})}" method="post">
-                        <input type="hidden" name="_method" value="post">
-                        <button type="submit" class="btn" onclick="return confirm('해당 상품의 찜을 해제하겠습니까?')">찜 삭제</button>
-                    </form>
                 </div>
+                <form class="item_place" th:action="@{/user/wish/delete/{wishId}(wishId=${wish.id})}" method="post">
+                    <input type="hidden" name="_method" value="post">
+                    <button type="submit" class="btn btn-light border" style="background-image: linear-gradient(to right, #a1c4fd 0%, #a1c4fd 51%, #a1c4fd 100%);" onclick="return confirm('해당 상품의 찜을 해제하겠습니까?')">찜 삭제</button>
+                </form>
 
             </a>
 

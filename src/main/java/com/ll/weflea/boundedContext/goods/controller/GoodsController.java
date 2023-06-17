@@ -3,6 +3,7 @@ package com.ll.weflea.boundedContext.goods.controller;
 import com.ll.weflea.base.rq.Rq;
 import com.ll.weflea.base.rsData.RsData;
 import com.ll.weflea.boundedContext.goods.entity.Goods;
+import com.ll.weflea.boundedContext.goods.entity.GoodsImage;
 import com.ll.weflea.boundedContext.goods.entity.Status;
 import com.ll.weflea.boundedContext.goods.service.GoodsImageService;
 import com.ll.weflea.boundedContext.goods.service.GoodsService;
@@ -12,10 +13,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.domain.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -43,19 +41,33 @@ public class GoodsController {
 
 
     @GetMapping("/list")
-    public String wefleaList(Model model, @RequestParam(value = "page", defaultValue = "0") int page) {
+    public String wefleaList(Model model,
+                             @RequestParam(value = "page", defaultValue = "0") int page,
+                             @RequestParam(defaultValue = "1") Integer sortCode) {
 
-        Page<Goods> goodsList = this.goodsService.getGoodsList(page);
+        log.info("현재 페이지 = {}", page);
+
+        Page<Goods> goodsList = this.goodsService.getGoodsList(page, sortCode);
         model.addAttribute("goodsList", goodsList);
+        model.addAttribute("sortCode", sortCode);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("keyword", null);
 
         return "user/weflea/list";
     }
 
     @GetMapping("/list/search")
-    public String searchGoods(Model model, @RequestParam("keyword") String keyword, @RequestParam(defaultValue = "0") int page) {
-        Page<Goods> goodsList = goodsService.getGoodsListByKeyword(keyword, page);
+    public String searchGoods(Model model, @RequestParam("keyword") String keyword,
+                              @RequestParam(defaultValue = "0") int page,
+                              @RequestParam(defaultValue = "1") Integer sortCode) {
+        log.info("현재 페이지 = {}", page);
+        Page<Goods> goodsList = goodsService.getGoodsListByKeyword(keyword, page, sortCode);
+
         model.addAttribute("goodsList", goodsList);
+        model.addAttribute("currentPage", page);
         model.addAttribute("keyword", keyword);
+        model.addAttribute("sortCode", sortCode);
+
 
         return "user/weflea/list";
     }
@@ -73,14 +85,16 @@ public class GoodsController {
     @Getter
     @Setter
     public static class CreateForm {
-        @NotEmpty(message="제목을 입력해 주세요.")
+        @NotEmpty(message = "제목을 입력해 주세요.")
         private String title;
         private String area;
         private Status status;
         private boolean securePayment;
+
         @NotNull(message="가격은 필수항목 입니다.")
         @Min(value = 0, message = "가격은 0보다 크거나 같아야 합니다.")
         private Integer price;
+
         @NotEmpty(message="내용을 입력해 주세요.")
         private String description;
         private List<MultipartFile> images;
@@ -124,10 +138,9 @@ public class GoodsController {
     @GetMapping("/detail/{id}")
     public String detail(Model model, @PathVariable("id") Long id) throws IOException {
         Goods goods = goodsService.findById(id);
-        ResponseEntity<List<byte[]>> allGoodsImages = goodsService.getAllGoodsImages(goods);
+        List<GoodsImage> goodsImageList = goods.getGoodsImages();
 
-        model.addAttribute("goodsImages", allGoodsImages.getBody());
-
+        model.addAttribute("goodsImages", goodsImageList);
 
         model.addAttribute("goods", goods);
 
@@ -160,18 +173,58 @@ public class GoodsController {
     }
 
     @GetMapping("/goodsImage/{id}")
-    public ResponseEntity<byte[]> getGoodsImg (@PathVariable("id") Long id) throws IOException {
-        Goods goods = goodsService.findById(id);
-        ResponseEntity<byte[]> goodsImage = goodsService.getGoodsImg(goods);
+    public ResponseEntity<byte[]> getGoodsImg(@PathVariable("id") Long id) throws IOException {
+        ResponseEntity<byte[]> goodsImage = goodsService.getGoodsImg(id);
 
         return goodsImage;
     }
 
     @GetMapping("/detail/goodsImage/{id}")
-    public ResponseEntity<List<byte[]>> getAllGoodsImg (@PathVariable("id") Long id) throws IOException {
-        Goods goods = goodsService.findById(id);
+    public ResponseEntity<byte[]> getGoodsImgs(@PathVariable("id") Long id) throws IOException {
+        GoodsImage goodsImage = goodsImageService.findById(id);
+        ResponseEntity<byte[]> goodsImg = goodsImageService.getGoodsImg(goodsImage);
 
-        return goodsService.getAllGoodsImages(goods);
+        return goodsImg;
     }
 
+    @GetMapping("/modify/{id}")
+    public String wefleaModify(@PathVariable("id") Long id, Model model) {
+        Goods goods = goodsService.findById(id);
+
+        if (goods == null) {
+            return "/user/weflea/detail";
+        }
+
+        model.addAttribute("goods", goods);
+
+        return "user/weflea/modify";
+    }
+
+    @PostMapping("/modify/{id}")
+    public String modify(@PathVariable("id") Long id, @Valid CreateForm createForm,
+                         BindingResult bindingResult, @AuthenticationPrincipal User user,
+                         Model model) throws Exception {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("goods", goodsService.findById(id));
+            return "user/weflea/modify";
+        }
+
+        String username = user.getUsername();
+
+        Member member = memberRepository.findByUsername(username).orElse(null);
+
+        Goods goods = goodsService.findById(id);
+
+        if (!goods.getMember().getUsername().equals(user.getUsername())) {
+            return rq.historyBack("수정할 수 있는 권한이 없습니다.");
+        }
+
+        RsData<Goods> modifyRsData = goodsService.modify(goods, member, createForm);
+
+        if (modifyRsData.isFail()) {
+            return rq.historyBack(modifyRsData);
+        }
+
+        return "redirect:/user/weflea/detail/" + modifyRsData.getData().getId();
+    }
 }

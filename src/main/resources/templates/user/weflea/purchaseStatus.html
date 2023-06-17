@@ -46,7 +46,7 @@
               </td>
               <td class="text-center">
                 <form th:action="@{/user/member/me/status/complete/deal/{id}(id=${goods.id})}" method="post">
-                  <button type="submit" class="btn btn-light" onclick="return confirm('상품을 받으셨으면 거래 완료 버튼을 눌러주세요.')"
+                  <button type="submit" class="btn btn-light border" style="background-image: linear-gradient(to right, #a1c4fd 0%, #a1c4fd 51%, #a1c4fd 100%);" onclick="return confirm('상품을 받으셨으면 거래 완료 버튼을 눌러주세요.')"
                           th:disabled="${goods.status.toString() == '거래완료'}">
                     거래완료 신청</button>
                 </form>

@@ -1,7 +1,7 @@
 <html layout:decorate="~{common/layout.html}" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>상품 등록 폼</title>
+    <title>위플리 등록</title>
 </head>
 <body layout:fragment="content">
 <!--<h1>상품 등록</h1>-->
@@ -47,13 +47,10 @@
     <input type="file" id="images" name="images" multiple><br><br>
 
     <button type="submit" onclick="showSuccessMessage()"
-            style="background-image: linear-gradient(to right, #a1c4fd 0%, #c2e9fb 51%, #a1c4fd 100%); font-size: 1.2em; padding: 10px 20px; border-radius: 10px;">저장
+            class="btn btn-light border" style="background-image: linear-gradient(to right, #a1c4fd 0%, #a1c4fd 51%, #a1c4fd 100%);">저장
     </button>
 
 </form>
-<!--<button onclick="location.href='/user/weflea/list'"
-        style="background-color: aliceblue; font-size: 1.2em; padding: 10px 20px; border-radius: 10px">목록
-</button>-->
 
 <script>
     function showSuccessMessage() {
