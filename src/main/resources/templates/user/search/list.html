@@ -133,10 +133,13 @@
     const provider = document.querySelector('select[name="provider"]').value;
     const sortCode = document.querySelector('select[name="sortCode"]').value;
     const currentPage = Math.ceil((items.length) / 12); // 현재 페이지 계산
+    const sellDate = document.querySelector('select[name="sellDate"]').value;
 
-    const url = `/user/search/all/${currentPage}` + (keyword ? `?keyword=${keyword}` : `?keyword=`) + (provider ? `&provider=${provider}` : `&provider=`) + (sortCode ? `&sortCode=${sortCode}` : `&sortCode=`);
-
-
+    const url = `/user/search/all/${currentPage}` +
+            (keyword ? `?keyword=${keyword}` : `?keyword=`) +
+            (provider ? `&provider=${provider}` : `&provider=`) +
+            (sortCode ? `&sortCode=${sortCode}` : `&sortCode=`) +
+            (sellDate ? `&sellDate=${sellDate}` : `&sellDate=`)
 
     fetch(url)
             .then(response => response.json())

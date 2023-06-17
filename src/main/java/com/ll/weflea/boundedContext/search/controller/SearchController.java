@@ -7,7 +7,6 @@ import com.ll.weflea.boundedContext.search.service.SearchService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,7 +28,10 @@ public class SearchController {
 
     //전체조회
     @GetMapping("/all")
-    public String searchAll(Model model, @RequestParam(defaultValue = "") String keyword, @RequestParam(defaultValue = "") String provider, @RequestParam(defaultValue = "1") Integer sortCode) {
+    public String searchAll(Model model,
+                            @RequestParam(defaultValue = "") String keyword,
+                            @RequestParam(defaultValue = "") String provider,
+                            @RequestParam(defaultValue = "1") Integer sortCode) {
 
         SearchDto searchDto = new SearchDto(keyword, provider, sortCode);
 
@@ -46,7 +48,10 @@ public class SearchController {
 
     @GetMapping("/all/{pageNumber}")
     @ResponseBody
-    public ResponseEntity<Map<String, Object>> searchByPageNumber(@PathVariable int pageNumber, @RequestParam(defaultValue = "") String keyword, @RequestParam(defaultValue = "") String provider, @RequestParam(defaultValue = "1") Integer sortCode) {
+    public ResponseEntity<Map<String, Object>> searchByPageNumber(@PathVariable int pageNumber,
+                                                                  @RequestParam(defaultValue = "") String keyword,
+                                                                  @RequestParam(defaultValue = "") String provider,
+                                                                  @RequestParam(defaultValue = "1") Integer sortCode) {
 
         log.info("페이지 번호 = {}" , pageNumber);
 

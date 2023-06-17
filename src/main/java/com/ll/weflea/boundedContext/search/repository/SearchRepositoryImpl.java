@@ -10,6 +10,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +35,7 @@ public class SearchRepositoryImpl implements SearchRepositoryCustom {
                         eqProvider(provider)
                 )
                 .orderBy(sortSearchList(sortCode))
-                .offset(pageable.getOffset())
+//                .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
     }
@@ -54,6 +55,14 @@ public class SearchRepositoryImpl implements SearchRepositoryCustom {
         }
 
         return search.provider.eq(provider);
+    }
+
+    private BooleanExpression ltSellDate(LocalDateTime sellDate, Integer sortCode) {
+        if (sellDate == null || sortCode != 1) {
+            return null;
+        }
+
+        return search.sellDate.lt(sellDate);
     }
 
     private OrderSpecifier[] sortSearchList(Integer sortCode) {
