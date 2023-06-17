@@ -8,6 +8,7 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.util.StringUtils;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDateTime;
@@ -18,12 +19,32 @@ import static com.ll.weflea.boundedContext.search.entity.QSearch.search;
 
 
 @RequiredArgsConstructor
+@Slf4j
 public class SearchRepositoryImpl implements SearchRepositoryCustom {
 
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public List<Search> findSearchesById(SearchDto searchDto, Pageable pageable) {
+    public List<Search> findSearchesBySellDate(SearchDto searchDto, Pageable pageable) {
+
+        String keyword = searchDto.getKeyword();
+        String provider = searchDto.getProvider();
+        Integer sortCode = searchDto.getSortCode();
+        LocalDateTime lastSellDate = searchDto.getSellDate();
+
+        return jpaQueryFactory.selectFrom(search)
+                .where(
+                        containsKeyword(keyword),
+                        eqProvider(provider),
+                        ltSellDate(lastSellDate, sortCode)
+                )
+                .orderBy(sortSearchList(sortCode))
+                .limit(pageable.getPageSize())
+                .fetch();
+    }
+
+    @Override
+    public List<Search> findSearchesByPrice(SearchDto searchDto, Pageable pageable) {
 
         String keyword = searchDto.getKeyword();
         String provider = searchDto.getProvider();
@@ -35,7 +56,7 @@ public class SearchRepositoryImpl implements SearchRepositoryCustom {
                         eqProvider(provider)
                 )
                 .orderBy(sortSearchList(sortCode))
-//                .offset(pageable.getOffset())
+                .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
     }
@@ -57,12 +78,12 @@ public class SearchRepositoryImpl implements SearchRepositoryCustom {
         return search.provider.eq(provider);
     }
 
-    private BooleanExpression ltSellDate(LocalDateTime sellDate, Integer sortCode) {
-        if (sellDate == null || sortCode != 1) {
+    private BooleanExpression ltSellDate(LocalDateTime lastSellDate, Integer sortCode) {
+        if (lastSellDate == null || sortCode != 1) {
             return null;
         }
 
-        return search.sellDate.lt(sellDate);
+        return search.sellDate.lt(lastSellDate);
     }
 
     private OrderSpecifier[] sortSearchList(Integer sortCode) {

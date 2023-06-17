@@ -8,5 +8,7 @@ import java.util.List;
 
 public interface SearchRepositoryCustom {
 
-    List<Search> findSearchesById(SearchDto searchDto, Pageable pageable);
+    List<Search> findSearchesBySellDate(SearchDto searchDto, Pageable pageable);
+
+    List<Search> findSearchesByPrice(SearchDto searchDto, Pageable pageable);
 }

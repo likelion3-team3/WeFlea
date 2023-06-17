@@ -36,9 +36,14 @@ public class SearchService {
         searchRepository.save(search);
     }
 
-    public List<Search> findSearchesById(SearchDto searchDto, Pageable pageable) {
+    public List<Search> findSearchesBySellDate(SearchDto searchDto, Pageable pageable) {
 
-        return searchRepository.findSearchesById(searchDto, pageable);
+        return searchRepository.findSearchesBySellDate(searchDto, pageable);
+    }
+
+    public List<Search> findSearchesByPrice(SearchDto searchDto, Pageable pageable) {
+
+        return searchRepository.findSearchesByPrice(searchDto, pageable);
     }
 
 
