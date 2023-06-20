@@ -51,6 +51,7 @@ public class SearchRepositoryImpl implements SearchRepositoryCustom {
         String provider = searchDto.getProvider();
         Integer sortCode = searchDto.getSortCode();
         Integer lastPrice = searchDto.getPrice();
+        LocalDateTime lastSellDate = searchDto.getSellDate();
 
         JPAQuery<Search> query = jpaQueryFactory.selectFrom(search)
                 .where(
@@ -69,6 +70,8 @@ public class SearchRepositoryImpl implements SearchRepositoryCustom {
         if (sortCode == 3) {
             query.where(goePrice(lastPrice));
         }
+
+        query.where(ltSellDate(lastSellDate));
 
         return query.fetch();
     }
