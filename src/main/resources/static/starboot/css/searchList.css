@@ -305,6 +305,12 @@ img{
     color: #B0C4DE;
 }
 
+.item_price_none{
+    display: none;
+    margin-top: 10px;
+    font-weight: 700;
+}
+
 .item_cost{
     display: none;
     margin-top: 10px;

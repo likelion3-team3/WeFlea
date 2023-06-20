@@ -19,4 +19,6 @@ public class SearchDto {
 
     private LocalDateTime sellDate = null;
 
+    private Integer price;
+
 }

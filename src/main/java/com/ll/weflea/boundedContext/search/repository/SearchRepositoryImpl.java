@@ -6,6 +6,7 @@ import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.util.StringUtils;
+import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -36,7 +37,7 @@ public class SearchRepositoryImpl implements SearchRepositoryCustom {
                 .where(
                         containsKeyword(keyword),
                         eqProvider(provider),
-                        ltSellDate(lastSellDate, sortCode)
+                        ltSellDate(lastSellDate)
                 )
                 .orderBy(sortSearchList(sortCode))
                 .limit(pageable.getPageSize())
@@ -49,16 +50,27 @@ public class SearchRepositoryImpl implements SearchRepositoryCustom {
         String keyword = searchDto.getKeyword();
         String provider = searchDto.getProvider();
         Integer sortCode = searchDto.getSortCode();
+        Integer lastPrice = searchDto.getPrice();
 
-        return jpaQueryFactory.selectFrom(search)
+        JPAQuery<Search> query = jpaQueryFactory.selectFrom(search)
                 .where(
                         containsKeyword(keyword),
                         eqProvider(provider)
                 )
                 .orderBy(sortSearchList(sortCode))
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
-                .fetch();
+                .limit(pageable.getPageSize());
+
+        //가격 높은 순
+        if (sortCode == 2) {
+            query.where(loePrice(lastPrice));
+        }
+
+        //가격 낮은 순
+        if (sortCode == 3) {
+            query.where(goePrice(lastPrice));
+        }
+
+        return query.fetch();
     }
 
 
@@ -78,13 +90,31 @@ public class SearchRepositoryImpl implements SearchRepositoryCustom {
         return search.provider.eq(provider);
     }
 
-    private BooleanExpression ltSellDate(LocalDateTime lastSellDate, Integer sortCode) {
-        if (lastSellDate == null || sortCode != 1) {
+    private BooleanExpression ltSellDate(LocalDateTime lastSellDate) {
+        if (lastSellDate == null) {
             return null;
         }
 
         return search.sellDate.lt(lastSellDate);
     }
+
+    private BooleanExpression loePrice(Integer lastPrice) {
+        if (lastPrice == null) {
+            return null;
+        }
+
+        return search.price.loe(lastPrice);
+    }
+
+    private BooleanExpression goePrice(Integer lastPrice) {
+        if (lastPrice == null) {
+            return null;
+        }
+
+        return search.price.goe(lastPrice);
+    }
+
+
 
     private OrderSpecifier[] sortSearchList(Integer sortCode) {
 
@@ -100,10 +130,12 @@ public class SearchRepositoryImpl implements SearchRepositoryCustom {
             //가격 높은 순
             case 2:
                 orderSpecifiers.add(new OrderSpecifier<>(Order.DESC, search.price));
+                orderSpecifiers.add(new OrderSpecifier<>(Order.DESC, search.sellDate));
                 break;
             //가격 낮은 순
             case 3:
                 orderSpecifiers.add(new OrderSpecifier<>(Order.ASC, search.price));
+                orderSpecifiers.add(new OrderSpecifier<>(Order.DESC, search.sellDate));
                 break;
         }
 
