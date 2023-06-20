@@ -19,6 +19,6 @@ public class SearchDto {
 
     private LocalDateTime sellDate = null;
 
-    private Integer price;
+    private Integer price = null;
 
 }

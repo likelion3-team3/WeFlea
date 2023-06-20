@@ -76,7 +76,7 @@
                 <h1 class="item_sellDate" th:text="${#temporals.format(search.sellDate, 'MM-dd HH:mm')}"></h1>
               </div>
               <h2 class="item_cost" th:text="${search.sellDate}"></h2>
-              <h2 class="item_price_none" th:text="${search.price}"></h2>
+              <h2 class="item_price_1" th:text="${search.price}"></h2>
             </div>
 
           </a>
@@ -116,6 +116,7 @@
                     <h1 class="item_provider">${provider}</h1>
                     <h1 class="item_sellDate">${formattedSellDate}</h1>
                   </div>
+                  <h2 class="item_price_1">${price}</h2>
                 </div>
             </a>
         `;
@@ -134,13 +135,14 @@
     const sortCode = document.querySelector('select[name="sortCode"]').value;
     const currentPage = Math.ceil((items.length) / 12); // 현재 페이지 계산
     const sellDate = lastItem.querySelector('.item_cost').textContent || null;
-    const price = lastItem.querySelector('.item_price_none').textContent || null;
+    const price = lastItem.querySelector('.item_price_1').textContent || null;
 
-    const url = `/user/search/all/${currentPage}` + (keyword ? `?keyword=${keyword}` : `?keyword=`) +
-            (provider ? `&provider=${provider}` : `&provider=`) +
-            (sortCode ? `&sortCode=${sortCode}` : `&sortCode=`) +
-            (sellDate ? `&sellDate=${sellDate}` : `&sellDate=`) +
-            (price ? `&price=${price}` : `&price=`);
+    const url = `/user/search/all/${currentPage}`
+            + (keyword ? `?keyword=${keyword}` : `?keyword=`)
+            + (provider ? `&provider=${provider}` : `&provider=`)
+            + (sortCode ? `&sortCode=${sortCode}` : `&sortCode=`)
+            + (sellDate ? `&sellDate=${sellDate}` : `&sellDate=`)
+            + (price ? `&price=${price}` : `&price=`)
 
 
 
