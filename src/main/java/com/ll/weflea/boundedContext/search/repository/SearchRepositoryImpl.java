@@ -5,7 +5,6 @@ import com.ll.weflea.boundedContext.search.entity.Search;
 import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
-import com.querydsl.core.util.StringUtils;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.ll.weflea.boundedContext.search.entity.QSearch.search;
+import static org.springframework.util.StringUtils.hasText;
 
 
 @RequiredArgsConstructor
@@ -61,36 +61,13 @@ public class SearchRepositoryImpl implements SearchRepositoryCustom {
                 .orderBy(sortSearchList(sortCode))
                 .limit(pageable.getPageSize());
 
-        //가격 높은 순
-        if (sortCode == 2) {
-            query.where(loePrice(lastPrice));
-        }
 
-        //가격 낮은 순
-        if (sortCode == 3) {
-            query.where(goePrice(lastPrice));
+        if (comparePriceAndSellDate(lastPrice, sortCode, lastSellDate) != null) {
+            query.where(comparePriceAndSellDate(lastPrice, sortCode, lastSellDate));
         }
-
-        query.where(ltSellDate(lastSellDate));
 
         return query.fetch();
-    }
 
-
-    private BooleanExpression containsKeyword(String keyword) {
-        if (StringUtils.isNullOrEmpty(keyword)) {
-            return null;
-        }
-
-        return search.title.contains(keyword);
-    }
-
-    private BooleanExpression eqProvider(String provider) {
-        if (StringUtils.isNullOrEmpty(provider)) {
-            return null;
-        }
-
-        return search.provider.eq(provider);
     }
 
     private BooleanExpression ltSellDate(LocalDateTime lastSellDate) {
@@ -101,22 +78,66 @@ public class SearchRepositoryImpl implements SearchRepositoryCustom {
         return search.sellDate.lt(lastSellDate);
     }
 
-    private BooleanExpression loePrice(Integer lastPrice) {
+    private BooleanExpression containsKeyword(String keyword) {
+        return hasText(keyword) ? search.title.contains(keyword) : null;
+    }
+
+    private BooleanExpression eqProvider(String provider) {
+
+        return hasText(provider) ? search.provider.eq(provider) : null;
+    }
+
+
+    private BooleanExpression ltPrice(Integer lastPrice) {
         if (lastPrice == null) {
             return null;
         }
 
-        return search.price.loe(lastPrice);
+        return search.price.lt(lastPrice);
     }
 
-    private BooleanExpression goePrice(Integer lastPrice) {
+    private BooleanExpression gtPrice(Integer lastPrice) {
         if (lastPrice == null) {
             return null;
         }
 
-        return search.price.goe(lastPrice);
+        return search.price.gt(lastPrice);
     }
 
+    private BooleanExpression ltPriceAndGtPrice(Integer lastPrice, Integer sortCode) {
+        if (sortCode == 2) {
+            return ltPrice(lastPrice);
+        }
+
+        return gtPrice(lastPrice);
+    }
+
+    private BooleanExpression comparePriceAndSellDate(Integer lastPrice, Integer sortCode, LocalDateTime lastSellDate) {
+
+        if (ltPriceAndGtPrice(lastPrice, sortCode) == null) {
+            return null;
+        }
+
+
+        return ltPriceAndGtPrice(lastPrice, sortCode).or(eqPriceAndltSellDate(lastPrice,lastSellDate));
+    }
+
+    private BooleanExpression eqPriceAndltSellDate(Integer lastPrice, LocalDateTime lastSellDate) {
+        if (lastPrice == null && lastSellDate == null) {
+            return null;
+        }
+
+
+        if (lastPrice == null) {
+            return search.sellDate.lt(lastSellDate);
+        }
+
+        if (lastSellDate == null) {
+            return search.price.eq(lastPrice);
+        }
+
+        return search.price.eq(lastPrice).and(search.sellDate.lt(lastSellDate));
+    }
 
 
     private OrderSpecifier[] sortSearchList(Integer sortCode) {
